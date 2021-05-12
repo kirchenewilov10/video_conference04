@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="28" viewBox="0 0 240 28">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e7ebeb;
+        font-size: 20px;
+        font-family: MicrosoftJhengHeiRegular, Microsoft JhengHei;
+        letter-spacing: 0.02em;
+      }
+
+      .cls-2 {
+        font-family: SegoeUI, Segoe UI;
+      }
+    </style>
+  </defs>
+  <text id="حقوق_النسخ_محفوظه_2020_" data-name="حقوق النسخ محفوظه 2020 " class="cls-1" transform="translate(120 22)"><tspan x="-119.415" y="0">2020</tspan><tspan y="0"> </tspan><tspan y="0"> </tspan><tspan y="0"> </tspan><tspan class="cls-2" y="0">حقوق النسخ محفو</tspan><tspan y="0"> </tspan></text>
+</svg>

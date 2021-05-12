@@ -1,0 +1,46 @@
+span.ebay-span {
+    background: url(ebay_logo.svg) no-repeat top left;
+    background-size: contain;
+    cursor: pointer;
+    display: inline-block;
+    height: 84px;
+    width: 200px;
+}
+
+span.amazon-span {
+    background: url(amazon_logo.svg) no-repeat top left;
+    background-size: contain;
+    cursor: pointer;
+    display: inline-block;
+    height: 61px;
+    width: 200px;
+    margin-top: 17px;
+    margin-bottom: 6px;
+}
+
+span.ebay-span-small {
+    background: url(ebay_logo.svg) no-repeat top left;
+    background-size: contain;
+    cursor: pointer;
+    height: 1px;
+    width: 1px;
+}
+
+span.amazon-span-small {
+    background: url(amazon_logo.svg) no-repeat top left;
+    background-size: contain;
+    cursor: pointer;
+    display: inline-block;
+    height: 61px;
+    width: 200px;
+    margin-top: 17px;
+    margin-bottom: 6px;
+}
+span.unit-code-span {
+    border: 1px;
+    border-style: groove;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+}

@@ -1,0 +1,7 @@
+<style type="text/css">
+    @page {
+        size: {{pagesize}};
+        {% if page_orientation == 'landscape' %} {% include 'pdfgeneration/landscape.css' %} {% endif %}
+        {% if page_orientation == 'portrait' %} {% include 'pdfgeneration/portrait.css' %} {% endif %}
+    }
+</style>

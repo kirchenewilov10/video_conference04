@@ -1,0 +1,74 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="add_category_item_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 500px; max-width: 500px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-diamond"></i> {% trans 'Add Item' %}<a class="close star-back-color" href="#" onclick="on_close_add_category_item_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="item_name"><b>{% trans 'Item Name' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <input type="text" id="item_name" class="form-control" value="" onkeyup="on_keyup_item_name(event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="on_add_category_item()">{% trans 'Add' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_add_category_item_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function on_open_add_category_item_modal(){
+        $("#item_name").val("");
+        open_modal("add_category_item_modal");
+        $("#item_name").focus();
+    }
+
+    function on_close_add_category_item_modal(){
+        close_modal("add_category_item_modal");
+        open_modal("new_service_modal");
+    }
+
+    function on_add_category_item(){
+        var item_name = $("#item_name").val();
+        var html = "<span data-toggle=\"tooltip\" class=\"badge bg-green\" style=\"padding: 10px; font-size: 15px; margin: 0 5px 0 0;\">" + item_name + "<i class=\"fa fa-close hand pl-2\" onclick=\"on_click_remove_category_item(event)\"></i></span>";
+
+        var objs = $("#category_items_" + selected_category_id).children();
+        var i;
+        for (i=0;i<objs.length;i++){
+            if (item_name === objs[i].childNodes[0].textContent) {
+                show_message("warning", "{% trans "Warning" %}", "{% trans "This item is already existed." %}");
+                return;
+            }
+        }
+
+        $("#category_items_" + selected_category_id).append(html);
+        on_close_add_category_item_modal();
+    }
+
+    function on_keyup_item_name(e){
+        if (e.keyCode === 13){
+            on_add_category_item();
+        }
+    }
+
+    function on_click_remove_category_item(e){
+        $(e.target.parentElement).remove();
+    }
+</script>

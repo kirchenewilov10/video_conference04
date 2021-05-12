@@ -1,0 +1,71 @@
+#available_fields_ul .ui-selecting {
+    background: #cfcfcf;
+}
+#available_fields_ul .ui-selected {
+    background: #c1c1c1; color: white;
+}
+
+#available_fields_ul li {
+    margin: 1px; padding: 3px; font-size: 1.2em; height: 30px;
+    border: 1px solid #c1c1c1;
+}
+
+#available_fields_ul {
+    list-style-type: none;margin: 0;padding: 0;
+    border: 1px solid #c1c1c1;
+}
+
+#exporting_fields_ul .ui-selecting {
+    background: #cfcfcf;
+}
+#exporting_fields_ul .ui-selected {
+    background: #c1c1c1; color: white;
+}
+
+#exporting_fields_ul li {
+    margin: 1px; padding: 3px; font-size: 1.2em; height: 30px;
+    border: 1px solid #c1c1c1;
+}
+
+#exporting_fields_ul {
+    list-style-type: none;margin: 0;padding: 0;
+    border: 1px solid #c1c1c1;
+}
+
+#ed_available_fields_ul .ui-selecting {
+    background: #cfcfcf;
+}
+#ed_available_fields_ul .ui-selected {
+    background: #c1c1c1; color: white;
+}
+
+#ed_available_fields_ul li {
+    margin: 1px; padding: 3px; font-size: 1.2em; height: 30px;
+    border: 1px solid #c1c1c1;
+}
+
+#ed_available_fields_ul {
+    list-style-type: none;margin: 0;padding: 0;
+    border: 1px solid #c1c1c1;
+}
+
+#ed_exporting_fields_ul .ui-selecting {
+    background: #cfcfcf;
+}
+#ed_exporting_fields_ul .ui-selected {
+    background: #c1c1c1; color: white;
+}
+
+#ed_exporting_fields_ul li {
+    margin: 1px; padding: 3px; font-size: 1.2em; height: 30px;
+    border: 1px solid #c1c1c1;
+}
+
+#ed_exporting_fields_ul {
+    list-style-type: none;margin: 0;padding: 0;
+    border: 1px solid #c1c1c1;
+}
+
+#export_format_ul {
+    overflow-y: scroll;
+}

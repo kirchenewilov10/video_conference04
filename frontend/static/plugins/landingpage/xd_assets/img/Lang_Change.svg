@@ -1,0 +1,20 @@
+<svg id="Lang_Change" xmlns="http://www.w3.org/2000/svg" width="71" height="25" viewBox="0 0 71 25">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+        font-size: 18px;
+        font-family: Poppins-Light, Poppins;
+        font-weight: 300;
+        letter-spacing: 0.15em;
+      }
+
+      .cls-1 {
+        opacity: 0.5;
+      }
+    </style>
+  </defs>
+  <text id="AR" class="cls-1" transform="translate(13 19)"><tspan x="-12.501" y="0">AR</tspan></text>
+  <text id="EN" class="cls-2" transform="translate(58 19)"><tspan x="-12.051" y="0">EN</tspan></text>
+  <text id="_" data-name="|" class="cls-2" transform="translate(36 19)"><tspan x="-2.349" y="0">|</tspan></text>
+</svg>

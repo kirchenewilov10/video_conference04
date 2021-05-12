@@ -1,0 +1,434 @@
+{% load staticfiles %}
+{% load i18n %}
+<script>
+var currentUserid = '{{ chat_param.userid }}';
+var currentUsername = '{{ chat_param.username }}';
+var printed_date = "";
+var ws = 'ws://';
+if(window.location.protocol==="https:"){ ws = 'wss://'; }
+var chatSocket = new WebSocket(ws + window.location.host + '/ws?session_key={{ chat_param.session_key }}');
+
+chatSocket.onmessage = function(e) {
+    getMessageById(e.data);
+};
+
+chatSocket.onclose = function(e) {
+	console.log('Chat socket closed unexpectedly');
+};
+
+
+function scrollToBottom(el) {
+    el.scrollTop = el.scrollHeight;
+}
+
+function on_typing_message(e){
+    if (e.keyCode === 13) {  // enter, return
+        on_click_send_message();
+    }
+}
+
+function on_mini_typing_message(e){
+    if (e.keyCode === 13) {  // enter, return
+        on_click_mini_send_message();
+    }
+}
+
+function on_click_send_message(){
+    var messageInputDom = $('#chat-message-input');
+
+    if (selected_userid === 0){
+        show_message("warning", "{% trans "Warning" %}", "{% trans "Please select user." %}");
+        return;
+    }
+
+    sendMessage(selected_userid, messageInputDom, null, 1, 1)
+}
+
+function on_click_mini_send_message(){
+    var messageInputDom = $('#mini-chat-message-input');
+
+    if (selected_userid === 0){
+        show_message("warning", "{% trans "Warning" %}", "{% trans "Please select user." %}");
+        return;
+    }
+
+    sendMessage(selected_userid, messageInputDom, null, 1, 1)
+}
+
+
+function sendMessage(recipientid, body, form, room_id, type) {
+    var url = "";
+    if (selected_session_type === "registered"){
+        url = "/chat/api/v1/message/";
+    }
+    else {
+        url = "/chat/instantmessage";
+    }
+
+    if (type === 1){
+        // text chatting
+        var text = body.val();
+        if (text.indexOf("<script") >=0 && text.indexOf("<\/script>")){
+            text = text.split("<\/script>").join("");
+            text = text.substring(text.indexOf("<script") + 1, text.length);
+            text = text.substring(text.indexOf(">") + 1, text.length);
+        }
+        $.post(url, {
+            userid: {{ userid }},
+            recipientid: recipientid,
+            body: text,
+            type: 'TEXT',
+            session_type: selected_session_type
+        }).fail(function () {
+            console.log('Error! Check console!');
+        });
+        body.val('');
+        body.focus();
+    }
+    else if (type === 2){
+        // file transfer
+        var formData = new FormData(form.get(0));
+
+        var file = form.get(0)[0].files[0];
+        formData.append("image", file);
+        formData.append("userid", currentUserid);
+        formData.append("recipientid", recipientid);
+        formData.append("body", 'FAKE');
+        formData.append("type", 'FILE');
+        formData.append("session_type", selected_session_type);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (res) {
+                $('#chat_message_' + room_id).val('');
+                if (res === 'FILE_SIZE_ERROR') {
+                    alert(gettext("File Size is too large."))
+                }
+            },
+            error: function (xhr, error) {
+                $('#chat_message_' + room_id).val('');
+            }
+        });
+    }
+    else if (type === 3) {
+        // video chatting
+        $.post(url, {
+            userid: {{ userid }},
+            recipientid: recipientid,
+            body: JSON.stringify(body),
+            type: 'VIDEO',
+            session_type: selected_session_type
+        }).fail(function () {
+            console.log('Error! Check console!');
+        });
+    }
+}
+
+function getMessageById(message){
+    var session_type = JSON.parse(message).session_type;
+    if (session_type === "video_chatting"){
+        getVideoChattingMessage(message);
+        return;
+    }
+    var id = JSON.parse(message).message;
+    if (parseInt(id) < 0){
+        draw_blob(id);
+        return;
+    }
+
+    var url = "", params = {};
+    if (session_type === "registered"){
+        url = '/chat/api/v1/message/' + id + '/';
+    }
+    else if (session_type === "unregistered") {
+        url = '/chat/instantmessage';
+        params = {"id": id};
+    }
+
+    $.getJSON(url, params, function (data) {
+        var currentRecipientid = selected_userid;
+
+        if (data.recipientid.toString() === currentUserid.toString()){
+            if (selected_userid === 0 || selected_userid.toString() !== data.userid.toString() ){
+                total_unread_messages_cnt += 1;
+                update_unread_message_mark();
+
+                var element = document.getElementById("filterMember_" + data.userid);
+                if (element !== null){
+                    var unread_marker = document.getElementById("user_" + data.userid + "_unread_msg_alert");
+                    var unread_cnt = unread_marker.innerText;
+                    unread_cnt = unread_cnt === "" ? 1 : parseInt(unread_cnt) + 1;
+                    unread_marker.innerText = unread_cnt;
+                }
+            }
+        }
+
+        if (data.userid.toString() === currentUserid.toString() && data.recipientid.toString() === currentRecipientid.toString()){
+            drawMessage(data);
+        }
+        else if (data.userid.toString() === currentRecipientid.toString() && data.recipientid.toString() === currentUserid.toString()){
+            update_message_status(id);
+            drawMessage(data);
+        }
+    });
+}
+
+
+function getVideoChattingMessage(data){
+    var message = JSON.parse(JSON.parse(data).message);
+    var userid = parseInt(currentUserid);
+    var socket_type = message["type"];
+    var targetUser, description;
+    if (socket_type === "calling_check"){
+        targetUser = parseInt(message["targetUser"]);
+        if (targetUser === userid){
+            calling_user = parseInt(message["sendUser"]);
+            on_open_receive_calling_modal();
+        }
+    }
+
+    if (socket_type === "accept_calling"){
+        targetUser = parseInt(message["targetUser"]);
+        if (targetUser === userid){
+            callAction();
+        }
+    }
+
+    if (socket_type === "reject_calling"){
+        targetUser = parseInt(message["targetUser"]);
+        if (targetUser === userid){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Your call is rejected from Admin." %}");
+            localStream.getTracks().forEach( (track) => {
+                track.stop();
+            });
+            close_videochatting_modal();
+            counting = false;
+        }
+    }
+
+    if (socket_type === "cancel_calling"){
+        targetUser = parseInt(message["targetUser"]);
+        if (targetUser === userid){
+            hangupAction();
+            try{
+                localStream.getTracks().forEach( (track) => {
+                    track.stop();
+                });
+            }
+            catch(e){
+                console.log(e);
+            }
+            on_close_receive_calling_modal();
+            counting = false;
+        }
+    }
+
+    if (socket_type === "finish_calling") {
+        targetUser = parseInt(message["targetUser"]);
+        if (targetUser === userid){
+            hangupAction();
+            try{
+                localStream.getTracks().forEach( (track) => {
+                    track.stop();
+                });
+            }
+            catch(e){
+                console.log(e);
+            }
+            on_close_receive_calling_modal();
+            close_videochatting_modal();
+            counting = false;
+        }
+    }
+
+    if (socket_type === "handshake_offer"){
+        targetUser = parseInt(message["targetUser"]);
+        description = message["description"];
+        if (targetUser === userid){
+            const servers = { iceServers: [ { urls: 'stun:stun.l.google.com:19302' }]};
+
+            remotePeerConnection = new RTCPeerConnection(servers);
+            trace('Created remote peer connection object remotePeerConnection.');
+
+            remotePeerConnection.addEventListener('icecandidate', handleConnection);
+            remotePeerConnection.addEventListener('iceconnectionstatechange', handleConnectionChange);
+            remotePeerConnection.addEventListener('addstream', gotRemoteMediaStream);
+
+            trace('remotePeerConnection setRemoteDescription start.');
+            remotePeerConnection.setRemoteDescription(description).then(() => {
+                setRemoteDescriptionSuccess(remotePeerConnection);
+            }).catch(setSessionDescriptionError);
+
+            // Add local stream to connection and create offer to connect.
+            remotePeerConnection.addStream(localStream);
+            trace('Added local stream to remotePeerConnection.');
+
+            trace('remotePeerConnection createAnswer start.');
+            remotePeerConnection.createAnswer().then(createdAnswer).catch(setSessionDescriptionError);
+
+            seconds=0, minutes=0, hours=0;
+            counting = true;
+            counter = document.getElementById('time_counter');
+            timer();
+        }
+    }
+
+    if (socket_type === "handshake_answer"){
+        targetUser = parseInt(message["targetUser"]);
+        description = message["description"];
+        if (targetUser === userid){
+            trace('remotePeerConnection setRemoteDescription start.');
+            remotePeerConnection.setRemoteDescription(description).then(() => {
+                setRemoteDescriptionSuccess(remotePeerConnection);
+            }).catch(setSessionDescriptionError);
+
+            seconds=0, minutes=0, hours=0;
+            counting = true;
+            counter = document.getElementById('time_counter');
+            timer();
+        }
+    }
+
+    if (socket_type === "candidate"){
+        targetUser = parseInt(message["targetUser"]);
+        if (targetUser === userid){
+            var iceCandidate = message["candidate"];
+            const newIceCandidate = new RTCIceCandidate(iceCandidate);
+
+            remotePeerConnection.addIceCandidate(newIceCandidate).then(() => {
+                handleConnectionSuccess(remotePeerConnection);
+            }).catch((error) => {
+                handleConnectionFailure(remotePeerConnection, error);
+            });
+
+            trace(`${getPeerName(remotePeerConnection)} ICE candidate:\n` + `${iceCandidate.candidate}.`);
+        }
+    }
+}
+
+
+function update_message_status(id){
+    $.ajax({
+        type: "POST",
+        url: "message/update_message_status",
+        data: {
+            message_id: id
+        },
+        success: function(res){
+
+        }
+    })
+}
+
+function drawMessage(data){
+    var sender, receiver, msg, type, date, time, me;
+	var userid = parseInt(document.getElementById("userid").value);
+
+	type = data.type;
+	date = data.timestamp.substr(0, 10);
+	time = data.timestamp.substr(11, 5);
+    sender = parseInt(data.userid);
+    {#receiver = parseInt(data.recipientid);#}
+
+    me = "";
+    if (sender === userid){
+        me = "me";
+    }
+
+	var new_message_txt = "";
+	if (type === "TEXT"){
+        msg = data.body;
+
+        if (printed_date !== date){
+            printed_date = date;
+            new_message_txt += "<div class=\"date\">" +
+                    "<hr><span style=\"width: 100%; text-align: center;\">" + printed_date + "</span><hr>" +
+                    "</div>";
+        }
+
+        new_message_txt += "<div class=\"message " + me + "\">\n";
+        if (me === ""){
+            new_message_txt += "<img class=\"avatar-md\" src=\"{% static "img/user-avatar1.jpg" %}\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"{{ receiver.username }}\" alt=\"Recevier Avatar\">\n";
+        }
+        new_message_txt += "<div class=\"text-main\">\n" +
+            "                   <div class=\"text-group " + me + "\">\n" +
+            "                       <div class=\"text " + me + "\">\n" +
+            "                           <p>" + msg + "</p>\n" +
+            "                       </div>\n" +
+            "                   </div>\n" +
+            "                   <span>" + time + "</span>\n" +
+            "               </div>\n" +
+            "           </div>";
+
+	    $("#message_box").append(new_message_txt);
+	    $("#mini_message_box").append(new_message_txt);
+	    scrollToBottom(document.getElementById('message_box_container'));
+    }
+
+	if (type === "FILE"){
+	    var body;
+	    if (selected_session_type === "registered")
+	        body = JSON.parse(data.body);
+	    else
+	        body = data.body;
+
+        var file_name = body['name'];
+        var file_path = body['path'];
+        var namearray = file_name.split('.');
+        var file_ext = namearray[namearray.length - 1];
+
+        if (printed_date !== date){
+            printed_date = date;
+            new_message_txt += "<div class=\"date\">" +
+                    "<hr><span style=\"width: 100%; text-align: center;\">" + printed_date + "</span><hr>" +
+                    "</div>";
+        }
+
+        new_message_txt += "<div class=\"message " + me + "\">\n";
+        if (me === ""){
+            new_message_txt += "<img class=\"avatar-md\" src=\"{% static "img/user-avatar1.jpg" %}\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"{{ receiver.username }}\" alt=\"Recevier Avatar\">\n";
+        }
+        new_message_txt += "<div class=\"text-main\">\n" +
+            "                   <div class=\"text-group " + me + "\">\n" +
+            "                       <div class=\"text " + me + "\">\n" +
+            "                           <div class=\"attachment " + me + "\">";
+        if (file_ext === 'png' || file_ext === 'PNG' || file_ext === 'gif' || file_ext === 'GIF' || file_ext === 'bmp' || file_ext === 'BMP' || file_ext === 'jpg' || file_ext === 'JPG' || file_ext === 'jpeg' || file_ext === 'JPEG') {
+            new_message_txt += '<a class="fancybox" href="' + file_path + '" data-fancybox-group="gallery" title="' + file_name + '">' +
+                '<img class="chat_img" src="' + file_path + '" style="width: 100%" alt="no image"><br>' +
+                '</a>' +
+                '</div>' +
+                '<br>' +
+                '<a class="chat_file_a" href="' + file_path + '" target="_blank" download><i class="fa fa-file"></i> ' + file_name;
+        }
+        else {
+            new_message_txt += "            <button class=\"btn attach\"><i class=\"material-icons md-18\">insert_drive_file</i></button>" +
+                "                               <div class=\"file\">\n" +
+                "                                   <h5><a href=\"" + file_path + "\" target=\"_blank\" download>" + file_name + "</a></h5>\n" +
+                "                               </div>" +
+                "                           </div>";
+        }
+        new_message_txt += "        </div>\n" +
+            "                   </div>\n" +
+            "                   <span>" + time + "</span>\n" +
+            "               </div>\n" +
+            "           </div>";
+
+        $("#message_box").append(new_message_txt);
+        $("#mini_message_box").append(new_message_txt);
+	    scrollToBottom(document.getElementById('message_box_container'));
+    }
+    $('.fancybox').fancybox();
+}
+
+function update_unread_message_mark(){
+    if (total_unread_messages_cnt > 0){
+        $("#total_unread_message_status").css("display", "");
+    }
+    else {
+        $("#total_unread_message_status").css("display", "none");
+    }
+}
+</script>

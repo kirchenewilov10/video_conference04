@@ -1,0 +1,92 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="order_payment_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 500px; margin-top: 100px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-dollar"></i> {% trans 'Payment' %} <label id="order_price_label"></label>
+                    <a class="close star-back-color" onclick="on_close_order_payment_modal()">
+                        <i class="fa fa-close"></i>
+                    </a>
+                </h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="col-12 col-md-12 col-lg-12 no-padding">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_visa" data-toggle="tab"><img src="{% static "/dist/img/credit/visa.png" %}" alt="Visa"><img src="{% static "/dist/img/credit/mastercard.png" %}" alt="MasterCard"></a></li>
+                                <li><a href="#tab_paypal" data-toggle="tab"><img src="{% static "/dist/img/credit/paypal.png" %}" alt="Paypal" style="width: 51px;"></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_visa">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <label for="visa_name_on_card">{% trans "Name on Card" %}</label>
+                                                <input type="text" class="form-control" id="visa_name_on_card" placeholder="{% trans "Name on Card" %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <label for="visa_cardnumber">{% trans "Card Number" %}</label>
+                                                <input type="text" class="form-control" id="visa_cardnumber" placeholder="{% trans "Card Number" %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-7">
+                                            <div class="form-group">
+                                                <label for="visa_exp_date">{% trans "Expiration Date" %}</label>
+                                                <input type="text" class="form-control" id="visa_exp_date" placeholder="MM/YYYY">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-12 col-lg-5">
+                                            <div class="form-group">
+                                                <label for="visa_cvv">{% trans "CVV" %}</label>
+                                                <input type="text" class="form-control" id="visa_cvv" placeholder="CVV">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab_paypal">
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 col-lg-12" id="paypal-button-container">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-flat" onclick="on_pay_order()">{% trans 'Pay' %}</button>
+                <button type="button" class="btn btn-primary btn-flat" onclick="on_close_order_payment_modal()">{% trans 'Close' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function on_open_order_payment_modal(){
+        open_modal("order_payment_modal");
+    }
+
+    function on_close_order_payment_modal() {
+        $("#order_price_label").html("");
+        close_modal("order_payment_modal");
+    }
+
+    function make_order_payment(order_id, order_price) {
+        on_open_order_payment_modal();
+        $("#order_price_label").html(" - <b>$" + order_price + "</b>")
+    }
+
+    function on_pay_order(){
+        show_message("warning", "{% trans "Warning" %}", "{% trans "Integration of payment is under development now." %}");
+    }
+</script>

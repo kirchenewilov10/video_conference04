@@ -1,0 +1,172 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<div id="add_comment_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 700px; max-width: 1000px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-bars"></i> {% trans 'Orders' %}<a class="close star-back-color" href="#" onclick="on_close_add_comment_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:500px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label><b>{% trans 'User' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-box-title">
+                                        <label id="service_request_user"></label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label><b>{% trans 'Service Type' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-box-title">
+                                        <label id="service_type"></label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label><b>{% trans 'Price' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-box-title">
+                                        <label><b>$</b></label>
+                                        <a id="service_price" class="hand underline" style="color: deepskyblue; text-decoration: underline;"></a>
+                                        <input type="text" class="form-control hide" id="service_price_input" style="width: 80%; display: initial;"
+                                               onfocusout="on_focusout_service_price()" onkeyup="on_keyup_service_price(event)">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label><b>{% trans 'Status' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-box-title">
+                                        <label id="service_status"></label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label><b>{% trans 'Description' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-box-title">
+                                        <label id="service_description"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label><b>{% trans 'Created' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-box-title">
+                                        <label id="service_date_created"></label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="new_comment"><b>{% trans 'Comment' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-box-title">
+                                        <textarea class="form-control" id="new_comment" rows="4" style="resize: vertical;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner hide" id="user_response_div">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="user_response"><b>{% trans 'User Response' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 text-box-title">
+                                        <label id="user_response"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn_save_comment" class="btn btn-primary" onclick="on_save_comment()">{% trans 'Save' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_add_comment_modal()">{% trans 'Close' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var selected_order_id = 0;
+
+    function on_close_add_comment_modal(){
+        $("#user_response_div").addClass("hide");
+        $("#service_price").attr("onclick", "on_click_service_price(this)");
+        close_modal("add_comment_modal");
+    }
+
+    function on_save_comment() {
+        var price = $("#service_price").html();
+        var comment = $("#new_comment").val();
+
+        if (comment.indexOf("<script>") >= 0 || comment.indexOf("<style>") >= 0 || comment.indexOf("<\/script>") >= 0 || comment.indexOf("<\/style>") >= 0) {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "You have input illegal sentences." %}");
+            return;
+        }
+
+        if (price === "" || isNaN(price)) {
+            price = 0;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/adminsettings/save_comment",
+            data: {
+                order_id: selected_order_id,
+                price: price,
+                comment: comment
+            },
+            success: function(res) {
+                if (res === "success"){
+                    show_message("success", "{% trans "Success" %}", "{% trans "Comment has been set successfully." %}");
+                    close_modal("add_comment_modal");
+                    update_table(orders_table);
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                }
+            }
+        })
+    }
+
+    function on_click_service_price(){
+        $("#service_price_input").removeClass("hide");
+        $("#service_price_input").val($("#service_price").html());
+        $("#service_price").addClass("hide");
+        $("#service_price_input").focus();
+    }
+
+    function on_focusout_service_price(){
+        var price = $("#service_price_input").val();
+        if (price === "" || isNaN(price)) {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please input the correct price." %}");
+            $("#service_price_input").val("");
+            $("#service_price_input").focus();
+            return;
+        }
+        $("#service_price_input").addClass("hide");
+        $("#service_price").html($("#service_price_input").val());
+        $("#service_price").removeClass("hide");
+    }
+
+    function on_keyup_service_price(e){
+        if (e.keyCode === 13){
+            on_focusout_service_price();
+        }
+    }
+</script>

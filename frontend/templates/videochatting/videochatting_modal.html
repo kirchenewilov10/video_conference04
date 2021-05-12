@@ -1,0 +1,97 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="videochatting_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" id="videochatting_modal_dialog" style="margin-top: 20px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-video-camera"></i> {% trans 'Video Chatting' %}
+                    <label id="time_counter" class="pull-right">00:00:00</label>
+                </h4>
+                <div class="modal-close-area modal-close-df">
+                    <a class="close star-back-color no-padding" onclick="on_close_videochatting_modal()">
+                        <i class="fa fa-close"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-12" style="height:650px; padding: 0; overflow-x: hidden; overflow-y: auto; background-color: whitesmoke;">
+                <div class="box-body" id="videochatting_content">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var seconds=0, minutes=0, hours=0;
+    var counter;
+    var counting = true;
+
+    function timer() {
+        if (seconds >= 60) {
+            minutes++;
+            seconds = 0;
+        }
+        if (minutes >= 60) {
+            hours++;
+            minutes = 0;
+        }
+        var hour_str = PrefixInteger(hours, 2);
+        var minute_str = PrefixInteger(minutes, 2);
+        var second_str = PrefixInteger(seconds, 2);
+        counter.innerHTML = hour_str + ":" + minute_str + ":" + second_str;
+        if (counting) {
+            seconds++;
+            setTimeout(timer, 1000);
+        }
+    }
+
+    function PrefixInteger(num, length) {
+        return (Array(length).join('0') + num).slice(-length);
+    }
+
+    function on_open_videochatting_modal(){
+        $("#videochatting_modal").addClass("in");
+        $("#videochatting_modal").css("display", "block");
+        $("#waiting").addClass("modal-backdrop fade in");
+        $(document.body).addClass("modal-open");
+
+        var window_height = (window.innerHeight - 314) + "px";
+        var window_width = (window.innerWidth - 100) + "px";
+        $("#videochatting_modal_dialog").css("maxWidth", window_width);
+        $("#videochatting_modal_dialog").css("width", window_width);
+        $("#videochatting_modal_dialog").css("maxHeight", window_height);
+        $("#videochatting_modal_dialog").css("height", window_height);
+    }
+
+    function send_finish_calling_message(){
+        hangupAction();
+
+        try{
+            localStream.getTracks().forEach( (track) => {
+                track.stop();
+            });
+        }
+        catch(e){
+            console.log(e);
+        }
+
+        var messageData = {};
+        messageData["sendUser"] = {{ userid }};
+        messageData["targetUser"] = selected_userid;
+        messageData["type"] = "finish_calling";
+        sendMessage(selected_userid, messageData, null, 0, 3);
+    }
+
+
+    function on_close_videochatting_modal(){
+        send_finish_calling_message();
+        close_videochatting_modal();
+    }
+
+    function close_videochatting_modal(){
+        $("#videochatting_modal").removeClass("in");
+        $("#videochatting_modal").css("display", "none");
+        $("#waiting").removeClass("modal-backdrop fade in");
+        $(document.body).removeClass("modal-open");
+    }
+</script>

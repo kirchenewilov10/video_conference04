@@ -1,0 +1,248 @@
+{% load staticfiles %}
+{% load i18n %}
+<div class="container" style="margin-top: 50px;">
+    <div class="row justify-content-center mt-30">
+        <div class="col-12 col-md-10 col-lg-12 mb-30">
+            <div class="page-header">
+                <h3><i class="fa fa-navicon"></i> {% trans "Users" %}</h3>
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-md-12">
+{#                                <button type="button" class="btn btn-primary" onclick=""><i#}
+{#                                        class="fa fa-upload adminpro-home-admin" aria-hidden="true"></i>&nbsp;{% trans "Add User" %}#}
+{#                                </button>#}
+{#                                <hr>#}
+                        <table id="table" class="display cell-border compact stripe" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {% for data in headerdata %}
+                                    <th class="text-center">{{ data.name }}</th>
+                                {% endfor %}
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "user/user_transaction_table_modal.html" %}
+
+<script>
+    var usermg_table;
+    $(document).ready(function () {
+        var height = (window.innerHeight - 465) + "px";
+        usermg_table = $('#table').DataTable({
+            dom: '<"top"Rf<"clear">>rt<"bottom"lip<"clear">>',
+            serverSide: true,
+            lengthMenu: [[10], [10]],
+            pageLength: 10,
+            scrollY: height,
+            scrollX: true,
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0,
+                    width: "1px"
+                }],
+            ajax: {
+                url: "/users/users_datatable_api?format=datatables",
+                data: function (d){
+                    return $.extend( {}, d, {});
+                }
+            },
+            columns: [
+                {
+                    width: "1%",
+                    data: "id", "searchable": false, "render": function (data, type, row) {
+                        var htm = "";
+                        htm += '<i id=' + row.id + ' style="display: None"></i>';
+                        return htm;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "image_path", "render": function(data, type, row){
+                        let html = "<div class=\"product-img\">\n" +
+                            "<img src=\"" + row.image_path + "\" alt=\"\" style=\"width: 40px; height:40px; border: 1px solid; border-color: #c5c5c5\">\n" +
+                            "</div>";
+                        return html;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "username"
+                },
+                {
+                    class: "dt-center",
+                    data: "is_superuser", "render": function(data, type, row) {
+                        let html="";
+                        if (row.is_superuser){
+                            html = "<i class=\"fa big-icon fa-user\"></i>";
+                        }
+                        return html;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "address1", "render": function(data, type, row){
+                        let html = "";
+                        if (row.address1 !== ""){
+                            html += row.address1 + " ";
+                        }
+                        if (row.address2 !== ""){
+                            html += row.address2 + " ";
+                        }
+                        if (row.city !== ""){
+                            html += row.city + " ";
+                        }
+                        if (row.state !== ""){
+                            html += row.state + " ";
+                        }
+                        if (row.zipcode !== ""){
+                            html += row.zipcode + ", ";
+                        }
+                        if (row.country !== ""){
+                            html += row.country;
+                        }
+                        return html;
+                    }
+                },
+                {
+                    class: "dt-center hide",
+                    data: "address2"
+                },
+                {
+                    class: "dt-center hide",
+                    data: "city"
+                },
+                {
+                    class: "dt-center hide",
+                    data: "state"
+                },
+                {
+                    class: "dt-center hide",
+                    data: "country"
+                },
+                {
+                    class: "dt-center hide",
+                    data: "zipcode"
+                },
+                {
+                    class: "dt-center hide",
+                    data: "phone"
+                },
+                {
+                    class: "dt-center hide",
+                    data: "spent_money"
+                },
+                {
+                    class: "dt-center",
+                    data: "current_money", "render": function(data, type, row){
+                        return "<b>$</b> " + row.current_money;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "service_usable", "render": function(data, type, row){
+                        let html, checked_html;
+                        if (row.service_usable === 1){
+                            checked_html = "checked";
+                        }
+                        else {
+                            checked_html = "";
+                        }
+
+                        html = "<div class=\"custom-switch custom-switch-label-status pl-0\">\n" +
+                            "       <input class=\"custom-switch-input\" id=\"user_service_status_" + row.id + "\" type=\"checkbox\" " + checked_html + " onclick=\"on_click_user_active_service(" + row.id + ")\">\n" +
+                            "       <label class=\"custom-switch-btn\" for=\"user_service_status_" + row.id + "\" style=\"top: 0px;\"></label>\n" +
+                            "   </div>";
+                        return html;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "", "render": function(data, type, row) {
+                        let html;
+                        if (row.online === 1){
+                            html = "<span class=\"label label-info\">{% trans "Online" %}</span>";
+                        }
+                        else {
+                            html = "<span class=\"label label-default\">{% trans "Offline" %}</span>";
+                        }
+                        return html;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "", "render": function(data, type, row){
+                        let html;
+                        html = "<button data-toggle=\"tooltip\" title=\"{% trans "Transactions" %}\" onclick=\"on_click_show_user_transactions(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-bars\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+                        return html;
+                    }
+                }
+            ],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+            order: [
+                [2, 'asc']
+            ]
+        });
+
+        $('#table thead').on("click", "th.select-checkbox", function () {
+            if ($("tr").hasClass("selected")) {
+                usermg_table.rows().deselect();
+                $("tr").removeClass("selected");
+            } else {
+                usermg_table.rows().select();
+                $("tr").addClass("selected");
+            }
+        }).on("select deselect", function () {
+            if (usermg_table.rows({selected: true}).count() !== usermg_table.rows().count()) {
+                $("tr").removeClass("selected");
+            } else {
+                $("tr").addClass("selected");
+            }
+        });
+    });
+
+    function on_click_user_active_service(id) {
+        let active;
+        if ($("#user_service_status_" + id)[0].checked)
+            active = 1;
+        else
+            active = 0;
+
+        $.ajax({
+            type: "POST",
+            url: "/users/active_user_service",
+            data: {
+                userid: id,
+                active: active
+            },
+            success: function(res){
+                if (res === "success"){
+
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                    $("#user_service_status_" + id)[0].checked = !$("#user_service_status_" + id)[0].checked;
+                }
+            }
+        })
+    }
+
+    function on_click_show_user_transactions(userid){
+        on_open_user_transaction_table_modal();
+        init_transaction_table(userid);
+    }
+</script>

@@ -1,0 +1,276 @@
+{% load staticfiles %}
+{% load i18n %}
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <label>{% trans "Please fill in all fields." %}</label>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <input class="form-control" id="reg_username" name="reg_username" placeholder="{% trans "Username" %}" onkeyup="validate_username()" autofocus required>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <label>{% trans " - Username should contain one letter and one number at least." %}</label>
+        <label>{% trans " - Username should not contain symbols." %}</label>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <input class="form-control" id="reg_firstname" name="reg_firstname" placeholder="{% trans "Firstname" %}">
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <input class="form-control" id="reg_lastname" name="reg_lastname" placeholder="{% trans "Lastname" %}">
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <label>{% trans "To better secure your account safety," %}<br>{% trans "please follow the recommendations below to set your password:" %}</label><br>
+        <label id="reg_pwd_length">&nbsp;&nbsp;&nbsp;{% trans "- Use 8 to 64 characters" %}</label><br>
+        <label id="reg_pwd_letter">&nbsp;&nbsp;&nbsp;{% trans "- Include at least one letter" %}</label><br>
+        <label id="reg_pwd_number">&nbsp;&nbsp;&nbsp;{% trans "- Include at least one number" %}</label><br>
+        <label id="reg_pwd_symbol">&nbsp;&nbsp;&nbsp;{% trans "- Include at least one symbol. Only these symbols are supported !@#$%^*_+=" %}</label><br>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <input type="password" class="form-control" id="reg_password" name="reg_password" placeholder="{% trans "Password" %}" onkeyup="validate_password()" required>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <input type="password" class="form-control" id="reg_password_confirm" placeholder="{% trans "Confirm Password" %}" required>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <label>{% trans "Mobile Phone Number (for sign-in)" %}</label>
+        <input class="form-control" id="reg_phone" name="reg_phone" placeholder="(201) 555-5555" required>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<div class="row">
+    <div class="form-group col-lg-1"></div>
+    <div class="form-group col-lg-10">
+        <input type="email" class="form-control" id="reg_email" name="reg_email" placeholder="{% trans "Email Here (for verification and password reset)" %}" required>
+    </div>
+    <div class="form-group col-lg-1"></div>
+</div>
+<button type="submit" id="btn_register_form_submit" style="display: none;"></button>
+<div class="text-center">
+    <button class="btn btn-default mt-5" style="padding: 10px 25px; -webkit-border-radius: 1.2em;-moz-border-radius: 1.2em;border-radius: 1.2em;" onclick="on_click_register(1)">{% trans "Register" %}</button>
+</div>
+
+<script>
+
+    var validate_length_flag = 0;
+    var validate_letter_flag = 0;
+    var validate_number_flag = 0;
+    var validate_symbol_flag = 0;
+    var validate_username_letter_flag = 0;
+    var validate_username_number_flag = 0;
+
+    function validate_username(){
+        var reg_username = $("#reg_username").val();
+        var re = /[a-zA-Z]/;
+        if (re.test(reg_username)) {
+            validate_username_letter_flag = 1;
+        }
+        else {
+            validate_username_letter_flag = 0;
+        }
+
+        re = /[0-9]/;
+        if (re.test(reg_username)){
+            validate_username_number_flag = 1;
+        }
+        else {
+            validate_username_number_flag = 0;
+        }
+    }
+
+    function validate_password() {
+        var reg_password = $("#reg_password").val();
+
+        if (reg_password.length > 7) {
+            $("#reg_pwd_length").css("color", "green");
+            validate_length_flag = 1;
+        }
+        else {
+            $("#reg_pwd_length").css("color", "lightgrey");
+            validate_length_flag = 0;
+        }
+
+        var re = /[a-zA-Z]/;
+        if (re.test(reg_password)) {
+            $("#reg_pwd_letter").css("color", "green");
+            validate_letter_flag = 1;
+        }
+        else {
+            $("#reg_pwd_letter").css("color", "lightgrey");
+            validate_letter_flag = 0;
+        }
+
+        re = /[0-9]/;
+        if (re.test(reg_password)) {
+            $("#reg_pwd_number").css("color", "green");
+            validate_number_flag = 1;
+        }
+        else {
+            $("#reg_pwd_number").css("color", "lightgrey");
+            validate_number_flag = 0;
+        }
+
+        re = /[!@#$%^*_+=]/;
+        if (re.test(reg_password)) {
+            $("#reg_pwd_symbol").css("color", "green");
+            validate_symbol_flag = 1;
+        }
+        else {
+            $("#reg_pwd_symbol").css("color", "lightgrey");
+            validate_symbol_flag = 0;
+        }
+    }
+
+    function on_click_referral_code() {
+
+        if (document.getElementById("referral_code").disabled === true) {
+            document.getElementById("referral_code").disabled = false;
+        }
+        else {
+            document.getElementById("referral_code").disabled = true;
+            $("#referral_code").val("");
+        }
+    }
+
+    function on_click_register(flag){
+
+        if (validate_username_letter_flag === 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Username must contain at least one letter." %}");
+            return;
+        }
+
+        if (validate_username_number_flag === 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Username must contain at least one number." %}");
+            return;
+        }
+
+        if (validate_length_flag === 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Password length must be greater than 8." %}");
+            return;
+        }
+
+        if (validate_letter_flag === 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Password must contain at least one letter." %}");
+            return;
+        }
+
+        if (validate_number_flag === 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Password must contain at least one number." %}");
+            return;
+        }
+
+        if (validate_symbol_flag === 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Password must contain at least one symbol." %}");
+            return;
+        }
+
+        if ($("#reg_password").val() !== $("#reg_password_confirm").val()){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Password confirmation failed." %}");
+            $("#reg_password_confirm").focus();
+            return;
+        }
+
+        var username = $("#reg_username").val();
+        var firstname = $("#reg_firstname").val();
+        var lastname = $("#reg_lastname").val();
+        var password = $("#reg_password").val();
+        var phone = $("#reg_phone").val();
+        var email = $("#reg_email").val();
+
+        if (username === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Username couldn't be empty." %}");
+            $("#username").focus();
+            return;
+        }
+        if (firstname === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Firstname couldn't be empty." %}");
+            $("#reg_firstname").focus();
+            return;
+        }
+        if (lastname === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Lastname couldn't be empty." %}");
+            $("#reg_lastname").focus();
+            return;
+        }
+        if (phone === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Phone couldn't be empty." %}");
+            $("#reg_phone").focus();
+            return;
+        }
+        if (email === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Email couldn't be empty." %}");
+            $("#reg_email").focus();
+            return;
+        }
+        // validate email format
+        if (email.indexOf("@") < 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Invalid email format." %}");
+            $("#reg_email").focus();
+            return;
+        }
+        if (email.split("@")[1].indexOf(".") < 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Invalid email format." %}");
+            $("#reg_email").focus();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "userregister",
+            data: {
+                username: username,
+                firstname: firstname,
+                lastname: lastname,
+                password: password,
+                phone: phone,
+                email: email
+            },
+            success: function(res) {
+                if (res === "success"){
+                    show_message("success", "{% trans "Success" %}", "{% trans "Registration success" %}");
+                    $("#register_modal").modal("hide");
+                }
+                else if (res === "existedname"){
+                    show_message("warning", "{% trans "Warning" %}", "{% trans "Username exists already." %}");
+                }
+                else if (res === "existedemail"){
+                    show_message("warning", "{% trans "Warning" %}", "{% trans "Email address exists already." %}");
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Registration failed." %}");
+                }
+            }
+        });
+    }
+</script>

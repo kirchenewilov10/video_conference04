@@ -1,0 +1,249 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="user_profile_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 700px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-user-circle-o"></i> {% trans 'Profile' %}<a class="close star-back-color" href="#" onclick="on_close_user_profile_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0px; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <form class="user_avatar_upload" method="post" ENCTYPE="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-check-wraper">
+                                    <div class="form-file form-group-mb custom-go-button">
+                                        <input id="image_select" class="file-input" type="file" style="display:None;">
+                                        <label class="file-label" for="image_select"
+                                               style="display:None;"><span>+</span> Add Image</label>
+                                        <span class="file-name" style="display:None;"></span>
+                                        <button id="image_submit" type="submit" class="btn btn-primary"
+                                                style="background-color: #003059; display:None;"><i
+                                                class="fa fa-upload adminpro-home-admin"
+                                                aria-hidden="true"></i> Upload
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% if not userinfo.image_path == "" %}
+                                <img class="profile-user-img img-responsive img-circle hand" id="user_avatar" src="{{ userinfo.image_path }}" alt="{% trans 'User profile picture' %}" onclick="on_click_user_avatar()">
+                            {% else %}
+                                <img class="profile-user-img img-responsive img-circle hand" id="user_avatar" src="{% static "/img/user-avatar1.jpg" %}" alt="{% trans 'User profile picture' %}" onclick="on_click_user_avatar()">
+                            {% endif %}
+                            <input type="hidden" id="userid" value="{{ userinfo.id }}">
+                            <h3 id="label_user_name" class="profile-username text-center hand underline" onclick="on_click_label_user_name()">{{ userinfo.username }}</h3>
+                            <input type="text" class="form-control" style="display: none; text-align:center; font-size: 21px" id="textbox_user_name" value="{{ userinfo.username }}" onfocusout="on_change_user_name()">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'First Name' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_first_name" class="form-control pull-right" value="{{ userinfo.first_name }}">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Last Name' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_last_name" class="form-control pull-right" value="{{ userinfo.last_name }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Phone' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_phone" class="form-control pull-right" value="{{ userinfo.phone }}">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Email' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_email" class="form-control pull-right" value="{{ userinfo.email }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Address1' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_address1" class="form-control pull-right" value="{{ userinfo.address1 }}">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Address2' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_address2" class="form-control pull-right" value="{{ userinfo.address2 }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'City' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_city" class="form-control pull-right" value="{{ userinfo.city }}">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'State' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_state" class="form-control pull-right" value="{{ userinfo.state }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Zipcode' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <input type="text" id="user_zipcode" class="form-control pull-right" value="{{ userinfo.zipcode }}">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Country' %}</b>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <select class="form-control select2" id="user_country" style="width: 100%; height: 100%;">
+                                            {% for country in countries %}
+                                                {% if country.value == userinfo.country %}
+                                                    <option value="{{ country.value }}" selected>{{ country.name }}</option>
+                                                {% else %}
+                                                    <option value="{{ country.value }}">{{ country.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="save_user_profile()">{% trans 'Save' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_user_profile_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function on_open_profile_modal(){
+        open_modal("user_profile_modal");
+        $(".select2").select2();
+    }
+
+    function on_close_user_profile_modal(){
+        $("#user_profile_modal").removeClass("in");
+        $("#user_profile_modal").css("display", "none");
+        $("#waiting").removeClass("modal-backdrop fade in");
+        $(document.body).removeClass("modal-open");
+    }
+
+    function on_click_user_avatar(){
+        $("#image_select").trigger("click");
+        $("#image_submit").trigger("click");
+    }
+
+    function on_click_label_user_name(){
+        $("#label_user_name").css("display", "none");
+        $("#textbox_user_name").css("display", "");
+        $("#textbox_user_name").focus();
+    }
+
+    function on_change_user_name(){
+        var new_user_name = $("#textbox_user_name").val();
+        $("#label_user_name").html(new_user_name);
+        $("#textbox_user_name").css("display", "none");
+        $("#label_user_name").css("display", "");
+    }
+
+    function save_user_profile(){
+        var username = $("#label_user_name").html();
+        var first_name = $("#user_first_name").val();
+        var last_name = $("#user_last_name").val();
+        var email = $("#user_email").val();
+        var phone = $("#user_phone").val();
+        var address1 = $("#user_address1").val();
+        var address2 = $("#user_address2").val();
+        var city = $("#user_city").val();
+        var state = $("#user_state").val();
+        var zipcode = $("#user_zipcode").val();
+        var country = $("#user_country").val();
+
+        if (username === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "The username can not be blank." %}");
+            on_click_label_user_name();
+            return;
+        }
+        if (phone === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "The phone can not be blank." %}");
+            $("#user_phone").focus();
+            return;
+        }
+        if (email === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "The email address can not be blank." %}");
+            $("#user_email").focus();
+            return;
+        }
+        if (email.indexOf("@") < 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Invalid email format." %}");
+            $("#new_email").focus();
+            return;
+        }
+        if (email.split("@")[1].indexOf(".") < 0){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Invalid email format." %}");
+            $("#new_email").focus();
+            return;
+        }
+
+
+        $.ajax({
+            type: "POST",
+            url: "accountsetting/update_user_profile",
+            data:{
+                username: username,
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                phone: phone,
+                address1: address1,
+                address2: address2,
+                city: city,
+                state: state,
+                zipcode: zipcode,
+                country: country
+            },
+            success: function(res){
+                var obj = JSON.parse(res);
+                res = obj["msg"];
+                if (res === "success"){
+                    show_message("success", "{% trans "Success" %}", "{% trans "Profile is updated successfully." %}");
+                    on_close_user_profile_modal();
+                    document.getElementById("user_avatar").src = obj["image_path"];
+                    $("#hi_username").html("Hi, " + username);
+                    $("#username_paragraph").html(username);
+                }
+                else if (res === "username_duplicated"){
+                    show_message("error", "{% trans "Error" %}", "{% trans "The username exists already." %}");
+                    on_click_label_user_name();
+                }
+                else if (res === "email_duplicated"){
+                    show_message("error", "{% trans "Error" %}", "{% trans "The email exists already." %}");
+                    $("#user_email").focus();
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                }
+            }
+        });
+    }
+</script>

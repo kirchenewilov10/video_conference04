@@ -1,0 +1,148 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<div id="user_transaction_table_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 1000px; max-width: 1000px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-bars"></i> {% trans 'Transactions' %}<a class="close star-back-color" onclick="on_close_user_transaction_table_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <table id="user_transaction_table" class="display cell-border compact stripe" style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        {% for header in transaction_header_data %}
+                                            <th class="text-center">{{ header.name }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="on_close_user_transaction_table_modal()">{% trans 'Close' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var user_transaction_table=null;
+    var transaction_filter_user = 0;
+    var transaction_total_select = 0;
+
+    function on_open_user_transaction_table_modal(){
+        open_modal("user_transaction_table_modal");
+    }
+
+    function on_close_user_transaction_table_modal(){
+        close_modal("user_transaction_table_modal");
+    }
+
+    function init_transaction_table(userid){
+        console.log(typeof(user_transaction_table));
+        if (user_transaction_table !== null){
+            transaction_filter_user = userid;
+            update_table(user_transaction_table);
+            return;
+        }
+
+        var height = (window.innerHeight - 410) + "px";
+        user_transaction_table = $('#user_transaction_table').DataTable({
+            dom: '<"top"Rf<"clear">>rt<"bottom"lip<"clear">>',
+            serverSide: true,
+            lengthMenu: [[10], [10]],
+            pageLength: 10,
+            scrollY: height,
+            scrollX: true,
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0,
+                    width: "1px"
+                }],
+            ajax: {
+                url: "/users/user_transactions_datatable_api?format=datatables",
+                data: function (d){
+                    return $.extend( {}, d, {
+                        "userid": transaction_filter_user
+                    });
+                }
+            },
+            columns: [
+                {
+                    width: "1%",
+                    data: "id", "searchable": false, "render": function (data, type, row) {
+                        var htm = "";
+                        htm += '<i id=' + row.id + ' style="display: None"></i>';
+                        return htm;
+                    }
+                },
+                {
+                    class: "dt-center",
+                    data: "deposit_date"
+                },
+                {
+                    class: "dt-center",
+                    data: "mode"
+                },
+                {
+                    class: "dt-center",
+                    data: "amount"
+                },
+                {
+                    class: "dt-center",
+                    data: "tracking_number"
+                },
+                {
+                    class: "dt-center",
+                    data: "description"
+                }
+            ],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+            order: [
+                [2, 'desc']
+            ],
+            "search": {
+                "regex": true
+            }
+        });
+        let tableElement = document.getElementsByClassName('dataTable');
+        tableElement[2].id = "user_transaction_table";
+
+        $('#user_transaction_table thead').on("click", "th.select-checkbox", function () {
+            if (transaction_total_select % 2 === 1) {
+                user_transaction_table.rows().deselect();
+                $("#user_transaction_table thead tr").removeClass("selected");
+            } else {
+                user_transaction_table.rows().select();
+                $("#user_transaction_table thead tr").addClass("selected");
+            }
+            transaction_total_select++;
+        });
+
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Get the column API object
+            let column = user_transaction_table.column($(this).attr('data-column'));
+
+            // Toggle the visibility
+            column.visible(!column.visible());
+        });
+    }
+</script>

@@ -1,0 +1,155 @@
+{% load staticfiles %}
+{% load i18n %}
+<script>
+'use strict';
+
+var currentUserIpaddress = '{{ chat_param.ip_address }}';
+var adminId = '{{ chat_param.admin_id }}';
+var printed_date = "";
+var ws = 'ws://';
+if(window.location.protocol==="https:"){ ws = 'wss://'; }
+var chatSocket = new WebSocket(ws + window.location.host + '/ws?session_key={{ chat_param.session_key }}');
+
+chatSocket.onmessage = function(e) {
+    getMessageById(e.data);
+};
+
+chatSocket.onclose = function(e) {
+    console.log(e);
+	console.log('Chat socket closed unexpectedly');
+};
+
+
+function sendMessage(body, form, type) {
+    if (type === 1){
+        // text chatting
+        var text = body.val();
+        if (text.indexOf("<script") >=0 && text.indexOf("<\/script>")){
+            text = text.split("<\/script>").join("");
+            text = text.substring(text.indexOf("<script") + 1, text.length);
+            text = text.substring(text.indexOf(">") + 1, text.length);
+        }
+        $.post('/chat/instantmessage', {
+            userid: currentUserIpaddress,
+            recipientid: adminId,
+            body: text,
+            type: 'TEXT',
+            session_type: 'unregistered'
+        }).fail(function () {
+            console.log('Error! Check console!');
+        });
+        body.val('');
+        body.focus();
+    }
+    else if (type === 2){
+        // file transfer
+        var formData = new FormData(form.get(0));
+
+        var file = form.get(0)[0].files[0];
+        formData.append("image", file);
+        formData.append("userid", currentUserIpaddress);
+        formData.append("recipientid", adminId);
+        formData.append("body", 'FAKE');
+        formData.append("type", 'FILE');
+        formData.append("session_type", 'unregistered');
+        $.ajax({
+            url: '/chat/instantmessage',
+            type: 'POST',
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,  // tell jQuery not to set contentType
+            success: function (res) {
+                $('#chat_message').val('');
+                if (res === 'FILE_SIZE_ERROR') {
+                    alert("File Size is too large.");
+                }
+            },
+            error: function (xhr, error) {
+                $('#chat_message').val('');
+            }
+        });
+    }
+}
+
+function getMessageById(message){
+    var id = JSON.parse(message).message;
+    $.getJSON('/chat/instantmessage', {"id": id}, function (data) {
+
+        if (data.userid === currentUserIpaddress && data.recipientid === adminId){
+            drawMessage(data);
+        }
+        else if (data.userid === adminId && data.recipientid === currentUserIpaddress){
+            drawMessage(data);
+        }
+    });
+}
+
+function drawMessage(message) {
+    on_click_chat_prime();
+    let name_position = 'admin';
+    let time_position = 'admin';
+    const date = message.timestamp;
+    if (message.userid === currentUserIpaddress) {
+        name_position = 'user';
+        time_position = 'user text-right';
+    }
+    var messageItem = '';
+    var read_status = "";
+    if (message.status === 1 && name_position === 'user')
+        read_status = "&check;";
+    if (message.type === 'TEXT') {
+        messageItem = '<span class="chat_msg_item chat_msg_item_' + name_position + '">\n' +
+            '<span class="chat_send_time_' + time_position + '">' + date + '</span>\n' +
+            '<span class="chat_read_status_' + time_position + '">' + read_status + '</span>\n' +
+            '<div class="chat_avatar">\n';
+        if (name_position === 'admin')
+            messageItem += '<img src="/static/dist/img/codestar.jpg"/>\n';
+        else if (name_position === 'user')
+            messageItem += '<img src="/static/dist/img/codestar.jpg"/>\n';
+        else
+            messageItem += '<img src="/static/dist/img/codestar.jpg"/>\n';
+        messageItem += '</div>' + message.body + '</span>';
+    }
+    if (message.type === 'FILE') {
+        var body = message.body;
+        var file_name = body['name'];
+        var file_path = body['path'];
+        var namearray = file_name.split('.');
+        var file_ext = namearray[namearray.length - 1];
+        messageItem += '<span class="chat_msg_item chat_msg_item_' + name_position + '">\n';
+        messageItem += '<span class="chat_send_time_' + time_position + '">' + date + '</span>\n';
+        messageItem += '<span class="chat_read_status_' + time_position + '">' + read_status + '</span>\n';
+        messageItem += '<div class="chat_avatar">\n';
+        if (name_position === 'admin')
+            messageItem += '<img src="/static/dist/img/codestar.jpg"/>\n';
+        else if (name_position === 'user')
+            messageItem += '<img src="/static/dist/img/codestar.jpg"/>\n';
+        else
+            messageItem += '<img src="/static/dist/img/codestar.jpg"/>\n';
+
+        messageItem += '</div>';
+        if (file_ext === 'png' || file_ext === 'PNG' || file_ext === 'gif' || file_ext === 'GIF' || file_ext === 'bmp' || file_ext === 'BMP' || file_ext === 'jpg' || file_ext === 'JPG' || file_ext === 'jpeg' || file_ext === 'JPEG') {
+            messageItem += '<a class="fancybox" href="' + file_path + '" data-fancybox-group="gallery" title="' + file_name + '">';
+            messageItem += '<img class="chat_img" src="' + file_path + '" style="width: 100%" alt="no image"><br>';
+            messageItem += '</a>';
+        }
+
+        if (name_position === "user")
+            messageItem += '<a class="chat_file_a" style="color: white;" download href="' + file_path + '"><i class="fa fa-file"></i> ' + file_name;
+        else
+            messageItem += '<a class="chat_file_a" download href="' + file_path + '"><i class="fa fa-file"></i> ' + file_name;
+        messageItem += '</a>';
+        messageItem += '</span>';
+    }
+    if (message.type === 'NOTI') {
+        return;
+    }
+    $("#chat_converse").append(messageItem);
+    scrollToBottom(document.getElementById('chat_converse'));
+    $('.fancybox').fancybox();
+}
+
+function scrollToBottom(el) {
+    el.scrollTop = el.scrollHeight;
+}
+</script>

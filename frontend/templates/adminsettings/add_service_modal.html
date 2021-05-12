@@ -1,0 +1,234 @@
+{% load staticfiles %}
+{% load i18n %}
+{% include "adminsettings/add_category_item_modal.html" %}
+
+<div id="new_service_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 1000px; max-width: 1000px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-diamond"></i> {% trans 'New Services' %}<a class="close star-back-color" href="#" onclick="on_close_service_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:500px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="service_name"><b>{% trans 'Service Name' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <input type="text" id="service_name" class="form-control pull-right" value="">
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <input type="button" class="btn btn-primary" value="{% trans "+Add Category" %}" onclick="on_click_add_category()">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner" id="service_category_box">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="on_save_new_service()">{% trans 'Save' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_service_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var selected_service_id = 0;
+    var total_categories = 0;
+    var selected_category_id = 0;
+
+    function on_open_service_modal(){
+        total_categories = 0;
+        selected_category_id = 0;
+        open_modal("new_service_modal");
+    }
+
+    function on_close_service_modal(){
+        total_categories = 0;
+        selected_service_id = 0;
+        $("#service_name").val("");
+        $("#service_category_box").html("");
+
+        close_modal("new_service_modal");
+    }
+
+    function on_save_new_service() {
+        var service_name = $("#service_name").val();
+
+        if (service_name === "") {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please input service name" %}");
+            return;
+        }
+        var categories = [], i, j, obj, category_name, temp, item_objs;
+        for (i=0;i<total_categories;i++){
+            obj = $("#category_row_" + i);
+            temp = {};
+            if (obj.length > 0){
+                category_name = $("#category" + i + "_name_input").val();
+                if (category_name === ""){
+                    show_message("warning", "{% trans "Warning" %}", "{% trans "Please input the name of category." %}");
+                    on_click_edit_category_name(i);
+                    return;
+                }
+
+                temp["name"] = category_name;
+                temp["items"] = [];
+                item_objs = $("#category_items_" + i).children();
+                for (j=0;j<item_objs.length;j++){
+                    temp["items"].push(item_objs[j].childNodes[0].textContent);
+                }
+                categories.push(temp);
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "adminsettings/save_service",
+            data: {
+                service_id: selected_service_id,
+                service_name: service_name,
+                service_categories: JSON.stringify(categories)
+            },
+            success: function(res){
+                if (res === "success"){
+                    show_message("success", "{% trans "Success" %}", "{% trans "Saved successfully." %}");
+                    on_close_service_modal();
+                    on_click_menu('adminsettings/services_view');
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                }
+            }
+        })
+    }
+
+    function on_click_edit_service(service_id){
+        selected_service_id = service_id;
+        on_open_service_modal();
+
+        $.ajax({
+            type: "POST",
+            url: "adminsettings/get_service_by_id",
+            data: {
+                service_id: service_id
+            },
+            success: function(res){
+                var data = JSON.parse(res);
+                $("#service_name").val(data['name']);
+                var i, j, category, item, html;
+                for (i=0;i<data["categories"].length;i++){
+                    category = data["categories"][i];
+                    on_click_add_category();
+                    $("#category" + i + "_name_label").html(category["name"]);
+                    $("#category" + i + "_name_input").val(category["name"]);
+                    for (j=0;j<category["items"].length;j++){
+                        item = category["items"][j];
+                        html = "<span data-toggle=\"tooltip\" class=\"badge bg-green\" style=\"padding: 10px; font-size: 15px; margin: 0 5px 0 0;\">" + item + "<i class=\"fa fa-close hand pl-2\" onclick=\"on_click_remove_category_item(event)\"></i></span>";
+                        $("#category_items_" + i).append(html);
+                    }
+                }
+            }
+        })
+    }
+
+    function on_click_remove_service(service_id){
+        swal({
+            title: "{% trans "Are you sure?" %}",
+            text: "{% trans "Are you sure to delete this service permanently?" %}",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+             $.ajax({
+                 type: "POST",
+                 url: "adminsettings/remove_service",
+                 data: {
+                     service_id: service_id
+                 },
+                 success: function(res){
+                    if (res === "success"){
+                        swal("{% trans "Deleted!" %}", "{% trans "Service is deleted successfully." %}", "success");
+                        on_click_menu('adminsettings/services_view');
+                    }
+                    else {
+                        swal("{% trans "Failed!" %}", "{% trans "Failed to delete the service." %}", "error");
+                    }
+                 }
+             })
+        });
+    }
+
+    function on_click_add_category(){
+        var html = "<div class=\"row\" id=\"category_row_" + total_categories + "\">\n" +
+            "<div class=\"col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right\">\n" +
+            "   <label class=\"category-label\" for=\"category" + total_categories + "_name\"><b>{% trans "Category" %}</b></label>\n" +
+            "</div>\n" +
+            "<div class=\"col-lg-7 col-md-7 col-sm-7 col-xs-7 text-box-title\">\n" +
+            "   <div class=\"panel box box-primary no-margin\">\n" +
+            "       <div class=\"box-header with-border\">\n" +
+            "           <h4 class=\"box-title\" style=\"display: block;\">\n" +
+            "               <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + total_categories + "\">\n" +
+            "                   <label id=\"category" + total_categories + "_name_label\" style=\"cursor: pointer; font-size: 17px; font-family: initial; margin: 5px;\">{% trans "Category Name" %}</label>\n" +
+            "                   <input type=\"text\" class=\"form-control hide\" id=\"category" + total_categories + "_name_input\" placeholder=\"{% trans "Category Name" %}\" style=\"display: inherit; width: 70%;\" value=\"\" onfocusout=\"on_focusout_category_name(" + total_categories + ")\" onkeyup=\"on_keyup_category_name(event, " + total_categories + ")\">\n" +
+            "               </a>\n" +
+            "               <input type=\"button\" class=\"btn btn-default pull-right\" style=\"padding: 5px;\" onclick=\"on_click_remove_category_name(" + total_categories + ")\" value=\"{% trans "Remove" %}\">\n" +
+            "               <input type=\"button\" class=\"btn btn-default pull-right\" style=\"padding: 5px; margin-right: 5px;\" onclick=\"on_click_edit_category_name(" + total_categories + ")\" value=\"{% trans "Edit Name" %}\">\n" +
+            "           </h4>\n" +
+            "       </div>\n" +
+            "       <div id=\"collapse" + total_categories + "\" class=\"panel-collapse collapse in\">\n" +
+            "           <div class=\"box-body\">\n" +
+            "               <input type=\"button\" class=\"btn btn-primary\" onclick=\"on_click_add_category_item(" + total_categories + ")\" value=\"{% trans "Add Item" %}\">\n" +
+            "               <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding\" id=\"category_items_" + total_categories + "\" style=\"margin: 5px 0;\">\n" +
+            "               </div>\n" +
+            "           </div>\n" +
+            "       </div>\n" +
+            "   </div>\n" +
+            "</div>\n" +
+            "<div class=\"col-lg-2 col-md-2 col-sm-2 col-xs-2\">\n" +
+            "</div>\n" +
+            "</div>";
+        $("#service_category_box").append(html);
+        total_categories += 1;
+    }
+
+    function on_click_edit_category_name(id){
+        $("#category" + id + "_name_label").addClass("hide");
+        $("#category" + id + "_name_input").removeClass("hide");
+        $("#category" + id + "_name_input").val($("#category" + id + "_name_label").html());
+        $("#category" + id + "_name_input").focus();
+    }
+
+    function on_focusout_category_name(id){
+        $("#category" + id + "_name_label").removeClass("hide");
+        $("#category" + id + "_name_input").addClass("hide");
+        $("#category" + id + "_name_label").html($("#category" + id + "_name_input").val());
+    }
+
+    function on_keyup_category_name(e, id){
+        if (e.keyCode === 13) {
+            on_focusout_category_name(id);
+        }
+    }
+
+    function on_click_add_category_item(id){
+        selected_category_id = id;
+        close_modal("new_service_modal");
+        on_open_add_category_item_modal();
+    }
+
+    function on_click_remove_category_name(id){
+        $("#category_row_" + id).remove();
+    }
+</script>

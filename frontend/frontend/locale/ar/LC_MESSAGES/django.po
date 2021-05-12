@@ -1,0 +1,1681 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-10-15 22:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\frontend\adminsettings\views.py:26 .\frontend\adminsettings\views.py:40
+#: .\frontend\adminsettings\views.py:316 .\frontend\dashboard\views.py:307
+#: .\templates\dashboard\index_.html:236
+#: .\templates\dashboard\open_pick_service_modal.html:85
+msgid "Service"
+msgstr "الخدمات"
+
+#: .\frontend\adminsettings\views.py:27 .\frontend\adminsettings\views.py:43
+#: .\frontend\adminsettings\views.py:211 .\frontend\adminsettings\views.py:329
+#: .\frontend\dashboard\views.py:320 .\frontend\users\views.py:40
+msgid "Action"
+msgstr "عمل"
+
+#: .\frontend\adminsettings\views.py:41
+msgid "Case"
+msgstr "حالة"
+
+#: .\frontend\adminsettings\views.py:42 .\frontend\adminsettings\views.py:319
+#: .\frontend\dashboard\views.py:309
+#: .\templates\adminsettings\add_comment_modal.html:36
+#: .\templates\adminsettings\set_price_modal.html:17
+#: .\templates\dashboard\index_.html:240
+#: .\templates\dashboard\open_pick_service_modal.html:89
+msgid "Price"
+msgstr "السعر"
+
+#: .\frontend\adminsettings\views.py:210
+msgid "Software"
+msgstr "البرمجيات"
+
+#: .\frontend\adminsettings\views.py:315
+#: .\templates\adminsettings\add_comment_modal.html:18
+msgid "User"
+msgstr "المستعمل"
+
+#: .\frontend\adminsettings\views.py:317
+#: .\templates\adminsettings\add_service_modal.html:176
+msgid "Category"
+msgstr "الفئة"
+
+#: .\frontend\adminsettings\views.py:318 .\frontend\users\views.py:64
+#: .\templates\adminsettings\add_comment_modal.html:57
+#: .\templates\dashboard\index_.html:239
+#: .\templates\dashboard\open_pick_service_modal.html:88
+msgid "Description"
+msgstr "وصف"
+
+#: .\frontend\adminsettings\views.py:320 .\frontend\dashboard\views.py:310
+msgid "Pay Status"
+msgstr "حالة الدفع"
+
+#: .\frontend\adminsettings\views.py:321
+msgid "Service Status"
+msgstr "حالة الخدمة"
+
+#: .\frontend\adminsettings\views.py:322 .\frontend\dashboard\views.py:312
+msgid "Paid Price"
+msgstr "السعر المدفوع"
+
+#: .\frontend\adminsettings\views.py:323 .\frontend\dashboard\views.py:313
+msgid "Date Created"
+msgstr "تاريخ الإنشاء"
+
+#: .\frontend\adminsettings\views.py:324 .\frontend\dashboard\views.py:314
+msgid "Date Paid"
+msgstr "تاريخ الدفع"
+
+#: .\frontend\adminsettings\views.py:325 .\frontend\dashboard\views.py:315
+#: .\templates\adminsettings\add_comment_modal.html:76
+#: .\templates\adminsettings\orders.html:98
+#: .\templates\adminsettings\orders.html:185
+#: .\templates\dashboard\add_response_to_comment_modal.html:20
+msgid "Comment"
+msgstr "تعليق"
+
+#: .\frontend\adminsettings\views.py:326 .\frontend\dashboard\views.py:316
+msgid "Review"
+msgstr "مراجعة"
+
+#: .\frontend\adminsettings\views.py:327 .\frontend\dashboard\views.py:317
+msgid "Score"
+msgstr "أحرز هدفا"
+
+#: .\frontend\adminsettings\views.py:328 .\frontend\dashboard\views.py:319
+#: .\templates\adminsettings\orders.html:154
+#: .\templates\dashboard\index.html:286
+msgid "Booked"
+msgstr "حجز"
+
+#: .\frontend\dashboard\views.py:308 .\templates\dashboard\index_.html:237
+#: .\templates\dashboard\open_pick_service_modal.html:86
+msgid "Type"
+msgstr "نوع"
+
+#: .\frontend\dashboard\views.py:311
+#: .\templates\adminsettings\add_comment_modal.html:48
+msgid "Status"
+msgstr "الحالة"
+
+#: .\frontend\dashboard\views.py:318 .\templates\adminsettings\orders.html:101
+#: .\templates\dashboard\add_response_to_comment_modal.html:7
+#: .\templates\dashboard\add_response_to_comment_modal.html:28
+#: .\templates\dashboard\index.html:304
+msgid "Response"
+msgstr "استجابة"
+
+#: .\frontend\users\views.py:26
+msgid "Photo"
+msgstr "صورة فوتوغرافية"
+
+#: .\frontend\users\views.py:27
+#: .\templates\landingpage\contactus_modal.html:28
+#: .\templates\landingpage\contactus_modal.html:90
+msgid "Name"
+msgstr "اسم"
+
+#: .\frontend\users\views.py:28
+msgid "Admin"
+msgstr "مدير"
+
+#: .\frontend\users\views.py:29
+msgid "Address"
+msgstr "عنوان"
+
+#: .\frontend\users\views.py:30 .\templates\dashboard\profile.html:79
+msgid "Address2"
+msgstr "العنوان 2"
+
+#: .\frontend\users\views.py:31 .\templates\dashboard\profile.html:89
+msgid "City"
+msgstr "مدينة"
+
+#: .\frontend\users\views.py:32 .\templates\dashboard\profile.html:95
+msgid "State"
+msgstr "حالة"
+
+#: .\frontend\users\views.py:33 .\templates\dashboard\profile.html:111
+msgid "Country"
+msgstr "بلد"
+
+#: .\frontend\users\views.py:34 .\templates\dashboard\profile.html:105
+msgid "Zipcode"
+msgstr "رمز بريدي"
+
+#: .\frontend\users\views.py:35 .\templates\dashboard\profile.html:57
+msgid "Phone"
+msgstr "هاتف"
+
+#: .\frontend\users\views.py:36
+msgid "Spent Money"
+msgstr "صرفت مال"
+
+#: .\frontend\users\views.py:37
+msgid "Current Money"
+msgstr "الأموال الحالية"
+
+#: .\frontend\users\views.py:38
+msgid "Service Available"
+msgstr "الخدمة متوفرة"
+
+#: .\frontend\users\views.py:39
+msgid "Online Status"
+msgstr "الموجودين"
+
+#: .\frontend\users\views.py:60
+msgid "Deposit Date"
+msgstr "تاريخ الإيداع"
+
+#: .\frontend\users\views.py:61
+msgid "Mode"
+msgstr "الوضع"
+
+#: .\frontend\users\views.py:62
+msgid "Amount"
+msgstr "كمية"
+
+#: .\frontend\users\views.py:63
+msgid "Tracking Number"
+msgstr "أرقام التتبع"
+
+#: .\templates\accountsetting\change_password.html:7
+msgid "Change Password"
+msgstr "غير كلمة السر"
+
+#: .\templates\accountsetting\change_password.html:15
+msgid "Current Password"
+msgstr "كلمة المرور الحالي"
+
+#: .\templates\accountsetting\change_password.html:23
+msgid "New Password"
+msgstr "كلمة سر جديدة"
+
+#: .\templates\accountsetting\change_password.html:31
+msgid "Confirm New Password"
+msgstr "تأكيد كلمة المرور الجديدة"
+
+#: .\templates\accountsetting\change_password.html:40
+msgid "Change"
+msgstr "يتغيرون"
+
+#: .\templates\accountsetting\change_password.html:54
+#: .\templates\accountsetting\change_password.html:59
+#: .\templates\accountsetting\change_password.html:64
+#: .\templates\accountsetting\change_password.html:70
+#: .\templates\adminsettings\add_category_item_modal.html:56
+#: .\templates\adminsettings\add_comment_modal.html:151
+#: .\templates\adminsettings\add_service_modal.html:67
+#: .\templates\adminsettings\add_service_modal.html:77
+#: .\templates\adminsettings\add_software_modal.html:104
+#: .\templates\adminsettings\add_software_modal.html:112
+#: .\templates\adminsettings\add_software_modal.html:117
+#: .\templates\adminsettings\orders.html:258
+#: .\templates\adminsettings\services.html:216
+#: .\templates\adminsettings\set_off_days_modal.html:199
+#: .\templates\adminsettings\set_price_modal.html:53
+#: .\templates\adminsettings\set_price_modal.html:59
+#: .\templates\chatjs.html:40 .\templates\chatjs.html:51
+#: .\templates\chatjs.html:203
+#: .\templates\dashboard\add_response_to_comment_modal.html:81
+#: .\templates\dashboard\open_pick_service_modal.html:211
+#: .\templates\dashboard\open_pick_service_modal.html:223
+#: .\templates\dashboard\open_pick_service_modal.html:357
+#: .\templates\dashboard\open_pick_service_modal.html:367
+#: .\templates\dashboard\order_payment_modal.html:90
+#: .\templates\dashboard\profile.html:183
+#: .\templates\dashboard\profile.html:188
+#: .\templates\dashboard\profile.html:193
+#: .\templates\dashboard\profile.html:198
+#: .\templates\dashboard\profile.html:203
+#: .\templates\landingpage\forget_password_modal.html:18
+#: .\templates\landingpage\forget_password_modal.html:23
+#: .\templates\landingpage\forget_password_modal.html:28
+#: .\templates\landingpage\forget_password_modal.html:44
+#: .\templates\landingpage\forget_password_modal.html:47
+#: .\templates\landingpage\login_modal.html:39
+#: .\templates\landingpage\login_modal.html:43
+#: .\templates\landingpage\register_modal.html:168
+#: .\templates\landingpage\register_modal.html:173
+#: .\templates\landingpage\register_modal.html:178
+#: .\templates\landingpage\register_modal.html:183
+#: .\templates\landingpage\register_modal.html:188
+#: .\templates\landingpage\register_modal.html:193
+#: .\templates\landingpage\register_modal.html:198
+#: .\templates\landingpage\register_modal.html:211
+#: .\templates\landingpage\register_modal.html:216
+#: .\templates\landingpage\register_modal.html:221
+#: .\templates\landingpage\register_modal.html:226
+#: .\templates\landingpage\register_modal.html:231
+#: .\templates\landingpage\register_modal.html:237
+#: .\templates\landingpage\register_modal.html:242
+#: .\templates\landingpage\register_modal.html:263
+#: .\templates\landingpage\register_modal.html:266
+msgid "Warning"
+msgstr "تحذير"
+
+#: .\templates\accountsetting\change_password.html:54
+msgid "Please input current password"
+msgstr "الرجاء إدخال كلمة المرور الحالية"
+
+#: .\templates\accountsetting\change_password.html:59
+msgid "Please input new password"
+msgstr "الرجاء إدخال كلمة مرور جديدة"
+
+#: .\templates\accountsetting\change_password.html:64
+msgid "Please input confirm new password"
+msgstr "الرجاء إدخال تأكيد كلمة المرور الجديدة"
+
+#: .\templates\accountsetting\change_password.html:70
+msgid "Password confirmation failed"
+msgstr "فشل تأكيد كلمة المرور"
+
+#: .\templates\accountsetting\change_password.html:84
+#: .\templates\adminsettings\add_service_modal.html:102
+#: .\templates\adminsettings\add_software_modal.html:178
+#: .\templates\adminsettings\orders.html:310
+#: .\templates\adminsettings\orders.html:344
+#: .\templates\adminsettings\orders.html:378
+#: .\templates\adminsettings\set_off_days_modal.html:146
+#: .\templates\adminsettings\set_off_days_modal.html:217
+#: .\templates\adminsettings\set_price_modal.html:88
+#: .\templates\dashboard\add_response_to_comment_modal.html:95
+#: .\templates\dashboard\add_response_to_comment_modal.html:126
+#: .\templates\dashboard\open_pick_service_modal.html:382
+#: .\templates\dashboard\profile.html:229
+#: .\templates\landingpage\forget_password_modal.html:41
+#: .\templates\landingpage\index.html:606
+#: .\templates\landingpage\register_modal.html:260
+msgid "Success"
+msgstr "نجاح"
+
+#: .\templates\accountsetting\change_password.html:84
+msgid "Password is changed successfully."
+msgstr "تم تغيير كلمة المرور بنجاح."
+
+#: .\templates\accountsetting\change_password.html:88
+#: .\templates\accountsetting\change_password.html:91
+#: .\templates\accountsetting\change_password.html:94
+#: .\templates\adminsettings\add_comment_modal.html:135
+#: .\templates\adminsettings\add_service_modal.html:107
+#: .\templates\adminsettings\add_software_modal.html:158
+#: .\templates\adminsettings\add_software_modal.html:184
+#: .\templates\adminsettings\orders.html:317
+#: .\templates\adminsettings\orders.html:351
+#: .\templates\adminsettings\orders.html:385
+#: .\templates\adminsettings\services.html:200
+#: .\templates\adminsettings\set_off_days_modal.html:211
+#: .\templates\adminsettings\set_off_days_modal.html:214
+#: .\templates\adminsettings\set_price_modal.html:93
+#: .\templates\dashboard\add_response_to_comment_modal.html:100
+#: .\templates\dashboard\add_response_to_comment_modal.html:130
+#: .\templates\dashboard\open_pick_service_modal.html:387
+#: .\templates\dashboard\open_pick_service_modal.html:390
+#: .\templates\dashboard\profile.html:236
+#: .\templates\dashboard\profile.html:240
+#: .\templates\dashboard\profile.html:244
+#: .\templates\landingpage\forget_password_modal.html:50
+#: .\templates\landingpage\index.html:612
+#: .\templates\landingpage\register_modal.html:269
+#: .\templates\user\users_list.html:237
+msgid "Error"
+msgstr "خطأ"
+
+#: .\templates\accountsetting\change_password.html:88
+msgid "Password is not correct."
+msgstr "كلمة المرور غير صحيحة."
+
+#: .\templates\accountsetting\change_password.html:91
+msgid "Update failed."
+msgstr "فشل التحديث."
+
+#: .\templates\accountsetting\change_password.html:94
+msgid "Unknown error."
+msgstr "خطأ غير معروف"
+
+#: .\templates\adminsettings\add_category_item_modal.html:7
+#: .\templates\adminsettings\add_service_modal.html:192
+msgid "Add Item"
+msgstr "اضافة عنصر"
+
+#: .\templates\adminsettings\add_category_item_modal.html:17
+msgid "Item Name"
+msgstr "اسم العنصر"
+
+#: .\templates\adminsettings\add_category_item_modal.html:29
+#: .\templates\adminsettings\services.html:12
+#: .\templates\adminsettings\set_off_days_modal.html:21
+#: .\templates\adminsettings\softwares.html:12
+msgid "Add"
+msgstr "أضف"
+
+#: .\templates\adminsettings\add_category_item_modal.html:30
+#: .\templates\adminsettings\add_service_modal.html:37
+#: .\templates\adminsettings\add_service_modal.html:150
+#: .\templates\adminsettings\add_software_modal.html:64
+#: .\templates\adminsettings\add_software_modal.html:201
+#: .\templates\adminsettings\orders.html:298
+#: .\templates\adminsettings\orders.html:332
+#: .\templates\adminsettings\orders.html:366
+#: .\templates\adminsettings\set_off_days_modal.html:134
+#: .\templates\adminsettings\set_price_modal.html:30
+#: .\templates\dashboard\add_response_to_comment_modal.html:114
+#: .\templates\dashboard\forgot_password.html:79
+#: .\templates\dashboard\forgot_password.html:106
+#: .\templates\dashboard\forgot_password.html:149
+#: .\templates\dashboard\index.html:335 .\templates\dashboard\index.html:336
+#: .\templates\dashboard\language.html:39
+#: .\templates\dashboard\profile.html:132
+msgid "Cancel"
+msgstr "إلغاء"
+
+#: .\templates\adminsettings\add_category_item_modal.html:56
+msgid "This item is already existed."
+msgstr "هذا العنصر موجود بالفعل."
+
+#: .\templates\adminsettings\add_comment_modal.html:8
+#: .\templates\adminsettings\orders.html:12
+#: .\templates\dashboard\admin_index.html:157
+#: .\templates\dashboard\index.html:63 .\templates\dashboard\index.html:98
+msgid "Orders"
+msgstr "طلب"
+
+#: .\templates\adminsettings\add_comment_modal.html:27
+msgid "Service Type"
+msgstr "نوع الخدمة"
+
+#: .\templates\adminsettings\add_comment_modal.html:65
+#: .\templates\adminsettings\orders.html:122
+#: .\templates\dashboard\index.html:255
+msgid "Created"
+msgstr "خلقت"
+
+#: .\templates\adminsettings\add_comment_modal.html:86
+msgid "User Response"
+msgstr "استجابة المستخدم"
+
+#: .\templates\adminsettings\add_comment_modal.html:98
+#: .\templates\adminsettings\add_service_modal.html:36
+#: .\templates\adminsettings\add_software_modal.html:63
+#: .\templates\dashboard\profile.html:131
+msgid "Save"
+msgstr "حفظ"
+
+#: .\templates\adminsettings\add_comment_modal.html:99
+#: .\templates\adminsettings\set_off_days_modal.html:41
+#: .\templates\dashboard\add_response_to_comment_modal.html:41
+#: .\templates\dashboard\open_pick_service_modal.html:124
+#: .\templates\dashboard\order_payment_modal.html:68
+#: .\templates\dashboard\software_download_modal.html:35
+#: .\templates\user\user_transaction_table_modal.html:32
+msgid "Close"
+msgstr "قريب"
+
+#: .\templates\adminsettings\add_comment_modal.html:135
+#: .\templates\adminsettings\add_service_modal.html:107
+#: .\templates\adminsettings\add_software_modal.html:158
+#: .\templates\adminsettings\add_software_modal.html:184
+#: .\templates\adminsettings\orders.html:258
+#: .\templates\adminsettings\orders.html:317
+#: .\templates\adminsettings\orders.html:351
+#: .\templates\adminsettings\orders.html:385
+#: .\templates\adminsettings\set_off_days_modal.html:150
+#: .\templates\adminsettings\set_off_days_modal.html:214
+#: .\templates\adminsettings\set_price_modal.html:93
+#: .\templates\dashboard\add_response_to_comment_modal.html:100
+#: .\templates\dashboard\open_pick_service_modal.html:390
+#: .\templates\dashboard\profile.html:244 .\templates\user\users_list.html:237
+msgid "Operation failed."
+msgstr "فشلت العملية."
+
+#: .\templates\adminsettings\add_comment_modal.html:151
+msgid "Please input the correct price."
+msgstr "الرجاء إدخال السعر الصحيح."
+
+#: .\templates\adminsettings\add_service_modal.html:9
+msgid "New Services"
+msgstr "خدمات جديدة"
+
+#: .\templates\adminsettings\add_service_modal.html:19
+#: .\templates\dashboard\index_.html:184
+#: .\templates\dashboard\open_pick_service_modal.html:23
+msgid "Service Name"
+msgstr "اسم الخدمة"
+
+#: .\templates\adminsettings\add_service_modal.html:25
+msgid "+Add Category"
+msgstr "+ إضافة فئة"
+
+#: .\templates\adminsettings\add_service_modal.html:67
+msgid "Please input service name"
+msgstr "الرجاء إدخال اسم الخدمة"
+
+#: .\templates\adminsettings\add_service_modal.html:77
+msgid "Please input the name of category."
+msgstr "الرجاء إدخال اسم الفئة."
+
+#: .\templates\adminsettings\add_service_modal.html:102
+msgid "Saved successfully."
+msgstr "حفظ بنجاح."
+
+#: .\templates\adminsettings\add_service_modal.html:144
+#: .\templates\adminsettings\add_software_modal.html:195
+#: .\templates\dashboard\add_response_to_comment_modal.html:108
+msgid "Are you sure?"
+msgstr "هل أنت واثق؟"
+
+#: .\templates\adminsettings\add_service_modal.html:145
+msgid "Are you sure to delete this service permanently?"
+msgstr "هل أنت متأكد من حذف هذه الخدمة نهائيًا؟"
+
+#: .\templates\adminsettings\add_service_modal.html:149
+#: .\templates\adminsettings\add_software_modal.html:200
+#: .\templates\adminsettings\orders.html:297
+#: .\templates\adminsettings\orders.html:331
+#: .\templates\adminsettings\orders.html:365
+#: .\templates\adminsettings\set_off_days_modal.html:133
+#: .\templates\dashboard\add_response_to_comment_modal.html:113
+#: .\templates\dashboard\forgot_password.html:107
+msgid "Confirm"
+msgstr "تؤكد"
+
+#: .\templates\adminsettings\add_service_modal.html:162
+#: .\templates\adminsettings\add_software_modal.html:213
+msgid "Deleted!"
+msgstr "تم الحذف!"
+
+#: .\templates\adminsettings\add_service_modal.html:162
+msgid "Service is deleted successfully."
+msgstr "تم حذف الخدمة بنجاح."
+
+#: .\templates\adminsettings\add_service_modal.html:166
+#: .\templates\adminsettings\add_software_modal.html:217
+#: .\templates\adminsettings\set_off_days_modal.html:150
+msgid "Failed!"
+msgstr "فشل"
+
+#: .\templates\adminsettings\add_service_modal.html:166
+#: .\templates\adminsettings\add_software_modal.html:217
+msgid "Failed to delete the service."
+msgstr "فشل حذف الخدمة."
+
+#: .\templates\adminsettings\add_service_modal.html:183
+#: .\templates\adminsettings\add_service_modal.html:184
+msgid "Category Name"
+msgstr "اسم التصنيف"
+
+#: .\templates\adminsettings\add_service_modal.html:186
+msgid "Remove"
+msgstr "إزالة"
+
+#: .\templates\adminsettings\add_service_modal.html:187
+msgid "Edit Name"
+msgstr "تعديل الاسم"
+
+#: .\templates\adminsettings\add_software_modal.html:17
+msgid "New Software"
+msgstr "برامج جديدة"
+
+#: .\templates\adminsettings\add_software_modal.html:27
+msgid "Software Name"
+msgstr "اسم البرنامج"
+
+#: .\templates\adminsettings\add_software_modal.html:37
+msgid "File"
+msgstr "ملف"
+
+#: .\templates\adminsettings\add_software_modal.html:104
+msgid "Please input the name."
+msgstr "الرجاء إدخال الاسم."
+
+#: .\templates\adminsettings\add_software_modal.html:112
+#: .\templates\adminsettings\add_software_modal.html:117
+msgid "Please select the file"
+msgstr "الرجاء تحديد الملف"
+
+#: .\templates\adminsettings\add_software_modal.html:178
+msgid "New software is saved successfully."
+msgstr "تم حفظ البرنامج الجديد بنجاح."
+
+#: .\templates\adminsettings\add_software_modal.html:196
+msgid "Are you sure to delete this software permanently?"
+msgstr "هل أنت متأكد من حذف هذا البرنامج نهائيًا؟"
+
+#: .\templates\adminsettings\add_software_modal.html:213
+msgid "Software is deleted successfully."
+msgstr "تم حذف البرنامج بنجاح."
+
+#: .\templates\adminsettings\orders.html:13
+msgid "Set off days"
+msgstr "حدد أيام الراحة"
+
+#: .\templates\adminsettings\orders.html:126
+#: .\templates\dashboard\index.html:259
+msgid "Accepted"
+msgstr "وافقت"
+
+#: .\templates\adminsettings\orders.html:129
+#: .\templates\dashboard\index.html:262
+msgid "Paid"
+msgstr "دفع"
+
+#: .\templates\adminsettings\orders.html:133
+#: .\templates\dashboard\index.html:266
+msgid "Cancelled"
+msgstr "ألغيت"
+
+#: .\templates\adminsettings\orders.html:136
+#: .\templates\dashboard\index.html:269
+msgid "Finished"
+msgstr "تم الانتهاء من"
+
+#: .\templates\adminsettings\orders.html:188
+msgid "Accept"
+msgstr "قبول"
+
+#: .\templates\adminsettings\orders.html:191
+msgid "Cancel Accept"
+msgstr "إلغاء قبول"
+
+#: .\templates\adminsettings\orders.html:194
+msgid "Details"
+msgstr "تفاصيل"
+
+#: .\templates\adminsettings\orders.html:197
+msgid "Mark as Finished"
+msgstr "وضع علامة 'انتهى'"
+
+#: .\templates\adminsettings\orders.html:266
+#: .\templates\dashboard\index_.html:509
+msgid "Awaiting"
+msgstr "في انتظار"
+
+#: .\templates\adminsettings\orders.html:269
+msgid "Done"
+msgstr "منجز"
+
+#: .\templates\adminsettings\orders.html:292
+msgid "Are you sure to accept this order?"
+msgstr "هل أنت متأكد من قبول هذا الطلب؟"
+
+#: .\templates\adminsettings\orders.html:310
+msgid "This order has been accepted successfully."
+msgstr "تم قبول هذا الطلب بنجاح."
+
+#: .\templates\adminsettings\orders.html:314
+#: .\templates\adminsettings\orders.html:348
+#: .\templates\adminsettings\orders.html:382
+msgid "Permission Denied"
+msgstr "طلب الاذن مرفوض"
+
+#: .\templates\adminsettings\orders.html:314
+#: .\templates\adminsettings\orders.html:348
+#: .\templates\adminsettings\orders.html:382
+msgid "You don't have the permission for this operation."
+msgstr "ليس لديك إذن لهذه العملية."
+
+#: .\templates\adminsettings\orders.html:326
+msgid "Are you sure to cancel the acceptance of this order?"
+msgstr "هل أنت متأكد من إلغاء قبول هذا الطلب؟"
+
+#: .\templates\adminsettings\orders.html:344
+#: .\templates\adminsettings\orders.html:378
+msgid "The acceptance of this order has been cancelled successfully."
+msgstr "تم إلغاء قبول هذا الطلب بنجاح."
+
+#: .\templates\adminsettings\orders.html:360
+msgid "Are you sure to finish this order?"
+msgstr "هل أنت متأكد من إنهاء هذا الطلب؟"
+
+#: .\templates\adminsettings\services.html:11
+#: .\templates\dashboard\admin_index.html:163
+msgid "Services"
+msgstr "الخدمات"
+
+#: .\templates\adminsettings\services.html:46
+msgid "Prices"
+msgstr "السعر"
+
+#: .\templates\adminsettings\services.html:47
+#: .\templates\adminsettings\services.html:220
+msgid "Bulk Update"
+msgstr "تحديث بالجملة"
+
+#: .\templates\adminsettings\services.html:200
+msgid "Failed to get price"
+msgstr "فشل في الحصول على السعر"
+
+#: .\templates\adminsettings\services.html:216
+msgid "Please select the prices"
+msgstr "الرجاء تحديد الأسعار"
+
+#: .\templates\adminsettings\set_off_days_modal.html:8
+msgid "Off Days"
+msgstr "أيام الإجازة"
+
+#: .\templates\adminsettings\set_off_days_modal.html:24
+msgid "Please click red rectangle to delete rest day."
+msgstr "الرجاء النقر فوق المستطيل الأحمر لحذف يوم الراحة."
+
+#: .\templates\adminsettings\set_off_days_modal.html:128
+msgid "Remove?"
+msgstr "إزالة؟"
+
+#: .\templates\adminsettings\set_off_days_modal.html:129
+msgid "Are you sure to remove this rest day?"
+msgstr "هل أنت متأكد من قبول هذا الطلب؟"
+
+#: .\templates\adminsettings\set_off_days_modal.html:146
+msgid "Off-Day setting has been removed successfully."
+msgstr "تمت إزالة إعداد يوم الإجازة بنجاح."
+
+#: .\templates\adminsettings\set_off_days_modal.html:199
+msgid "Please select the date."
+msgstr "الرجاء تحديد التاريخ."
+
+#: .\templates\adminsettings\set_off_days_modal.html:211
+msgid "This date was already set."
+msgstr "تم تحديد هذا التاريخ بالفعل."
+
+#: .\templates\adminsettings\set_off_days_modal.html:217
+msgid "This day has been set as a rest day."
+msgstr "تم تحديد هذا اليوم كيوم راحة."
+
+#: .\templates\adminsettings\set_price_modal.html:7
+msgid "Set Price"
+msgstr "ضع سعر"
+
+#: .\templates\adminsettings\set_price_modal.html:29
+msgid "Set"
+msgstr "وضع"
+
+#: .\templates\adminsettings\set_price_modal.html:53
+msgid "Please input the price"
+msgstr "الرجاء إدخال السعر"
+
+#: .\templates\adminsettings\set_price_modal.html:59
+msgid "Please input correct price"
+msgstr "الرجاء إدخال السعر الصحيح"
+
+#: .\templates\adminsettings\set_price_modal.html:88
+msgid "Price has been set successfully."
+msgstr "تم تحديد السعر بنجاح."
+
+#: .\templates\adminsettings\softwares.html:11
+#: .\templates\dashboard\admin_index.html:160
+#: .\templates\dashboard\index.html:73 .\templates\dashboard\index_.html:324
+#: .\templates\dashboard\software_download_modal.html:7
+msgid "Softwares"
+msgstr "البرامج"
+
+#: .\templates\chatjs.html:40 .\templates\chatjs.html:51
+msgid "Please select user."
+msgstr "الرجاء تحديد المستخدم."
+
+#: .\templates\chatjs.html:203
+msgid "Your call is rejected from Admin."
+msgstr "تم رفض مكالمتك من المسؤول."
+
+#: .\templates\dashboard\add_response_to_comment_modal.html:40
+#: .\templates\dashboard\forgot_password.html:80
+msgid "Send"
+msgstr "إرسال"
+
+#: .\templates\dashboard\add_response_to_comment_modal.html:81
+msgid "Please input your response."
+msgstr "الرجاء إدخال ردك."
+
+#: .\templates\dashboard\add_response_to_comment_modal.html:95
+msgid "Your response has been sent to administrator successfully."
+msgstr "تم إرسال ردك إلى المسؤول بنجاح."
+
+#: .\templates\dashboard\add_response_to_comment_modal.html:109
+msgid "This order will be cancelled."
+msgstr "سيتم إلغاء هذا الطلب."
+
+#: .\templates\dashboard\add_response_to_comment_modal.html:126
+msgid "This order has been cancelled successfully."
+msgstr "تم إلغاء هذا الطلب بنجاح."
+
+#: .\templates\dashboard\add_response_to_comment_modal.html:130
+msgid "Failed to cancel order."
+msgstr "فشل في إلغاء الطلب."
+
+#: .\templates\dashboard\admin_index.html:13
+#: .\templates\landingpage\index.html:6
+msgid "SECUROLOGY"
+msgstr ""
+
+#: .\templates\dashboard\admin_index.html:149
+#: .\templates\dashboard\index_.html:348
+#: .\templates\messages\admin_messages_view.html:60
+#: .\templates\messages\user_messages_view.html:63
+msgid "Messages"
+msgstr "الرسائل"
+
+#: .\templates\dashboard\admin_index.html:154
+#: .\templates\user\users_list.html:7
+msgid "Users"
+msgstr "المستخدمون"
+
+#: .\templates\dashboard\admin_index.html:168
+#: .\templates\dashboard\index.html:79 .\templates\dashboard\index_.html:151
+msgid "UserInfo"
+msgstr "معلومات المستخدم"
+
+#: .\templates\dashboard\admin_index.html:169
+#: .\templates\dashboard\index.html:80 .\templates\dashboard\index_.html:152
+#: .\templates\dashboard\language.html:7
+#: .\templates\dashboard\language.html:17
+msgid "Language"
+msgstr "لغة"
+
+#: .\templates\dashboard\admin_index.html:170
+#: .\templates\dashboard\index.html:81 .\templates\dashboard\index_.html:153
+msgid "Logout"
+msgstr "تسجيل خروج"
+
+#: .\templates\dashboard\admin_index.html:193
+msgid "Records"
+msgstr "السجلات"
+
+#: .\templates\dashboard\admin_index.html:228
+#: .\templates\dashboard\index.html:136 .\templates\dashboard\index_.html:376
+msgid "Copyright &copy;2020 All rights reserved"
+msgstr "حقوق النسخ محفوظه 2020 "
+
+#: .\templates\dashboard\dashboard.html:8
+#: .\templates\dashboard\index_.html:227
+#: .\templates\dashboard\order_payment_modal.html:7
+msgid "Payment"
+msgstr "دفع"
+
+#: .\templates\dashboard\dashboard.html:16 .\templates\dashboard\index.html:99
+#: .\templates\dashboard\index_.html:176
+#: .\templates\dashboard\open_pick_service_modal.html:7
+msgid "Pick Service"
+msgstr "اختر الخدمة"
+
+#: .\templates\dashboard\dashboard.html:31
+msgid "Service Records"
+msgstr "سجلات الخدمة"
+
+#: .\templates\dashboard\forgot_password.html:9
+msgid "Forgot Password | Remote Support"
+msgstr "نسيت كلمة المرور | مساعدة عن بعد"
+
+#: .\templates\dashboard\forgot_password.html:39
+msgid "Forgot Password"
+msgstr "هل نسيت كلمة المرور"
+
+#: .\templates\dashboard\forgot_password.html:42
+#: .\templates\dashboard\profile.html:63
+#: .\templates\landingpage\forget_password_modal.html:4
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: .\templates\dashboard\forgot_password.html:48
+msgid "Send Email"
+msgstr "ارسل بريد الكتروني"
+
+#: .\templates\dashboard\forgot_password.html:52
+msgid "Go to Login"
+msgstr "اذهب إلى تسجيل الدخول"
+
+#: .\templates\dashboard\forgot_password.html:63
+msgid "Verify Email"
+msgstr "التحقق من البريد الإلكتروني"
+
+#: .\templates\dashboard\forgot_password.html:72
+msgid "Input Email"
+msgstr "أدخل البريد الإلكتروني"
+
+#: .\templates\dashboard\forgot_password.html:90
+msgid "Confirm your code"
+msgstr "قم بتأكيد الرمز الخاص بك"
+
+#: .\templates\dashboard\forgot_password.html:99
+msgid "Input code"
+msgstr "إدخال رمز"
+
+#: .\templates\dashboard\forgot_password.html:117
+msgid "Reset Account"
+msgstr "إعادة تعيين الحساب"
+
+#: .\templates\dashboard\forgot_password.html:125
+#: .\templates\landingpage\login_modal.html:4
+#: .\templates\landingpage\register_modal.html:13
+msgid "Username"
+msgstr "اسم المستخدم"
+
+#: .\templates\dashboard\forgot_password.html:128
+msgid "username"
+msgstr "اسم المستخدم"
+
+#: .\templates\dashboard\forgot_password.html:133
+#: .\templates\landingpage\login_modal.html:9
+#: .\templates\landingpage\register_modal.html:53
+msgid "Password"
+msgstr "كلمه السر"
+
+#: .\templates\dashboard\forgot_password.html:141
+#: .\templates\landingpage\register_modal.html:60
+msgid "Confirm Password"
+msgstr "تأكيد كلمة المرور"
+
+#: .\templates\dashboard\forgot_password.html:150
+#: .\templates\landingpage\forget_password_modal.html:9
+msgid "Reset"
+msgstr "إعادة تعيين"
+
+#: .\templates\dashboard\index.html:66
+msgid "A/V"
+msgstr ""
+
+#: .\templates\dashboard\index.html:332 .\templates\dashboard\index.html:333
+#: .\templates\dashboard\index_.html:304
+#: .\templates\dashboard\order_payment_modal.html:67
+msgid "Pay"
+msgstr "دفع"
+
+#: .\templates\dashboard\index_.html:197
+#: .\templates\dashboard\open_pick_service_modal.html:37
+msgid "Describe your need..."
+msgstr "صف حاجتك ..."
+
+#: .\templates\dashboard\index_.html:205
+msgid "Requests"
+msgstr "الطلبات"
+
+#: .\templates\dashboard\index_.html:235
+msgid "NO"
+msgstr "No"
+
+#: .\templates\dashboard\index_.html:238
+#: .\templates\dashboard\open_pick_service_modal.html:87
+msgid "Qty"
+msgstr "كمية"
+
+#: .\templates\dashboard\index_.html:241
+#: .\templates\dashboard\open_pick_service_modal.html:90
+msgid "Delete"
+msgstr "تم الحذف"
+
+#: .\templates\dashboard\index_.html:246
+#: .\templates\dashboard\open_pick_service_modal.html:95
+msgid "Total"
+msgstr "مجموع"
+
+#: .\templates\dashboard\index_.html:250 .\templates\dashboard\index_.html:252
+#: .\templates\dashboard\open_pick_service_modal.html:99
+#: .\templates\dashboard\open_pick_service_modal.html:101
+msgid "Discount Code"
+msgstr "رمز التخفيض"
+
+#: .\templates\dashboard\index_.html:256
+#: .\templates\dashboard\open_pick_service_modal.html:105
+msgid "Discount Total"
+msgstr "إجمالي الخصم"
+
+#: .\templates\dashboard\index_.html:275 .\templates\dashboard\index_.html:276
+#: .\templates\dashboard\order_payment_modal.html:26
+#: .\templates\dashboard\order_payment_modal.html:27
+msgid "Name on Card"
+msgstr "الاسم على البطاقة"
+
+#: .\templates\dashboard\index_.html:283 .\templates\dashboard\index_.html:284
+#: .\templates\dashboard\order_payment_modal.html:34
+#: .\templates\dashboard\order_payment_modal.html:35
+msgid "Card Number"
+msgstr "رقم البطاقة"
+
+#: .\templates\dashboard\index_.html:291
+#: .\templates\dashboard\order_payment_modal.html:42
+msgid "Expiration Date"
+msgstr "تاريخ الإنتهاء"
+
+#: .\templates\dashboard\index_.html:297
+#: .\templates\dashboard\order_payment_modal.html:48
+msgid "CVV"
+msgstr ""
+
+#: .\templates\dashboard\index_.html:329
+#: .\templates\dashboard\software_download_modal.html:20
+msgid "Programs"
+msgstr "البرامج"
+
+#: .\templates\dashboard\language.html:38
+msgid "OK"
+msgstr "حسنا"
+
+#: .\templates\dashboard\open_pick_service_modal.html:25
+msgid "Please select service"
+msgstr "الرجاء تحديد الخدمة"
+
+#: .\templates\dashboard\open_pick_service_modal.html:44
+msgid "Booking"
+msgstr "الحجز"
+
+#: .\templates\dashboard\open_pick_service_modal.html:56
+msgid "Date & Time"
+msgstr "التاريخ والوقت"
+
+#: .\templates\dashboard\open_pick_service_modal.html:69
+msgid ""
+"You can select the time from 9:00 AM to 5:59 PM everyday in the next two "
+"months."
+msgstr ""
+"يمكنك تحديد الوقت من 9:00 صباحًا إلى 5:59 مساءً كل يوم في الشهرين المقبلين."
+
+#: .\templates\dashboard\open_pick_service_modal.html:84
+msgid "No"
+msgstr ""
+
+#: .\templates\dashboard\open_pick_service_modal.html:123
+msgid "Create Order"
+msgstr "إنشاء النظام"
+
+#: .\templates\dashboard\open_pick_service_modal.html:223
+msgid "Please select the service"
+msgstr "الرجاء تحديد الخدمة"
+
+#: .\templates\dashboard\open_pick_service_modal.html:357
+msgid "Please pick the service."
+msgstr "الرجاء اختيار الخدمة."
+
+#: .\templates\dashboard\open_pick_service_modal.html:367
+msgid "Please set booking date and time."
+msgstr "يرجى تحديد تاريخ ووقت الحجز."
+
+#: .\templates\dashboard\open_pick_service_modal.html:382
+msgid "New order has been created."
+msgstr "تم إنشاء أمر جديد."
+
+#: .\templates\dashboard\open_pick_service_modal.html:387
+msgid "Invalid datetime for booking."
+msgstr "التاريخ والوقت غير صالح للحجز."
+
+#: .\templates\dashboard\order_payment_modal.html:90
+msgid "Integration of payment is under development now."
+msgstr "تكامل الدفع قيد التطوير الآن."
+
+#: .\templates\dashboard\profile.html:7
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: .\templates\dashboard\profile.html:31 .\templates\dashboard\profile.html:33
+msgid "User profile picture"
+msgstr "صورة ملف تعريف المستخدم"
+
+#: .\templates\dashboard\profile.html:41
+msgid "First Name"
+msgstr "الاسم الاول"
+
+#: .\templates\dashboard\profile.html:47
+msgid "Last Name"
+msgstr "الكنية"
+
+#: .\templates\dashboard\profile.html:73
+msgid "Address1"
+msgstr "العنوان 1"
+
+#: .\templates\dashboard\profile.html:183
+msgid "The username can not be blank."
+msgstr "لا يمكن أن يكون اسم المستخدم فارغًا."
+
+#: .\templates\dashboard\profile.html:188
+msgid "The phone can not be blank."
+msgstr "لا يمكن أن يكون الهاتف فارغًا."
+
+#: .\templates\dashboard\profile.html:193
+msgid "The email address can not be blank."
+msgstr "لا يمكن أن يكون عنوان البريد الإلكتروني فارغًا."
+
+#: .\templates\dashboard\profile.html:198
+#: .\templates\dashboard\profile.html:203
+#: .\templates\landingpage\forget_password_modal.html:23
+#: .\templates\landingpage\forget_password_modal.html:28
+#: .\templates\landingpage\register_modal.html:237
+#: .\templates\landingpage\register_modal.html:242
+msgid "Invalid email format."
+msgstr "تنسيق بريد إلكتروني غير صالح."
+
+#: .\templates\dashboard\profile.html:229
+msgid "Profile is updated successfully."
+msgstr "تم تحديث الملف الشخصي بنجاح."
+
+#: .\templates\dashboard\profile.html:236
+msgid "The username exists already."
+msgstr "اسم المستخدم موجود بالفعل."
+
+#: .\templates\dashboard\profile.html:240
+msgid "The email exists already."
+msgstr "البريد الإلكتروني موجود بالفعل."
+
+#: .\templates\dashboard\software_download_modal.html:34
+msgid "Download"
+msgstr "تحميل"
+
+#: .\templates\landingpage\ask_for_service_modal.html:10
+msgid "Ask for Services"
+msgstr "أطلب الخدمة"
+
+#: .\templates\landingpage\ask_for_service_modal.html:15
+msgid ""
+"\n"
+"                        We appreciate your trust in Securology,\n"
+"                        <br>Please log in to the system and request the "
+"service\n"
+"                        <br>Or send a service request by e-mail\n"
+"                        <br>Info@Securology.net\n"
+"                    "
+msgstr ""
+"\n"
+"نقدر ثقتكم بسكيورولوجي, <br>نرجو منكم تسجيل دخول للنظام و طلب الخدمة <br>او "
+"ارسال طلب الخدمة عن طريق البريد الإلكترونيInfo@Securology.net"
+
+#: .\templates\landingpage\ask_for_service_modal.html:26
+#: .\templates\landingpage\ask_for_service_modal.html:34
+msgid "SignIn"
+msgstr "تسجيل الدخول "
+
+#: .\templates\landingpage\ask_for_service_modal.html:30
+#: .\templates\landingpage\ask_for_service_modal.html:38
+msgid "Connect with us"
+msgstr "تواصل معنا"
+
+#: .\templates\landingpage\chatbox.html:27
+msgid "SUPPORT TEAM"
+msgstr "فريق الدعم"
+
+#: .\templates\landingpage\chatbox.html:47
+msgid "Send a message"
+msgstr "ارسل رسالة"
+
+#: .\templates\landingpage\contactus_modal.html:9
+#: .\templates\landingpage\contactus_modal.html:74
+#: .\templates\landingpage\index.html:222
+msgid "Contact Us"
+msgstr "تواصل معنا"
+
+#: .\templates\landingpage\contactus_modal.html:14
+#: .\templates\landingpage\contactus_modal.html:79
+msgid ""
+"\n"
+"                            We appreciate your trust in Securology,\n"
+"                            <br>We welcome your inquiries, your request will "
+"be answered\n"
+"                            <br>in a maximum period of 24 hours.\n"
+"                            <br>Info@Securology.net\n"
+"                        "
+msgstr ""
+"\n"
+"نقدر ثقتكم بسكيورولوجي, <br>ونرحب باستفساراتكم , سيتم الرد على طلبكم <br>في "
+"مدة أقصاها 24 ساعة.<br>Info@Securology.net"
+
+#: .\templates\landingpage\contactus_modal.html:36
+#: .\templates\landingpage\contactus_modal.html:98
+msgid "E-Mail"
+msgstr "البريد الألكتروني"
+
+#: .\templates\landingpage\contactus_modal.html:41
+#: .\templates\landingpage\contactus_modal.html:106
+msgid "Message"
+msgstr "الرسالة"
+
+#: .\templates\landingpage\contactus_modal.html:47
+#: .\templates\landingpage\contactus_modal.html:112
+msgid "Submit"
+msgstr "ارسال"
+
+#: .\templates\landingpage\forget_password_modal.html:12
+msgid "Go To Sign In"
+msgstr "انتقل إلى تسجيل الدخول"
+
+#: .\templates\landingpage\forget_password_modal.html:18
+msgid "Please input the email"
+msgstr "الرجاء إدخال البريد الإلكتروني"
+
+#: .\templates\landingpage\forget_password_modal.html:41
+msgid "Your password is reset. We have sent the new password to your email."
+msgstr ""
+"تم إعادة تعيين كلمة المرور الخاصة بك. لقد أرسلنا كلمة المرور الجديدة إلى "
+"بريدك الإلكتروني."
+
+#: .\templates\landingpage\forget_password_modal.html:44
+msgid "Unregistered email."
+msgstr "بريد إلكتروني غير مسجل."
+
+#: .\templates\landingpage\forget_password_modal.html:47
+msgid "This email is unreachable."
+msgstr "هذا البريد الإلكتروني لا يمكن الوصول إليه."
+
+#: .\templates\landingpage\forget_password_modal.html:50
+msgid "Fail to reset password."
+msgstr "فشل في إعادة تعيين كلمة المرور."
+
+#: .\templates\landingpage\index.html:225
+#: .\templates\landingpage\index.html:281
+msgid "Our Services"
+msgstr "خدماتنا"
+
+#: .\templates\landingpage\index.html:228
+msgid "Ask for Service"
+msgstr "أطلب الخدمة"
+
+#: .\templates\landingpage\index.html:231
+#: .\templates\landingpage\index.html:364
+msgid "News"
+msgstr "أخبار"
+
+#: .\templates\landingpage\index.html:234
+msgid "Who we are"
+msgstr "من نحن"
+
+#: .\templates\landingpage\index.html:241
+msgid "AR"
+msgstr ""
+
+#: .\templates\landingpage\index.html:247
+msgid "EN"
+msgstr ""
+
+#: .\templates\landingpage\index.html:253
+#: .\templates\landingpage\index.html:436
+msgid "Sign In"
+msgstr "تسجيل الدخول"
+
+#: .\templates\landingpage\index.html:254
+#: .\templates\landingpage\index.html:466
+msgid "Sign Up"
+msgstr "تسجيل"
+
+#: .\templates\landingpage\index.html:255
+#: .\templates\landingpage\index.html:494
+#: .\templates\landingpage\login_modal.html:17
+msgid "Forget Password"
+msgstr "نسيت كلمة المرور"
+
+#: .\templates\landingpage\index.html:287
+msgid "Consulting Services"
+msgstr "خدمات إستشارية"
+
+#: .\templates\landingpage\index.html:292
+msgid ""
+"\n"
+"                                    It is a consulting services for "
+"individuals and companies aimed at raising the level of safety and correct "
+"guidance<br>\n"
+"                                    To solve some of the weaknesses and gaps "
+"that pertain to the methods of using and designing network solutions and "
+"information security\n"
+"                                "
+msgstr ""
+"\n"
+"هي عبارة عن خدمات استشارية للأفراد و الشركات تهدف الى رفع مستوى الأمان و "
+"التوجيه الصحيح<br> لحل بعض نقاط الضعف و الثغرات التي تختص بطرق استخدام و "
+"تصميم حلول الشبكات و أمن المعلومات"
+
+#: .\templates\landingpage\index.html:301
+msgid "Security Audit Services"
+msgstr "خدمات المراجعة الأمنية"
+
+#: .\templates\landingpage\index.html:306
+msgid ""
+"\n"
+"                                    It is a specialized service for "
+"individuals and companies to conduct a security review of the personal "
+"devices of individuals or structures<br>\n"
+"                                    Support and services for companies "
+"according to the best international practices and standards in the field of "
+"information security\n"
+"                                "
+msgstr ""
+"\n"
+"هي عبارة عن خدمات مختصة للافراد و الشركات لعمل مراجعة امنية للأجهزة الشخصية "
+"للأفراد او البنية<br> التحتحية و الخدمات للشركات وفقا لافضل الممارسات و "
+"المقاييس العالمية في مجال أمن المعلومات"
+
+#: .\templates\landingpage\index.html:315
+msgid "Professional Services"
+msgstr "خدمات إحترافية"
+
+#: .\templates\landingpage\index.html:320
+msgid ""
+"\n"
+"                                    It is a professional services for "
+"individuals and companies aiming to implement the outputs of security "
+"reviews or help in\n"
+"                                    <br>Executing some tasks that help raise "
+"the level of security in personal devices or infrastructure and services\n"
+"                                "
+msgstr ""
+"\n"
+"هي عبارة عن خدمات احترافية للأفراد و الشركات تهدف لتنفيذ مخرجات المراجعات "
+"الأمنية او المساعدة في تنفيذ بعض المهام التي تساعد في رفع المستوى الأمني في "
+"الأجهزة الشخصية او البنية التحتية و الخدمات"
+
+#: .\templates\landingpage\index.html:329
+msgid "Educational Services"
+msgstr "خدمات تعليمية"
+
+#: .\templates\landingpage\index.html:334
+msgid ""
+"\n"
+"                                    It is an educational service for "
+"individuals and companies, aiming to raise awareness of individuals in the "
+"field\n"
+"                                    <br>Managing the risks of their personal "
+"devices and devices related to the work environment in companies\n"
+"                                "
+msgstr ""
+"\n"
+"هي عبارة عن خدمات تعليمية للأفراد و الشركات, تهدف الى رفع مستوى الوعي "
+"للأفراد في مجال<br> إدارة المخاطر الخاصة بأجهزتهم الشخصية و الأجهزة التابعة "
+"لبيئة العمل في الشركات "
+
+#: .\templates\landingpage\index.html:402
+msgid "Who Are We"
+msgstr "من نحن"
+
+#: .\templates\landingpage\index.html:407
+msgid ""
+"\n"
+"                            In light of the increasing growth of cyber "
+"attacks on individuals and companies in the Kingdom of Saudi Arabia,\n"
+"                            The user in the digital system has become a "
+"weakness and a target for various hacking operations.\n"
+"                            <br>And in 2017, Securityology was created by an "
+"elite team of specialists in the field of information security.\n"
+"                            Securityology aims to provide advisory, "
+"professional and educational services that guarantee\n"
+"                            Protection of data and personal or work "
+"environment information.\n"
+"                        "
+msgstr ""
+"\n"
+"في ظل التـنامي المتزايد للهجمات السيبرانية على الأفراد و الشركات في الممـلكة "
+"<br>العربية السعودية, اصبح المستخدم في المنظومة الرقمية  نقطة ضعف  و هدف "
+"لعمليات الإختراق المختلفة. <br>وفي عام 2017, <br> تم ابتكار سيكيورولوجي من "
+"قبل فريق من نخبة المختصين في مجال أمن المعلومات<br> سيكيورولوجي تهدف  إلى "
+"تقديم الخدمات الإسـتشارية, الإحـترافية و أيضا التعليمية التي تضمن<br> حماية "
+"البيانات و المعلومات الشخصية او الخاصة ببيئة العمل."
+
+#: .\templates\landingpage\index.html:530
+msgid "Copyright 2020. All rights reserved"
+msgstr "حقوق النسخ محفوظه 2020 "
+
+#: .\templates\landingpage\index.html:581
+msgid "Invalid name"
+msgstr "اسم غير صحيح"
+
+#: .\templates\landingpage\index.html:581
+msgid "Please input your name"
+msgstr "الرجاء إدخال اسمك"
+
+#: .\templates\landingpage\index.html:586
+msgid "Invalid email"
+msgstr "بريد إلكتروني خاطئ"
+
+#: .\templates\landingpage\index.html:586
+msgid "Please input your email"
+msgstr "الرجاء إدخال البريد الإلكتروني الخاص بك"
+
+#: .\templates\landingpage\index.html:591
+msgid "Invalid message"
+msgstr "رسالة غير صحيحة"
+
+#: .\templates\landingpage\index.html:591
+msgid "Please input your message"
+msgstr "الرجاء إدخال رسالتك"
+
+#: .\templates\landingpage\index.html:606
+msgid "Message was sent successfully"
+msgstr "تم ارسال الرسالة بنجاح"
+
+#: .\templates\landingpage\index.html:612
+msgid "Operation failed"
+msgstr "فشلت العملية"
+
+#: .\templates\landingpage\login_modal.html:8
+msgid "Password is required"
+msgstr "كلمة المرور مطلوبة"
+
+#: .\templates\landingpage\login_modal.html:14
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+#: .\templates\landingpage\login_modal.html:20
+msgid "Create new account"
+msgstr "انشاء حساب جديد"
+
+#: .\templates\landingpage\login_modal.html:39
+msgid "Please input the username"
+msgstr "الرجاء إدخال اسم المستخدم"
+
+#: .\templates\landingpage\login_modal.html:43
+msgid "Please input the password"
+msgstr "الرجاء إدخال كلمة المرور"
+
+#: .\templates\landingpage\login_modal.html:68
+msgid "Login Failed"
+msgstr "فشل تسجيل الدخول"
+
+#: .\templates\landingpage\login_modal.html:68
+msgid "Invalid username and password"
+msgstr "اسم المستخدم وكلمة المرور غير صالحة"
+
+#: .\templates\landingpage\register_modal.html:6
+msgid "Please fill in all fields."
+msgstr "يرجى تعبئة جميع الحقول."
+
+#: .\templates\landingpage\register_modal.html:20
+msgid " - Username should contain one letter and one number at least."
+msgstr "- يجب أن يحتوي اسم المستخدم على حرف واحد ورقم واحد على الأقل."
+
+#: .\templates\landingpage\register_modal.html:21
+msgid " - Username should not contain symbols."
+msgstr "- يجب ألا يحتوي اسم المستخدم على رموز."
+
+#: .\templates\landingpage\register_modal.html:28
+msgid "Firstname"
+msgstr "الاسم الاول"
+
+#: .\templates\landingpage\register_modal.html:35
+msgid "Lastname"
+msgstr "الكنية"
+
+#: .\templates\landingpage\register_modal.html:42
+msgid "To better secure your account safety,"
+msgstr "لتأمين أمان حسابك بشكل أفضل ،"
+
+#: .\templates\landingpage\register_modal.html:42
+msgid "please follow the recommendations below to set your password:"
+msgstr "يرجى اتباع التوصيات أدناه لتعيين كلمة المرور الخاصة بك:"
+
+#: .\templates\landingpage\register_modal.html:43
+msgid "- Use 8 to 64 characters"
+msgstr "- استخدم 8 إلى 64 حرفًا"
+
+#: .\templates\landingpage\register_modal.html:44
+msgid "- Include at least one letter"
+msgstr "- قم بتضمين حرف واحد على الأقل"
+
+#: .\templates\landingpage\register_modal.html:45
+msgid "- Include at least one number"
+msgstr "- قم بتضمين رقم واحد على الأقل"
+
+#: .\templates\landingpage\register_modal.html:46
+#, python-format
+msgid ""
+"- Include at least one symbol. Only these symbols are supported !@#$%%^*_+="
+msgstr "- قم بتضمين رمز واحد على الأقل. يتم دعم هذه الرموز فقط !@#$%%^*_+="
+
+#: .\templates\landingpage\register_modal.html:67
+msgid "Mobile Phone Number (for sign-in)"
+msgstr "رقم الهاتف المحمول (لتسجيل الدخول)"
+
+#: .\templates\landingpage\register_modal.html:75
+msgid "Email Here (for verification and password reset)"
+msgstr "أرسل هنا (للتحقق وإعادة تعيين كلمة المرور)"
+
+#: .\templates\landingpage\register_modal.html:81
+msgid "Register"
+msgstr "تسجيل"
+
+#: .\templates\landingpage\register_modal.html:168
+msgid "Username must contain at least one letter."
+msgstr "يجب أن يحتوي اسم المستخدم على حرف واحد على الأقل."
+
+#: .\templates\landingpage\register_modal.html:173
+msgid "Username must contain at least one number."
+msgstr "يجب أن يحتوي اسم المستخدم على رقم واحد على الأقل."
+
+#: .\templates\landingpage\register_modal.html:178
+msgid "Password length must be greater than 8."
+msgstr "يجب أن يكون طول كلمة المرور أكبر من 8."
+
+#: .\templates\landingpage\register_modal.html:183
+msgid "Password must contain at least one letter."
+msgstr "كلمة السر يجب أن تحتوي على حرف واحد على الأقل."
+
+#: .\templates\landingpage\register_modal.html:188
+msgid "Password must contain at least one number."
+msgstr "يجب ان تحتوي كلمة المرور على الاقل رقما واحدا."
+
+#: .\templates\landingpage\register_modal.html:193
+msgid "Password must contain at least one symbol."
+msgstr "يجب أن تحتوي كلمة المرور على رمز واحد على الأقل."
+
+#: .\templates\landingpage\register_modal.html:198
+msgid "Password confirmation failed."
+msgstr "فشل تأكيد كلمة المرور."
+
+#: .\templates\landingpage\register_modal.html:211
+msgid "Username couldn't be empty."
+msgstr "لا يمكن أن يكون اسم المستخدم فارغًا."
+
+#: .\templates\landingpage\register_modal.html:216
+msgid "Firstname couldn't be empty."
+msgstr "لا يمكن أن يكون الاسم الأول فارغًا."
+
+#: .\templates\landingpage\register_modal.html:221
+msgid "Lastname couldn't be empty."
+msgstr "لا يمكن أن يكون اسم العائلة فارغًا."
+
+#: .\templates\landingpage\register_modal.html:226
+msgid "Phone couldn't be empty."
+msgstr "لا يمكن أن يكون الهاتف فارغًا."
+
+#: .\templates\landingpage\register_modal.html:231
+msgid "Email couldn't be empty."
+msgstr "لا يمكن أن يكون البريد الإلكتروني فارغًا."
+
+#: .\templates\landingpage\register_modal.html:260
+msgid "Registration success"
+msgstr "نجاح التسجيل"
+
+#: .\templates\landingpage\register_modal.html:263
+msgid "Username exists already."
+msgstr "اسم المستخدم موجود بالفعل."
+
+#: .\templates\landingpage\register_modal.html:266
+msgid "Email address exists already."
+msgstr "عنوان البريد الإلكتروني موجود بالفعل."
+
+#: .\templates\landingpage\register_modal.html:269
+msgid "Registration failed."
+msgstr "فشل في التسجيل."
+
+#: .\templates\landingpage\sliders_ar.html:11
+#: .\templates\landingpage\sliders_en.html:10
+msgid "SECUROLOGY<br>Your personal safety starts with your digital safety"
+msgstr "سيكيورولوجي<br>أمــانك الشخصي يبدأ من أمــانك الرقمي"
+
+#: .\templates\landingpage\sliders_ar.html:12
+#: .\templates\landingpage\sliders_en.html:11
+msgid ""
+"Securology, is unique in providing consulting and professional services in "
+"protecting private information for individuals and companies' personal "
+"devices, and includes office devices, portable and also smart devices of all "
+"kinds, through safe and reliable technologies"
+msgstr ""
+"سيكيورولوجي, تنفرد بتقديم خدمات استشارية و احترافية في حماية  المعلومات "
+"الخاصة للأجهزة الشخصية للأفراد و الشركات, ويشمل الأجهزة المكتبية, "
+"<br>المحمولة و أيضا الأجهزة الذكية بأنواعها, من خلال تقنيات أمنة و موثوقة"
+
+#: .\templates\landingpage\sliders_ar.html:26
+#: .\templates\landingpage\sliders_en.html:25
+msgid "Are you being watched !! penetrative!! Or digitally threatened"
+msgstr "هل انت مراقب!! مخترق!! أو مهدد رقميا"
+
+#: .\templates\landingpage\sliders_ar.html:27
+#: .\templates\landingpage\sliders_en.html:26
+msgid ""
+"We provide you with a security analysis service for your private or mobile "
+"device from spyware and penetration tools and vulnerabilities"
+msgstr ""
+"نقدم لك خدمة التحليل الأمني لجهازك الخاص أو المحمول من أدوات و ثغرات التجسس "
+"و الاختراق  "
+
+#: .\templates\landingpage\sliders_ar.html:41
+#: .\templates\landingpage\sliders_en.html:40
+msgid ""
+"You are a keen person and are looking for the safety of your devices and I "
+"set up your family"
+msgstr "أنت شخص حريص و تبحث عن أمان أجهزتك<br> و أجهزت عائلتك"
+
+#: .\templates\landingpage\sliders_ar.html:42
+#: .\templates\landingpage\sliders_en.html:41
+msgid ""
+"We provide you with a security analysis service for your private or mobile "
+"device and also for your family members from tools and spyware and "
+"penetration loopholes"
+msgstr ""
+"نقدم لك خدمة التحليل الأمني لجهازك الخاص أو المحمول وأيضا أفراد عائلتك من "
+"أدوات<br>و ثغرات التجسس و الاختراق"
+
+#: .\templates\landingpage\sliders_ar.html:56
+#: .\templates\landingpage\sliders_en.html:55
+msgid "You have a problem !! Your device is slow !! Or acting unusually"
+msgstr "عندك مشكلة !!  جهازك بطيء !! أو يتصرف <br>بشكل غير معتاد"
+
+#: .\templates\landingpage\sliders_ar.html:57
+#: .\templates\landingpage\sliders_ar.html:72
+#: .\templates\landingpage\sliders_en.html:56
+#: .\templates\landingpage\sliders_en.html:71
+msgid ""
+"We provide you with maintenance and analysis service for technical problems "
+"for your private or mobile device, including service also get rid of spyware "
+"and penetration tools and gaps"
+msgstr ""
+"نقدم لك خدمة الصيانة و  التحليل للمشاكل التقنية لجهازك الخاص أو المحمول "
+"وتشمل الخدمة<br> أيضا التخلص من أدوات و ثغرات التجسس و الاختراق  "
+
+#: .\templates\landingpage\sliders_ar.html:71
+#: .\templates\landingpage\sliders_en.html:70
+msgid ""
+"Work and distance education<br> Now are your equipment and your family's "
+"devices protected against hacking and espionage?"
+msgstr ""
+"العمل و التعليم عن بعد الأن <br>هل أجهزتك و أجهزة عائلتك مؤمنة ضد الإختراق و "
+"التجسس "
+
+#: .\templates\messages\admin_messages_view.html:70
+#: .\templates\messages\user_messages_view.html:73
+msgid "Search for people..."
+msgstr "ابحث عن الناس..."
+
+#: .\templates\messages\admin_messages_view.html:76
+#: .\templates\messages\user_messages_view.html:79
+msgid "ALL"
+msgstr "الكل"
+
+#: .\templates\messages\admin_messages_view.html:79
+#: .\templates\messages\user_messages_view.html:82
+msgid "ONLINE"
+msgstr "عبر الانترنت"
+
+#: .\templates\messages\admin_messages_view.html:85
+msgid "REGISTRED"
+msgstr "مسجل"
+
+#: .\templates\messages\admin_messages_view.html:88
+msgid "UNREGISTERED"
+msgstr "غير مسجل"
+
+#: .\templates\messages\admin_messages_view.html:131
+#: .\templates\messages\user_messages_view.html:134
+msgid "Start typing for reply..."
+msgstr "ابدأ الكتابة للرد ..."
+
+#: .\templates\messages\user_messages_view.html:88
+msgid "IN-SITE"
+msgstr "في الموقع"
+
+#: .\templates\messages\user_messages_view.html:91
+msgid "OUT-SITE"
+msgstr "خارج الموقع"
+
+#: .\templates\user\user_transaction_table_modal.html:8
+#: .\templates\user\users_list.html:185
+msgid "Transactions"
+msgstr "المعاملات"
+
+#: .\templates\user\users_list.html:173
+msgid "Online"
+msgstr "عبر الانترنت"
+
+#: .\templates\user\users_list.html:176
+msgid "Offline"
+msgstr "غير متصل على الانترنت"
+
+#: .\templates\videochatting\calling_modal.html:13
+#: .\templates\videochatting\receiving_modal.html:13
+msgid "Connecting"
+msgstr "توصيل"
+
+#: .\templates\videochatting\videochatting_modal.html:7
+msgid "Video Chatting"
+msgstr "دردشة الفيديو"
+
+#~ msgid "Response:"
+#~ msgstr "استجابة:"
+
+#~ msgid "Bulk Upate"
+#~ msgstr "تحديث بالجملة"
+
+#~ msgid "Last Login"
+#~ msgstr "آخر تسجيل دخول"
+
+#~ msgid "Service Cost"
+#~ msgstr "تكلفة الخدمة"
+
+#~ msgid "Please input service cost"
+#~ msgstr "الرجاء إدخال تكلفة الخدمة"
+
+#~ msgid "Please input valid cost"
+#~ msgstr "الرجاء إدخال تكلفة صالحة"
+
+#~ msgid "Settings"
+#~ msgstr "الإعدادات"
+
+#~ msgid "Please input the amount to deposit."
+#~ msgstr "الرجاء إدخال المبلغ المراد إيداعه."
+
+#~ msgid "Failure"
+#~ msgstr "بالفشل"
+
+#~ msgid "OS"
+#~ msgstr "نظام التشغيل"
+
+#~ msgid "QTY"
+#~ msgstr "كمية"
+
+#~ msgid "Number of Audionce"
+#~ msgstr "عدد الجمهور"
+
+#~ msgid "The language is set successfully."
+#~ msgstr "تم ضبط اللغة بنجاح."
+
+#~ msgid "All"
+#~ msgstr "الكل"

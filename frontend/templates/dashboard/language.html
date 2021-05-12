@@ -1,0 +1,66 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="language_setting_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 350px; margin-top: 150px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-language"></i> {% trans 'Language' %}<a class="close star-back-color" onclick="on_close_language_setting_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0px; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <b>{% trans 'Language' %}</b>
+                                    </div>
+                                {% get_current_language as LANGUAGE_CODE %}
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <select class="form-control" id="language_name" style="height: 100%">
+                                            {% get_available_languages as LANGUAGES %}
+                                            {% get_language_info_list for LANGUAGES as languages %}
+                                            {% for language in languages %}
+                                                <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                                                    {{ language.name_local }} ({{ language.code }})
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="setting_language()">{% trans 'OK' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_language_setting_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function on_open_setting_modal(){
+        open_modal("language_setting_modal");
+    }
+
+    function on_close_language_setting_modal(){
+        $("#language_setting_modal").removeClass("in");
+        $("#language_setting_modal").css("display", "none");
+        $("#waiting").removeClass("modal-backdrop fade in");
+        $(document.body).removeClass("modal-open");
+    }
+
+    function setting_language(){
+        var lang_code = $("#language_name").val();
+        var url = '/index';
+        var form = $('<form action="' + url + '" method="post">{% csrf_token %}' +
+            '<input type="text" name="language_code" value="' + lang_code + '" />' +
+            '</form>');
+        $('body').append(form);
+        form.submit();
+    }
+</script>

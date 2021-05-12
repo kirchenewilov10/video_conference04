@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="136" height="25" viewBox="0 0 136 25">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-size: 18px;
+        font-family: Poppins-SemiBold, Poppins;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+      }
+
+      .cls-2 {
+        font-family: SegoeUI-Semibold, Segoe UI;
+      }
+    </style>
+  </defs>
+  <text id="تسجيل_الدخول" data-name="تسجيل الدخول" class="cls-1" transform="translate(68 19)"><tspan x="-67.34" y="0"> </tspan><tspan class="cls-2" y="0">تسجيل الدخو</tspan></text>
+</svg>

@@ -1,0 +1,56 @@
+{% load staticfiles %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+<div class="modal right fade" id="ask_service_modal" tabindex="-1" role="dialog" aria-labelledby="ask_service_modal" style="opacity: 1 !important;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header" style="background-color: transparent;">
+                <h4 class="modal-title" id="ask_service_modal_title">{% trans "Ask for Services" %}</h4>
+            </div>
+
+            <div class="modal-body">
+                <p class="pb-4">
+                    {% blocktrans %}
+                        We appreciate your trust in Securology,
+                        <br>Please log in to the system and request the service
+                        <br>Or send a service request by e-mail
+                        <br>Info@Securology.net
+                    {% endblocktrans %}
+                </p>
+
+                {% if LANGUAGE_CODE == "ar" %}
+                    <div class="col-md-12 pt-4 pb-4 text-right">
+                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>
+                        <span data-dismiss="modal" aria-label="Close" style="cursor: pointer; color: white; font-size: medium;" onclick="on_click_open_signin_modal()">{% trans "SignIn" %}</span>
+                    </div>
+                    <div class="col-md-12 pt-4 pb-4 text-right">
+                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>
+                        <span data-dismiss="modal" aria-label="Close" style="cursor: pointer; color: white; font-size: medium;" onclick="on_click_open_contactus_modal()">{% trans "Connect with us" %}</span>
+                    </div>
+                {% else %}
+                    <div class="col-md-12 pt-4 pb-4">
+                        <span data-dismiss="modal" aria-label="Close" style="cursor: pointer; color: white; font-size: medium;" onclick="on_click_open_signin_modal()">{% trans "SignIn" %}</span>
+                    <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-right" style="font-size: medium;"></i></span></button>
+                    </div>
+                    <div class="col-md-12 pt-4 pb-4">
+                        <span data-dismiss="modal" aria-label="Close" style="cursor: pointer; color: white; font-size: medium;" onclick="on_click_open_contactus_modal()">{% trans "Connect with us" %}</span>
+                    <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-right" style="font-size: medium;"></i></span></button>
+                    </div>
+                {% endif %}
+            </div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal -->

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load i18n %}
+<html lang="en">
+  <head>
+    <title>{% trans "SECUROLOGY" %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Oxygen:400,700" rel="stylesheet">
+    <!-- Favicon  -->
+    <link rel="icon" href="{% static "/welcome_page/images/securoloynet_logo.png" %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/css/animate.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/css/jquery.fancybox.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/fonts/ionicons/css/ionicons.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/fonts/fontawesome/css/font-awesome.min.css" %}">
+
+    <!-- Notifications CSS -->
+    <link rel="stylesheet" href="{% static "css/notifications/Lobibox.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/notifications/notifications.css" %}">
+
+      <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="{% static "plugins/fancybox/jquery.fancybox.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/login/util.css" %}">
+    <link rel="stylesheet" href="{% static "css/login/main.css" %}">
+
+    <!-- Chatbox CSS -->
+    <link rel="stylesheet" href="{% static "css/chatbox.css" %}">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" href="{% static "/welcome_page/css/style.css" %}">
+    <style>
+        .sign-in-tag {
+            position: absolute;
+            right: 30px;
+        }
+        .nav-item {
+            padding-left: 1em;
+        }
+        .no-padding {
+            padding: 0 !important;
+        }
+        .bg-net-design {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 60% !important;
+            opacity: 0.5;
+        }
+        .owl-nav button{
+            display: none;
+        }
+        h1 {
+            font-size: 40px !important;
+        }
+        h2 {
+            color: white;
+        }
+        .site-footer {
+            padding: 0 !important;
+            height: 0;
+            text-align: center;
+            position: relative;
+            top: -28px;
+            z-index: 11;
+            color: white;
+        }
+        .site-footer .social-media{
+            position: absolute;
+            bottom: 0;
+            left: 3em;
+            flex-direction: column;
+            display: flex;
+        }
+        .site-footer .social-media a {
+            padding: 10px 0;
+            cursor: pointer;
+        }
+        .site-footer .social-media img {
+            opacity: 0.7;
+        }
+        .site-footer .social-media img:hover{
+            opacity: 1;
+        }
+        .site-footer .slider-control-btn {
+            position: absolute;
+            bottom: 0;
+            right: 2em;
+        }
+        .site-footer .slider-control-btn a {
+            padding: 0 10px;
+        }
+        .slider-control-btn img {
+            opacity: 0.6;
+        }
+        .slider-control-btn img:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+        .slider-text h2 {
+            font-size: 2em;
+        }
+        .modal-header {
+            border-bottom: 0;
+        }
+        .modal-title {
+            padding: 30px 0 30px 0;
+            color: white;
+            font-size: x-large;
+            text-align: center;
+        }
+        .modal-body p{
+            text-align: center;
+            color: white;
+            font-size: medium;
+            padding: 0 10px 0 30px;
+        }
+        .modal-footer {
+            position: absolute;
+            bottom: 0;
+            border-top: 0;
+            font-size: medium;
+            width: 100%;
+        }
+        .modal-footer .back-to-home{
+            color: white;
+            cursor: pointer;
+        }
+        .close-modal {
+            color: #8D4141;
+        }
+        .contactus-content {
+            padding: 40px 10px 10px 10px;
+        }
+        .contactus-content input{
+            border-radius: 3em;
+            padding: 0 0.8em;
+            font-size: small;
+            height: 30px;
+        }
+        .contactus-content label {
+            padding: 0;
+            font-size: small;
+            color: white;
+        }
+        .contactus-content textarea {
+            border-radius: 2em;
+            font-size: small;
+            padding: 20px;
+        }
+        .contactus-content button {
+            padding: 10px 35px;
+            border-radius: 2em;
+        }
+        .service-catalog-title {
+            width: 100%;
+            background-color: #113956;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            border-radius: 0.8em;
+            font-size: medium;
+        }
+        .service-catalog-title .caret-down{
+            position: absolute;
+            top: 10px;
+            right: 2em;
+            color: #0B2538;
+        }
+        .service-catalog-tip p{
+            font-size: small;
+        }
+        .register-content label {
+            color: lightgrey;
+        }
+        .register-content input {
+            padding: 10px 15px;
+            font-size: medium;
+            -webkit-border-radius: 1.2em;
+            -moz-border-radius: 1.2em;
+            border-radius: 1.2em;
+        }
+        .modal-dialog {
+            width: 25% !important;
+            -moz-background-image: linear-gradient(to bottom, #000000, rgba(31, 50, 68, 0.5), rgba(31, 50, 68, 0.4), rgba(31, 50, 68, 0.3));;
+            background-image: linear-gradient(to bottom, #000000, rgba(31, 50, 68, 0.5), rgba(31, 50, 68, 0.4), rgba(31, 50, 68, 0.3));
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        .modal-content {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        {# this style is for firefox. #}
+        .modal-body{
+            scrollbar-color: rgb(60, 75, 90) rgb(46,54,69) !important;
+            scrollbar-width: thin !important;
+        }
+    </style>
+  </head>
+  <body>
+
+    <header role="banner">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand " href="index.html"><img src="{% static "/welcome_page/images/securoloynet_logo.png" %}" alt="Logo"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarsExample05">
+              <ul class="navbar-nav col-lg-9 col-md-9 col-xs-9 col-sm-9 justify-content-center">
+                  <li class="nav-item">
+                      <a class="nav-link" id="contactus_link" href="#" data-toggle="modal" data-target="#contactus_modal">{% trans "Contact Us" %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="modal" data-target="#services_modal">{% trans "Our Services" %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="modal" data-target="#ask_service_modal">{% trans "Ask for Service" %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="modal" data-target="#news_modal">{% trans "News" %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#" data-toggle="modal" data-target="#who_we_are_modal">{% trans "Who we are" %}</a>
+                  </li>
+                  <li class="nav-item">
+                  </li>
+              </ul>
+              <ul class="navbar-nav col-lg-3 col-md-3 col-xs-3 col-sm-3 justify-content-center">
+                  <li class="nav-item">
+                      <a class="nav-link ml-lg-n5" href="#" onclick="on_change_language('ar')">{% trans "AR" %}</a>
+                  </li>
+                  <li class="nav-item no-padding">
+                      <a class="nav-link" href="#">|</a>
+                  </li>
+                  <li class="nav-item no-padding">
+                      <a class="nav-link" href="#" onclick="on_change_language('en')">{% trans "EN" %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#"></a>
+                  </li>
+                  <li class="nav-item ml-5">
+                      <a class="nav-link" id="signin_link" href="#" data-toggle="modal" data-target="#signin_modal">{% trans "Sign In" %}</a>
+                      <a class="nav-link" id="register_link" href="#" data-toggle="modal" data-target="#register_modal" style="display: none;">{% trans "Sign Up" %}</a>
+                      <a class="nav-link" id="forget_password_link" href="#" data-toggle="modal" data-target="#forget_password_modal" style="display: none;">{% trans "Forget Password" %}</a>
+                  </li>
+              </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- END header -->
+
+    <div class="top-shadow"></div>
+    {% get_current_language as LANGUAGE_CODE %}
+    <section class="home-slider owl-carousel">
+    {% if LANGUAGE_CODE == "ar" %}
+        {% include "landingpage/sliders_ar.html" %}
+    {% else %}
+        {% include "landingpage/sliders_en.html" %}
+    {% endif %}
+    </section>
+
+    {% include "landingpage/contactus_modal.html" %}
+
+    <div class="modal right fade" id="services_modal" tabindex="-1" role="dialog" aria-labelledby="services_modal" style="opacity: 1 !important;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: transparent;">
+					<h4 class="modal-title" id="services_modal_title">{% trans "Our Services" %}</h4>
+				</div>
+
+				<div class="modal-body" style="overflow-y: auto; max-height: 70%;">
+					<div class="col-md-12 pb-4">
+                        <div class="service-catalog-title">
+                            <span>{% trans "Consulting Services" %}</span>
+                            <span class="caret-down"><i class="fa fa-caret-down" style="font-size: 50px;"></i></span>
+                        </div>
+                        <div class="service-catalog-tip text-center">
+                            <p>
+                                {% blocktrans %}
+                                    It is a consulting services for individuals and companies aimed at raising the level of safety and correct guidance<br>
+                                    To solve some of the weaknesses and gaps that pertain to the methods of using and designing network solutions and information security
+                                {% endblocktrans %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb-4">
+                        <div class="service-catalog-title">
+                            <span>{% trans "Security Audit Services" %}</span>
+                            <span class="caret-down"><i class="fa fa-caret-down" style="font-size: 50px;"></i></span>
+                        </div>
+                        <div class="service-catalog-tip text-center">
+                            <p>
+                                {% blocktrans %}
+                                    It is a specialized service for individuals and companies to conduct a security review of the personal devices of individuals or structures<br>
+                                    Support and services for companies according to the best international practices and standards in the field of information security
+                                {% endblocktrans %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb-4">
+                        <div class="service-catalog-title">
+                            <span>{% trans "Professional Services" %}</span>
+                            <span class="caret-down"><i class="fa fa-caret-down" style="font-size: 50px;"></i></span>
+                        </div>
+                        <div class="service-catalog-tip text-center">
+                            <p>
+                                {% blocktrans %}
+                                    It is a professional services for individuals and companies aiming to implement the outputs of security reviews or help in
+                                    <br>Executing some tasks that help raise the level of security in personal devices or infrastructure and services
+                                {% endblocktrans %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb-4">
+                        <div class="service-catalog-title">
+                            <span>{% trans "Educational Services" %}</span>
+                            <span class="caret-down"><i class="fa fa-caret-down" style="font-size: 50px;"></i></span>
+                        </div>
+                        <div class="service-catalog-tip text-center">
+                            <p>
+                                {% blocktrans %}
+                                    It is an educational service for individuals and companies, aiming to raise awareness of individuals in the field
+                                    <br>Managing the risks of their personal devices and devices related to the work environment in companies
+                                {% endblocktrans %}
+                            </p>
+                        </div>
+                    </div>
+				</div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+    {% include "landingpage/ask_for_service_modal.html" %}
+
+    <div class="modal right fade" id="news_modal" tabindex="-1" role="dialog" aria-labelledby="news_modal" style="opacity: 1 !important;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: transparent;">
+					<h4 class="modal-title" id="news_modal_title">{% trans "News" %}</h4>
+				</div>
+
+				<div class="modal-body" style="overflow-y: auto; max-height: 70%;">
+                    <div id="rss_feeds">
+                        <div class="feedgrabbr_widget first-rss-feed-box pb-5" id="fgid_9bee90b9c49e7c93171b8c6bc"></div>
+                        <div class="feedgrabbr_widget rss-feed-box pb-3" id="fgid_71bdb94310aaec7d716df364d"></div>
+                        <div class="feedgrabbr_widget rss-feed-box" id="fgid_5ffa0f557406486c431d89cb2"></div>
+                    </div>
+                    <script>
+                        if (typeof (fg_widgets) === "undefined")
+                            fg_widgets = [];
+                        fg_widgets.push("fgid_9bee90b9c49e7c93171b8c6bc");
+                        fg_widgets.push("fgid_71bdb94310aaec7d716df364d");
+                        fg_widgets.push("fgid_5ffa0f557406486c431d89cb2");
+                    </script>
+                    <script async src="https://www.feedgrabbr.com/widget/fgwidget.js"></script>
+				</div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+    <div class="modal right fade" id="who_we_are_modal" tabindex="-1" role="dialog" aria-labelledby="who_we_are_modal" style="opacity: 1 !important;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: transparent;">
+					<h4 class="modal-title" id="who_we_are_modal_title">{% trans "Who Are We" %}</h4>
+				</div>
+
+				<div class="modal-body">
+					<p>
+                        {% blocktrans %}
+                            In light of the increasing growth of cyber attacks on individuals and companies in the Kingdom of Saudi Arabia,
+                            The user in the digital system has become a weakness and a target for various hacking operations.
+                            <br>And in 2017, Securityology was created by an elite team of specialists in the field of information security.
+                            Securityology aims to provide advisory, professional and educational services that guarantee
+                            Protection of data and personal or work environment information.
+                        {% endblocktrans %}
+                    </p>
+				</div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+    <div class="modal right fade" id="signin_modal" tabindex="-1" role="dialog" aria-labelledby="signin_modal" style="opacity: 1 !important;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: transparent;">
+					<h4 class="modal-title" id="signin_modal_title">{% trans "Sign In" %}</h4>
+				</div>
+
+				<div class="modal-body">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        {% include "landingpage/login_modal.html" %}
+                    </div>
+				</div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+
+    <div class="modal right fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="register_modal" style="opacity: 1 !important;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: transparent;">
+					<h4 class="modal-title" id="register_modal_title">{% trans "Sign Up" %}</h4>
+				</div>
+
+				<div class="modal-body" style="overflow-y: auto; max-height: 70%;">
+                    <div class="col-md-12 register-content">
+                        {% include "landingpage/register_modal.html" %}
+                    </div>
+				</div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+    <div class="modal right fade" id="forget_password_modal" tabindex="-1" role="dialog" aria-labelledby="forget_password_modal" style="opacity: 1 !important;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header" style="background-color: transparent;">
+					<h4 class="modal-title" id="forget_password_modal_title">{% trans "Forget Password" %}</h4>
+				</div>
+
+				<div class="modal-body" style="overflow-y: auto; max-height: 60%;">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        {% include "landingpage/forget_password_modal.html" %}
+                    </div>
+                    <div class="col-md-1"></div>
+				</div>
+{#                <div class="modal-footer">#}
+{#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+{#                        {% blocktrans %}#}
+{#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+{#                        {% endblocktrans %}#}
+{#                    </p>#}
+{#                    <div class="back-to-home">#}
+{#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+{#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+    <!-- END slider -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="social-media">
+            <a><img id="twitter_icon" src="{% static "/welcome_page/images/Twitter_Icon.png" %}" alt="Twitter_logo"></a>
+            <a><img id="whatsapp_icon" src="{% static "/welcome_page/images/whatsApp2.png" %}" alt="whatsapp_logo"></a>
+            <a onclick="on_click_chat_prime()"><img id="chat_icon" src="{% static "/welcome_page/images/chat.png" %}" alt="chat_logo"></a>
+        </div>
+        <div class="slider-control-btn">
+            <a role="presentation" class="owl-prev" onclick="change_slide_show(0)"><img id="prev_slider_icon" src="{% static "/welcome_page/images/prev.png" %}" alt="Prev Slider"></a>
+            <a role="presentation" class="owl-next" onclick="change_slide_show(1)"><img id="next_slider_icon" src="{% static "/welcome_page/images/next.png" %}" alt="Next Slider"></a>
+        </div>
+        <p class="text-white">{% trans "Copyright 2020. All rights reserved" %}</p>
+    </footer>
+    {% include 'landingpage/chatbox.html' %}
+    {% include "landingpage/chatjs.html" %}
+
+    <!-- loader -->
+    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+    <script src="{% static "/welcome_page/js/jquery-3.2.1.min.js" %}"></script>
+    <script src="{% static "/bower_components/jquery/dist/jquery.cookie.js" %}"></script>
+    <script src="{% static "/welcome_page/js/popper.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/jquery.waypoints.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/main.js" %}"></script>
+    <!-- Notification JS-->
+    <script src="{% static "js/notifications/Lobibox.js" %}"></script>
+    <!-- Fancybox JS-->
+    <script src="{% static "plugins/fancybox/jquery.fancybox.js" %}"></script>
+    <script>
+        $(function(){
+            $.ajaxSetup({
+                beforeSend:function (xhr,settings) {
+                    xhr.setRequestHeader('X-CSRFtoken','{{ csrf_token }}');
+                }
+            });
+        });
+
+        function change_slide_show(type){
+            if (type === 0){
+                $(".owl-nav .owl-prev").trigger("click");
+            }
+            else {
+                $(".owl-nav .owl-next").trigger("click");
+            }
+        }
+
+        function on_change_language(lang_code){
+            var url = '/';
+            var form = $('<form action="' + url + '" method="post">{% csrf_token %}' +
+                '<input type="text" name="language_code" value="' + lang_code + '" />' +
+                '</form>');
+            $('body').append(form);
+            form.submit();
+        }
+
+        function on_click_send_contact_message() {
+            var contact_name = $("#contact_name").val();
+            var contact_email = $("#contact_email").val();
+            var contact_message = $("#contact_message").val();
+
+            if (contact_name === "") {
+                show_message("warning", "{% trans "Invalid name" %}", "{% trans "Please input your name" %}");
+                $("#contact_name").focus();
+                return;
+            }
+            if (contact_email === "") {
+                show_message("warning", "{% trans "Invalid email" %}", "{% trans "Please input your email" %}");
+                $("#contact_email").focus();
+                return;
+            }
+            if (contact_message === "") {
+                show_message("warning", "{% trans "Invalid message" %}", "{% trans "Please input your message" %}");
+                $("#contact_message").focus();
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "send_message",
+                data: {
+                    contact_name: contact_name,
+                    contact_email: contact_email,
+                    contact_message: contact_message
+                },
+                success: function(res) {
+                    if (res === "success") {
+                        show_message("success", "{% trans "Success" %}", "{% trans "Message was sent successfully" %}");
+                        $("#contact_name").val("");
+                        $("#contact_email").val("");
+                        $("#contact_message").val("");
+                        $("#contactus_modal").modal("hide");
+                    }
+                    else {
+                        show_message("error", "{% trans "Error" %}", "{% trans "Operation failed" %}");
+                    }
+                }
+            });
+        }
+
+        function on_click_open_signin_modal(){
+            $("#signin_link").trigger("click");
+        }
+
+        function on_click_open_contactus_modal(){
+            $("#contactus_link").trigger("click");
+        }
+
+        function show_message(type, title, msg, size = "") {
+            if (size === "") {
+                Lobibox.notify(type, {
+                    delay: 4000,
+                    title: title,
+                    msg: msg
+                });
+            }
+
+            if (size === "large") {
+                Lobibox.notify(type, {
+                    size: 'large',
+                    title: title,
+                    msg: msg
+                });
+            }
+        }
+    </script>
+  </body>
+</html>

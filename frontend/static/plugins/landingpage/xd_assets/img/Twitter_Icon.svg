@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="42.469" viewBox="0 0 48 42.469">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1d5c99;
+      }
+
+      .cls-2 {
+        filter: url(#Twitter_Icon);
+        mix-blend-mode: screen;
+        isolation: isolate;
+      }
+    </style>
+    <filter id="Twitter_Icon" x="0" y="0" width="48" height="42.469" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g class="cls-2" transform="matrix(1, 0, 0, 1, 0, 0)">
+    <path id="Twitter_Icon-2" data-name="Twitter_Icon" class="cls-1" d="M31.5,4.5a14.864,14.864,0,0,1-4.282,2.086A6.109,6.109,0,0,0,16.5,10.676V12.04A14.536,14.536,0,0,1,4.227,5.862S-1.227,18.135,11.045,23.59A15.873,15.873,0,0,1,1.5,26.317c12.273,6.818,27.273,0,27.273-15.682A6.136,6.136,0,0,0,28.664,9.5a10.527,10.527,0,0,0,2.836-5Z" transform="translate(7.5 1.52)"/>
+  </g>
+</svg>

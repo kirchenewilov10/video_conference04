@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="25" viewBox="0 0 110 25">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-size: 18px;
+        font-family: Poppins-SemiBold, Poppins;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+      }
+
+      .cls-2 {
+        font-family: SegoeUI-Semibold, Segoe UI;
+      }
+    </style>
+  </defs>
+  <text id="تواصل_معنا" data-name="تواصل معنا" class="cls-1" transform="translate(55 19)"><tspan x="-54.875" y="0"> </tspan><tspan class="cls-2" y="0">تواصل معن</tspan></text>
+</svg>

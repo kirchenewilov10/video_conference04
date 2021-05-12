@@ -1,0 +1,116 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="export_booking_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 500px; max-width: 500px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-diamond"></i> <label id="export_booking_modal_title">{% trans 'Export' %}</label><a class="close star-back-color" href="#" onclick="on_close_export_booking_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="export_from"><b>{% trans 'From' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <input type="date" class="form-control" id="export_from">
+                                    </div>
+                                </div>
+                                <div class="row mt-7">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="export_to"><b>{% trans 'To' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <input type="date" class="form-control" id="export_to">
+                                    </div>
+                                </div>
+                                <div class="row mt-7">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="service_price"><b>{% trans 'Export Type' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <div class="form-group">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="export_type" id="export_excel" value="excel" checked>{% trans "Excel" %}
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="export_type" id="export_pdf" value="pdf">{% trans "Pdf" %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="export_booking()">{% trans 'Export' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_export_booking_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function on_click_export_booking() {
+        open_modal("export_booking_modal");
+        $("#export_from").val(new Date().toISOString().slice(0, 10));
+        $("#export_to").val(new Date().toISOString().slice(0, 10))
+    }
+
+    function on_close_export_booking_modal() {
+        close_modal("export_booking_modal");
+    }
+
+    function export_booking() {
+        var export_from = $("#export_from").val();
+        var export_to = $("#export_to").val();
+        var export_type = "excel";
+
+        if ($("#export_pdf")[0].checked)
+            export_type = "pdf";
+
+        if (export_to < export_from) {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please select the valid daterange." %}");
+            return;
+        }
+
+        show_loading();
+        $.ajax({
+            type: "POST",
+            url: "adminsettings/export_booking",
+            data: {
+                export_from: export_from,
+                export_to: export_to,
+                export_type: export_type
+            },
+            success: function(res) {
+                hide_loading();
+                if (res === "failure") {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Failed to export" %}");
+                }
+                else if (res === "access_denied") {
+                    show_message("error", "{% trans "Error" %}", "{% trans "You have no permission." %}");
+                }
+                else {
+                    var a_obj = document.createElement("a");
+                    a_obj.href = res;
+                    var att = document.createAttribute("download");
+                    a_obj.setAttributeNode(att);
+                    a_obj.click();
+
+                    a_obj.remove();
+                }
+            }
+        })
+    }
+</script>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+{% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title  -->
+    <title>SECUROLOGY</title>
+    <!-- Favicon  -->
+    <link rel="icon" href="{% static "/img/securoloynet_logo.png" %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/css/animate.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/css/owl.carousel.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/fonts/ionicons/css/ionicons.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/fonts/fontawesome/css/font-awesome.min.css" %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static "dist/css/AdminLTE.min.css" %}">
+    <link rel="stylesheet" href="{% static "bower_components/select2/dist/css/select2.min.css" %}">
+    <link rel="stylesheet" href="{% static "/welcome_page/css/style.css" %}">
+    <!-- Swipe core CSS -->
+    <link type="text/css" rel="stylesheet" href="{% static "plugins/calling/css/swipe.min.css" %}">
+    <!-- Datepicker CSS -->
+    <link type="text/css" rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.css" %}">
+    <!-- Modal CSS -->
+    <link rel="stylesheet" href="{% static "css/modals.css" %}">
+    <link rel="stylesheet" href="{% static "css/form-file.css" %}">
+    <!-- Message/Notification CSS -->
+    <link rel="stylesheet" href="{% static "css/notifications/Lobibox.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/notifications/notifications.css" %}">
+    <!-- Sweet Alert CSS -->
+    <link rel="stylesheet" href="{% static "plugins/dialog/sweetalert/sweetalert.css" %}">
+    <!-- MANUAL SWITCH CSS -->
+    <link rel="stylesheet" href="{% static "plugins/switch/component-custom-switch.min.css" %}">
+    <!-- Fancy CSS -->
+    <link rel="stylesheet" href="{% static "plugins/fancybox/jquery.fancybox.css" %}">
+    <!-- Custom style -->
+    <link rel="stylesheet" href="{% static "/css/dashboard.css" %}">
+    <!-- Datatable style -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
+</head>
+<body>
+    <!-- ***** Header Area Start ***** -->
+    <header role="banner" style="background: black; top: 0;">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark no-margin">
+            <div class="container-fluid">
+                <a class="navbar-brand pt-15" href="/index"><img src="{% static "/welcome_page/images/securoloynet_logo.png" %}" alt="Logo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarsExample05">
+                    <ul class="navbar-nav col-lg-12 col-md-12 col-xs-12 col-sm-12 justify-content-lg-end">
+                        {% if userinfo.service_usable == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/index" style="padding-right: 20px;"><i class="fa fa-list"></i>&nbsp;{% trans "Orders" %} <span class="sr-only"></span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" style="padding-right: 20px;" onclick="on_click_menu('/message/messages_view')"><i class="fa fa-video-camera"></i>&nbsp;{% trans "A/V" %} <span class="sr-only"></span>
+                                <span class="label" id="total_unread_message_status" style="display: {% if unread_messages_cnt > 0 %}block{% else %}none{% endif %}">
+                                    <i class="fa fa-circle text-danger"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" style="padding-right: 20px;" onclick="on_open_software_download_modal()"><i class="fa fa-cubes"></i>&nbsp;{% trans "Softwares" %} <span class="sr-only"></span></a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item pull-right">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, {{ username }}</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#" onclick="on_open_profile_modal()"><i class="fa big-icon fa-user"></i> {% trans "UserInfo" %}</a>
+                                <a class="dropdown-item" href="#" onclick="on_open_setting_modal()"><i class="fa big-icon fa-gear"></i> {% trans "Language" %}</a>
+                                <a class="dropdown-item" href="#" onclick="on_click_sign_out()"><i class="fa big-icon fa-power-off"></i> {% trans "Logout" %}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ***** Content Area Start ***** -->
+    <div class="regular-page-wrap" id="main_content">
+        <div class="container" style="margin-top: 80px;">
+            <div class="row justify-content-center mt-30">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="page-header">
+                        <h2>
+                            <i class="fa fa-bars"></i> {% trans "Orders" %}
+                            <button type="button" class="btn btn-primary pull-right" style="font-family: 'Play', sans-serif !important;" onclick="open_pick_service_modal()">{% trans "Pick Service" %}</button>
+                        </h2>
+                    </div>
+                    <div class="page-content" id="div_orders_table">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <table id="orders_table" class="display" style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        {% for header in headerdata %}
+                                            <th class="text-center">{{ header.name }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Content Area End ***** -->
+
+    <footer class="footer-area" style="padding: 10px 0 !important;">
+        <div class="container no-margin" style="max-width: inherit;">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="footer-single-widget">
+                        <a href="#"><img src="{% static "img/securoloynet_logo.png" %}" alt="" style="width: 200px;"></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <div class="footer-single-widget">
+                        <div class="copywrite-text">
+                            <p>
+                                {% trans "Copyright &copy;2020 All rights reserved" %}
+{#                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved#}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% include "dashboard/language.html" %}
+    {% include "dashboard/profile.html" %}
+    {% include "dashboard/add_response_to_comment_modal.html" %}
+    {% include "dashboard/order_payment_modal.html" %}
+    {% include "dashboard/open_pick_service_modal.html" %}
+    {% include "dashboard/software_download_modal.html" %}
+    {% include "videochatting/videochatting_modal.html" %}
+    {% include "mainjs.html" %}
+    {% include "chatjs.html" %}
+
+{#    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>#}
+    <script src="{% static "/bower_components/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "/bower_components/jquery/dist/jquery.cookie.js" %}"></script>
+    <script src="{% static "/welcome_page/js/popper.min.js" %}"></script>
+{#    <script src="{% static "/welcome_page/js/bootstrap.min.js" %}"></script>#}
+    <script src="{% static "/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/jquery.waypoints.min.js" %}"></script>
+    <script src="{% static "/welcome_page/js/main.js" %}"></script>
+    <!-- Select2 -->
+    <script src="{% static "/bower_components/select2/dist/js/select2.full.min.js" %}"></script>
+    <!-- DatePicker -->
+    <script src="{% static "js/moment.js" %}"></script>
+    <script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+    <!-- notification JS -->
+    <script src="{% static "/js/notifications/Lobibox.js" %}"></script>
+    <!-- Fancy js -->
+    <script src="{% static "/plugins/fancybox/jquery.fancybox.js" %}"></script>
+    <!-- swal confirmation JS -->
+    <script src="{% static "/plugins/dialog/sweetalert/sweetalert.min.js" %}"></script>
+    <!-- WebRTC JS -->
+    <script src="{% static "/js/webrtc_adapter.js" %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static "/js/login.js" %}"></script>
+    <!-- Datatable -->
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+
+    <script>
+        var orders_table;
+        var total_select = 0;
+        var total_unread_messages_cnt = {{ unread_messages_cnt }};
+        var selected_session_type = "registered";
+
+        $(document).ready(function () {
+            // set csrf token for ajax call
+            $.ajaxSetup({
+                beforeSend:function (xhr,settings) {
+                    xhr.setRequestHeader('X-CSRFtoken','{{ csrf_token }}');
+                }
+            });
+
+            var window_height = (window.innerHeight - 340) + "px";
+
+            // Init orders table
+            orders_table = $('#orders_table').DataTable({
+                dom: '<"top"R<"clear">>rt<"bottom"lip<"clear">>',
+                serverSide: true,
+                lengthMenu: [[10], [10]],
+                pageLength: 10,
+                scrollY: window_height,
+                scrollX: true,
+                columnDefs: [
+                    {
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets: 0,
+                    }],
+                ajax: {
+                    url: "/orders_datatable_api?format=datatables",
+                    data: function (d) {
+                        return $.extend({}, d, {});
+                    }
+                },
+                columns: [
+                    {
+                        width: "1%",
+                        data: "id", "searchable": false, "render": function (data, type, row) {
+                            var htm = "";
+                            htm += '<i id=' + row.id + ' style="display: None"></i>';
+                            return htm;
+                        }
+                    },
+                    {
+                        className: "dt-center",
+                        width: "20%",
+                        data: "service_id", "render": function(data, type, row){
+                            return row.service_name;
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "category_type"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "price", "render": function(data, type, row){
+                            return "<label><b>$</b> " + row.price + "</label>";
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "pay_status"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "service_status", "render": function(data, type,row) {
+                            var html = "";
+                            if (row.service_status === 0){
+                                html = "<span class=\"badge bg-yellow\">{% trans "Created" %}</span>";
+                            }
+                            else if (row.service_status === 1){
+                                if (row.pay_status === 0){
+                                    html = "<span class=\"badge bg-aqua\">{% trans "Accepted" %}</span>";
+                                }
+                                else {
+                                    html = "<span class=\"badge bg-blue\">{% trans "Paid" %}</span>";
+                                }
+                            }
+                            else if (row.service_status === 2) {
+                                html = "<span class=\"badge bg-grey\">{% trans "Cancelled" %}</span>";
+                            }
+                            else if (row.service_status === 3) {
+                                html = "<span class=\"badge bg-green\">{% trans "Finished" %}</span>";
+                            }
+                            else if (row.service_status === 4) {
+                                html = "<span class=\"badge bg-red\">{% trans "Rejected" %}</span>";
+                            }
+
+                            return html;
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "paid_price"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "date_booked", "render": function(data, type, row) {
+                            var d = row.date_booked, html, text_color="";
+
+                            if (row.service_status <= 1) {
+                                text_color = "class=\"text-aqua\"";
+                            }
+
+                            if (row.booked === 1)
+                                html = "<p " + text_color + ">" + d.substring(0, 10) + "<br>" + d.substring(11, 19) + "</p>";
+                            else
+                                html = "{% trans "Immediately" %}";
+                            return html;
+                        }
+                    },
+                    {
+                        className: "dt-center",
+                        data: "date_created", "render": function(data, type, row){
+                            var html;
+                            var d = row.date_created;
+                            html = d.substring(0, 10) + " " + d.substring(11, 19);
+                            html = "<p class=\"text-muted\">" + html + "</p>";
+                            return html
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "date_paid"
+                    },
+                    {
+                        width: "20%",
+                        data: "comment", "render": function(data, type, row) {
+                            var html = "<p class='wrap-long-text' title='" + row.comment + "'>" + data + "</p>";
+                            if (row.comment !== "" && row.user_response === "") {
+                                html += "<small class=\"label pull-right hand bg-yellow\" onclick=\"add_response_to_comment(" + row.id + ")\">...</small>";
+                            }
+                            if (row.user_response !== "") {
+                                html += "<small class=\"label pull-right hand bg-yellow\" onclick=\"show_comment_and_response(" + row.id + ")\" title=\"{% trans "Response" %}\">R</small>";
+                            }
+                            return html;
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "review"
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "score"
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "user_response"
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "booked"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "", "render": function(data, type, row) {
+                            var html;
+                            if (row.service_status === 2 || row.service_status === 3 || row.service_status === 4)
+                                return "";
+
+                            html = "<button data-toggle=\"tooltip\" title=\"{% trans "Pay" %}\" onclick=\"make_order_payment(" + row.id + "," + row.price + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-money\" aria-hidden=\"true\"></i>{% trans "Pay" %}\n" +
+                            "</button>";
+                            html += "<button data-toggle=\"tooltip\" title=\"{% trans "Cancel" %}\" onclick=\"cancel_order(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-ban\" aria-hidden=\"true\"></i>{% trans "Cancel" %}\n" +
+                            "</button>";
+                            return html;
+                        }
+                    }
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+                order: [
+                    [8, 'desc']
+                ],
+                "search": {
+                    "regex": true
+                }
+            });
+            var tableElement = document.getElementsByClassName('dataTable');
+            tableElement[0].id = "orders_table";
+
+            $('#orders_table thead').on("click", "th.select-checkbox", function () {
+                if (total_select % 2 === 1) {
+                    orders_table.rows().deselect();
+                    $("#orders_table thead tr").removeClass("selected");
+                } else {
+                    orders_table.rows().select();
+                    $("#orders_table thead tr").addClass("selected");
+                }
+
+                total_select++;
+            });
+        });
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function open_modal(modal_name){
+            $("#" + modal_name).addClass("in");
+            $("#" + modal_name).css("display", "block");
+            $("#waiting").addClass("modal-backdrop fade in");
+            $(document.body).addClass("modal-open");
+        }
+
+        function close_modal(modal_name){
+            $("#" + modal_name).removeClass("in");
+            $("#" + modal_name).css("display", "none");
+            $("#waiting").removeClass("modal-backdrop fade in");
+            $(document.body).removeClass("modal-open");
+        }
+    </script>
+</body>
+
+</html>

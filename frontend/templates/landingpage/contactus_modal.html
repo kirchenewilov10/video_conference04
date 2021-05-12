@@ -1,0 +1,133 @@
+{% load staticfiles %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% if LANGUAGE_CODE == "ar" %}
+    <div class="modal right fade" id="contactus_modal" tabindex="-1" role="dialog" aria-labelledby="contactus_modal" style="opacity: 1 !important;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: transparent;">
+                    <h4 class="modal-title" id="contactus_modal_title">{% trans "Contact Us" %}</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p style="text-align: right;">
+                        {% blocktrans %}
+                            We appreciate your trust in Securology,
+                            <br>We welcome your inquiries, your request will be answered
+                            <br>in a maximum period of 24 hours.
+                            <br>Info@Securology.net
+                        {% endblocktrans %}
+                    </p>
+
+                    <div class="contactus-content">
+                        <div class="col-md-12 pb-4">
+                            <div class="col-md-8">
+                                <input type="text" name="name" id="contact_name" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="contact_name" class="pull-right">{% trans "Name" %}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pb-4">
+                            <div class="col-md-8">
+                                <input type="email" name="email" id="contact_email" class="form-control" required>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <label for="contact_email" class="pull-right">{% trans "E-Mail" %}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <label for="contact_message" class="pull-right">{% trans "Message" %}</label>
+                                <textarea name="contact_message" id="contact_message" class="form-control" cols="30" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <button type="button" class="btn btn-default pull-right" onclick="on_click_send_contact_message()">{% trans "Submit" %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    {#                <div class="modal-footer">#}
+    {#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+    {#                        {% blocktrans %}#}
+    {#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+    {#                        {% endblocktrans %}#}
+    {#                    </p>#}
+    {#                    <div class="back-to-home">#}
+    {#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+    {#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+    {#                    </div>#}
+    {#                </div>#}
+            </div><!-- modal-content -->
+            <div class="background-img"></div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+
+{% else %}
+    <div class="modal right fade" id="contactus_modal" tabindex="-1" role="dialog" aria-labelledby="contactus_modal" style="opacity: 1 !important;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: transparent;">
+                    <h4 class="modal-title" id="contactus_modal_title">{% trans "Contact Us" %}</h4>
+                </div>
+
+                <div class="modal-body">
+                    <p style="text-align: left;">
+                        {% blocktrans %}
+                            We appreciate your trust in Securology,
+                            <br>We welcome your inquiries, your request will be answered
+                            <br>in a maximum period of 24 hours.
+                            <br>Info@Securology.net
+                        {% endblocktrans %}
+                    </p>
+
+                    <div class="contactus-content">
+                        <div class="col-md-12 pb-4">
+                            <div class="col-md-4">
+                                <label for="contact_name" class="pull-right">{% trans "Name" %}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" name="name" id="contact_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12 pb-4">
+                            <div class="col-md-4">
+                                <label for="contact_email" class="pull-right">{% trans "E-Mail" %}</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="email" name="email" id="contact_email" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <label for="contact_message">{% trans "Message" %}</label>
+                                <textarea name="contact_message" id="contact_message" class="form-control" cols="30" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-12 form-group">
+                                <button type="button" class="btn btn-default pull-right" onclick="on_click_send_contact_message()">{% trans "Submit" %}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    {#                <div class="modal-footer">#}
+    {#                    <p style="padding: 10px 0 15px 0; color: #8D4141; text-align:center; font-size: medium;">#}
+    {#                        {% blocktrans %}#}
+    {#                            Our services guarantee<br>Full confidentiality and authenticated and secure access#}
+    {#                        {% endblocktrans %}#}
+    {#                    </p>#}
+    {#                    <div class="back-to-home">#}
+    {#                        <button type="button" class="close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-caret-left" style="font-size: medium;"></i></span></button>#}
+    {#                        <span data-dismiss="modal" aria-label="Close">{% trans "Back to the home page" %}</span>#}
+    {#                    </div>#}
+    {#                </div>#}
+            </div><!-- modal-content -->
+            <div class="background-img"></div>
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+{% endif %}

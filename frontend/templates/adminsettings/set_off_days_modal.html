@@ -1,0 +1,241 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<div id="set_off_days_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="max-width: 800px; width: 800px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"> {% trans 'Off Days' %}<a class="close star-back-color" href="#" onclick="on_close_set_off_days_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px; padding: 0px; overflow-x: hidden; overflow-y: auto">
+                <div class="col-lg-12 no-padding">
+                    <div class="box-body">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <div class="col-lg-12 no-padding">
+                                    <div class="col-lg-3 no-padding">
+                                        <input type="date" class="form-control" id="new_off_day">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <button type="button" class="btn btn-primary" onclick="on_click_add_new_off_day()">{% trans "Add" %}</button>
+                                    </div>
+                                    <div class="col-lg-7 mt-2">
+                                        <p><i class="fa fa-question pl-2"></i>&nbsp;&nbsp;{% trans "Please click red rectangle to delete rest day." %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body box-profile">
+                                <div style="float:left; width: 150px;">
+                                    <div id="nav"></div>
+                                </div>
+                                <div style="margin-left: 150px;">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="on_close_set_off_days_modal()">{% trans 'Close' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var dtToday = new Date();
+        var dtAfter60 = new Date(Date.now() + 60*24*60*60*1000);
+
+        var minDate = change_date_format(dtToday);
+        var maxDate = change_date_format(dtAfter60);
+        $('#new_off_day').attr('min', minDate);
+        $('#new_off_day').attr('max', maxDate);
+    });
+
+    function change_date_format(dt) {
+        var month = dt.getMonth() + 1;
+        var day = dt.getDate();
+        var year = dt.getFullYear();
+        if(month < 10)
+            month = '0' + month.toString();
+        if(day < 10)
+            day = '0' + day.toString();
+
+        return year + '-' + month + '-' + day;
+    }
+
+    function on_click_open_set_off_days_modal() {
+        open_modal("set_off_days_modal");
+        dp.init();
+        draw_calendar();
+    }
+
+    function on_close_set_off_days_modal() {
+        close_modal("set_off_days_modal");
+    }
+
+
+    var nav = new DayPilot.Navigator("nav");
+    nav.showMonths = 3;
+    nav.selectMode = "month";
+    nav.onTimeRangeSelected = function(args) {
+        dp.startDate = args.start;
+        dp.update();
+    };
+    nav.init();
+
+
+    var now_date = new Date().toISOString().slice(0,10);
+
+    var picker = new DayPilot.DatePicker({
+        target: 'start',
+        pattern: 'yyyy-MM-dd',
+        onTimeRangeSelected: function(args) {
+            dp.startDate = args.start;
+            dp.update();
+        }
+    });
+
+    var dp = new DayPilot.Month("calendar");
+
+    // view
+    dp.startDate = now_date;
+    dp.eventMoveHandling = "Disabled";
+
+    // event creating
+    /*
+    dp.onTimeRangeSelected = function (args) {
+
+        var name = prompt("New event name:", "Event");
+        dp.clearSelection();
+        if (!name) return;
+        var e = new DayPilot.Event({
+            start: args.start,
+            end: args.end,
+            id: DayPilot.guid(),
+            text: name
+        });
+        dp.events.add(e);
+    };
+     */
+
+    dp.onEventClicked = function(args) {
+		var off_day_id = args.e.id();
+
+        swal({
+            title: "{% trans "Remove?" %}",
+            text: "{% trans "Are you sure to remove this rest day?" %}",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "adminsettings/remove_off_day",
+                data: {
+                    "off_day_id": off_day_id
+                },
+                success: function (res) {
+                    if (res === "success"){
+                        swal("{% trans "Success" %}", "{% trans "Off-Day setting has been removed successfully." %}", "success");
+                        dp.events.remove(args.e);
+                    }
+                    else {
+                        swal("{% trans "Failed!" %}", "{% trans "Operation failed." %}", "error");
+                    }
+                }
+            });
+        });
+    };
+
+    dp.onBeforeEventRender = function(args) {
+        var type = args.data.tags && args.data.tags.type;
+        switch (type) {
+            case "important":
+                args.data.fontColor = "#fff";
+                args.data.backColor = "#E06666";
+                args.data.borderColor = "#E06666";
+                break;
+            case "note":
+                args.data.fontColor = "#000";
+                args.data.backColor = "#9FC5E8";
+                args.data.borderColor = "#3D85C6";
+                break;
+            case "warning":
+                args.data.fontColor = "#000";
+                args.data.backColor = "#FFE599";
+                args.data.borderColor = "#F1C232";
+                break;
+            case "complete":
+                args.data.fontColor = "#000";
+                args.data.backColor = "#B6D7A8";
+                args.data.borderColor = "#6AA84F";
+                break;
+        }
+    };
+
+    function draw_calendar(){
+        $.ajax({
+            type: "POST",
+            url: "/adminsettings/get_off_days",
+            success: function(res){
+                var data = JSON.parse(res);
+                dp.events.list = get_event_list(data);
+                dp.update();
+            }
+        })
+    }
+
+    function on_click_add_new_off_day() {
+        var off_day = $("#new_off_day").val();
+
+        if (off_day === "") {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please select the date." %}");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/adminsettings/add_new_off_day",
+            data: {
+                off_day: off_day
+            },
+            success: function (res) {
+                if (res === "duplicated") {
+                    show_message("error", "{% trans "Error" %}", "{% trans "This date was already set." %}");
+                }
+                else if (res === "failure") {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                }
+                else {
+                    show_message("success", "{% trans "Success" %}", "{% trans "This day has been set as a rest day." %}");
+
+                    var off_days = JSON.parse(res);
+                    dp.events.list = get_event_list(off_days);
+                    dp.update();
+                }
+            }
+        })
+    }
+
+    function get_event_list(data) {
+        var event_list = [], i, temp;
+        for (i=0;i<data.length;i++){
+            temp = {};
+            temp["start"] = data[i]["off_day"] + "T" + "00:00:00";
+            temp["end"] = data[i]["off_day"] + "T" + "23:59:59";
+            temp["id"] = data[i]["id"];
+            temp["text"] = "Off";
+            temp["tags"] = {"type": "important"};
+            event_list.push(temp);
+        }
+        return event_list;
+
+    }
+</script>

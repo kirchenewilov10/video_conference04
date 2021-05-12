@@ -1,0 +1,19 @@
+{% extends "pdfgeneration/base.html" %}
+
+{% block style%}
+    {% include 'pdfgeneration/pagestyle.html' %}
+{% endblock %}
+
+{%block header%}
+    {% include 'pdfgeneration/header.html' %}
+{% endblock %}
+
+{% block content %}
+    {% include 'pdfgeneration/content.html' %}
+{% endblock %}
+
+{% block footer%}
+    {% include 'pdfgeneration/footer.html' %}
+{% endblock %}
+
+

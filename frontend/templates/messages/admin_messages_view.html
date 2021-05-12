@@ -1,0 +1,325 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<style>
+    .filterMembers {
+        display: flex;
+    }
+    .filterMembersBtn {
+        color: #3f3f3f;
+        font-size: smaller;
+    }
+    .online-filter .active {
+        color: #004065 !important;
+    }
+    .status {
+        position: relative;
+        width:20px;
+        height:20px;
+        right:0;
+        left:-8px;
+        top: 35px;
+        {#border:5px solid #fff;#}
+        margin-top:0;
+        border-radius:100%;
+    }
+    .status .online {
+        color: limegreen;
+    }
+    .status .offline {
+        color: lightgrey;
+    }
+    .contact .data h5 {
+        display:inline-flex;
+        font-size:16px;
+        font-weight:700;
+        color:#212529;
+        margin-bottom:5px;
+    }
+    .selected_member_bk {
+        background-color: whitesmoke;
+    }
+    .btn .no-border{
+        border: 0;
+    }
+    .unread-alert{
+        width: fit-content;
+        padding: 0 3px 0 4px;
+        position: absolute;
+        right: 5px;
+    }
+    .main .chat .bottom .form-control-swip {
+        padding: 10px 80px 5px 50px;
+    }
+</style>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-12 no-padding">
+            {% if user_level == 1 %}
+            <div class="page-header" style="margin-top: 80px;">
+                <h3><i class="fa fa-navicon"></i> {% trans "Messages" %}</h3>
+            </div>
+            {% endif %}
+            <div class="page-content no-padding" style="box-shadow: none;">
+                <div class="row">
+                    <div class="col-md-12 no-padding">
+                        <div class="col-md-5 no-padding">
+                            <div class="search">
+                                <form class="form-inline position-relative">
+                                    {% csrf_token %}
+                                    <input type="search" class="form-control-swip" id="people" placeholder="{% trans "Search for people..." %}" style="padding-left: 45px;">
+                                    <button type="button" class="btn btn-link loop no-border" style="position: absolute;"><i class="material-icons">search</i></button>
+                                </form>
+                            </div>
+                            <div class="col-md-12 online-filter" style="margin-top: 10px; margin-bottom: 5px;color: cornflowerblue;">
+                                <div class="col-md-2">
+                                    <a class="hand filterMembersBtn active show" data-toggle="list" data-filter="all"><b>{% trans "ALL" %}</b></a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="hand filterMembersBtn" data-toggle="list" data-filter="online"><b>{% trans "ONLINE" %}</b></a>
+                                </div>
+{#                                <div class="col-md-4">#}
+{#                                    <a class="hand filterMembersBtn" data-toggle="list" data-filter="offline"><b>{% trans "OFFLINE" %}</b></a>#}
+{#                                </div>#}
+                                <div class="col-md-3">
+                                    <a class="hand filterMembersBtn" data-toggle="list" data-filter="registered"><b>{% trans "REGISTRED" %}</b></a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="hand filterMembersBtn" data-toggle="list" data-filter="unregistered"><b>{% trans "UNREGISTERED" %}</b></a>
+                                </div>
+                            </div>
+                            <hr style="margin-top: 40px; margin-bottom: 0px;">
+                            <div class="col-md-12 no-padding" id="users_list" style="overflow-y: auto;">
+                                {% for user in users %}
+                                <a id="filterMember_{{ user.id }}" class="filterMembers all {% if user.online == 1 %}online{% else %}offline{% endif %} {% if user.type == 'registered' %}registered{% else %}unregistered{% endif %} contact mt-3 hand" data-toggle="list" onclick="on_click_member('{{ user.id }}', '{{ user.type }}')">
+                                    <img class="avatar-md" src="{{ user.image_path }}" data-toggle="tooltip" data-placement="top" title="{{ user.username }}" alt="avatar" style="border-radius: 0%;">
+                                    <input type="hidden" id="user_image_path_{{ user.id }}" value="{{ user.image_path }}">
+                                    <div class="status">
+                                        {% if user.online == 1 %}
+                                            <i class="material-icons online" style="font-size: 15px;">fiber_manual_record</i>
+                                        {% else %}
+                                            <i class="material-icons offline" style="font-size: 15px;">fiber_manual_record</i>
+                                        {% endif %}
+                                    </div>
+                                    <div class="data">
+                                        <h5>{{ user.username }}</h5>
+                                    </div>
+                                    {% if user.unread_messages_cnt > 0 %}
+                                        <span class="pull-right bg-red unread-alert" id="user_{{ user.id }}_unread_msg_alert">{{ user.unread_messages_cnt }}</span>
+                                    {% endif %}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-7 no-padding">
+                            <div class="main" style="position:relative; top: 0; height: 100%;">
+                                <div class="tab-content" id="nav-tabContent">
+                                    <!-- Start of Babble -->
+                                    <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
+                                        <!-- Start of Chat -->
+                                        <div class="chat pt-0" id="chat1">
+                                            <div class="content" id="content" style="height: calc(100vh - 270px) !important;">
+                                                <div class="container" style="overflow-y: auto; height: 100%;" id="message_box_container">
+                                                    <div class="col-md-12" id="message_box">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="container no-padding" style="border-top: 2px solid #e8e8e8; width:100%;">
+                                                <div class="col-md-12 no-padding">
+                                                    <div class="bottom no-padding">
+                                                        <div class="position-relative w-100">
+                                                            <textarea id="chat-message-input" class="form-control-swip" placeholder="{% trans "Start typing for reply..." %}" rows="1" onkeyup="on_typing_message(event)"></textarea>
+{#                                                            <button class="btn emoticons no-border" style="padding-left: 10px;"><i class="material-icons">insert_emoticon</i></button>#}
+                                                            <form ENCTYPE="multipart/form-data" class="chat_file_upload">
+                                                                {% csrf_token %}
+                                                                <div class="input-group form-file">
+                                                                    <input class="file-input" type="file" id="chfp_document" accept=".*" style="display:none;" onchange="on_select_attach_file()">
+                                                                </div>
+                                                            </form>
+                                                            <button class="btn no-border" style="position:absolute;top:0;bottom:0;padding: 0 15px;" onclick="on_click_attach_file()"><i class="material-icons">attach_file</i></button>
+                                                            <button type="button" id="chat-message-submit" class="btn send no-border" onclick="on_click_send_message()" style="padding: 10px 50px 0 15px;"><i class="material-icons">send</i></button>
+                                                            <button type="button" id="chat-message-videochat" class="btn send no-border" onclick="on_click_video_call()" style="padding: 10px;"><i class="fa fa-video-camera" style="font-size: 20px;"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static "plugins/calling/js/swipe.js" %}"></script>
+<script>
+    var height = (window.innerHeight - 340) + "px";
+    $("#users_list").css("height", height);
+
+    {% for user in users %}
+        if (selected_userid === 0){
+            selected_userid = '{{ user.id }}';
+            calling_user = selected_userid;
+            var tmp_element = document.getElementById("filterMember_" + selected_userid);
+            tmp_element.click();
+        }
+    {% endfor %}
+
+    function on_click_member(userid, usertype){
+        selected_userid = userid;
+        calling_user = userid;
+        selected_session_type = usertype;
+
+        $(".filterMembers").removeClass("selected_member_bk");
+        var member_element = document.getElementById("filterMember_" + userid);
+        if (member_element !== null){
+            member_element.classList.add("selected_member_bk");
+        }
+
+        var url = "";
+        if (usertype === "registered")
+            url = "message/get_message_history";
+        else
+            url = "message/get_instantmessage_history";
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                userid: userid
+            },
+            success: function(res){
+                // remove unread alert for this user
+                var element = document.getElementById("user_" + userid + "_unread_msg_alert");
+                if (element !== null){
+                    var read_message = element.innerText;
+                    read_message = read_message === "" ? 0 : parseInt(read_message);
+                    total_unread_messages_cnt -= read_message;
+                    if (total_unread_messages_cnt > 0)
+                        element.innerText = total_unread_messages_cnt;
+                    else
+                        element.innerText = "";
+                }
+
+                update_unread_message_mark();
+
+                // draw messages
+                var messages = JSON.parse(res);
+                var html, i, message, date, time, me, body, file_path, file_name, file_ext;
+                var now = new Date();
+                var image_path = document.getElementById("user_image_path_" + userid).value;
+
+                printed_date="";
+                $("#message_box").html("");
+                $("#mini_message_box").html("");
+
+                for (i=0;i<messages.length;i++){
+                    html = "";
+                    message = messages[i];
+
+                    date = message["timestamp"].substr(0, 10);
+                    time = message["timestamp"].substr(11, 5);
+                    if (printed_date !== date){
+                        printed_date = date;
+                        html += "<div class=\"date\">" +
+                                "<hr><span style=\"width: 100%; text-align: center;\">" + printed_date + "</span><hr>" +
+                                "</div>";
+                    }
+
+                    me = "";
+                    if (parseInt(message["userid"]) !== parseInt(userid)) {
+                        me = "me";
+                    }
+
+                    if (message["type"] === "TEXT"){
+
+                        html += "<div class=\"message " + me + "\">\n";
+
+                        if (me === ""){
+                            html += "<img class=\"avatar-md\" src=\"" + image_path + "\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" alt=\"Recevier Avatar\">\n";
+                        }
+
+                        html += "   <div class=\"text-main\">\n" +
+                                "       <div class=\"text-group " + me + "\">\n" +
+                                "           <div class=\"text " + me + "\">\n" +
+                                "               <p>" + message["body"] + "</p>\n" +
+                                "           </div>\n" +
+                                "       </div>\n" +
+                                "       <span>" + time + "</span>\n" +
+                                "   </div>\n" +
+                                "</div>";
+
+                        $("#message_box").append(html);
+                        $("#mini_message_box").append(html);
+                    }
+
+                    if (message["type"] === "FILE"){
+                        if (selected_session_type === "registered")
+                            body = JSON.parse(message["body"]);
+                        else
+                            body = message["body"];
+
+                        file_path = body["path"];
+                        file_name = body["name"];
+                        file_ext = file_name.split(".")[file_name.split(".").length - 1];
+
+                        html += "<div class=\"message " + me + "\">\n";
+
+                        if (me === ""){
+                            html += "<img class=\"avatar-md\" src=\"" + image_path + "\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" alt=\"Recevier Avatar\">\n";
+                        }
+
+                        html += "<div class=\"text-main\">\n" +
+                            "                   <div class=\"text-group " + me + "\">\n" +
+                            "                       <div class=\"text " + me + "\">\n" +
+                            "                           <div class=\"attachment " + me + "\">";
+                        if (file_ext === 'png' || file_ext === 'PNG' || file_ext === 'gif' || file_ext === 'GIF' || file_ext === 'bmp' || file_ext === 'BMP' || file_ext === 'jpg' || file_ext === 'JPG' || file_ext === 'jpeg' || file_ext === 'JPEG') {
+                            html += '<a class="fancybox" href="' + file_path + '" data-fancybox-group="gallery" title="' + file_name + '">' +
+                                '<img class="chat_img" src="' + file_path + '" style="width: 100%" alt="no image"><br>' +
+                                '</a>' +
+                                '</div>' +
+                                '<br>' +
+                                '<a class="chat_file_a" href="' + file_path + '" target="_blank" download><i class="fa fa-file"></i> ' + file_name;
+                        }
+                        else {
+                            html += "            <button class=\"btn attach\"><i class=\"material-icons md-18\">insert_drive_file</i></button>" +
+                                "                               <div class=\"file\">\n" +
+                                "                                   <h5><a href=\"" + file_path + "\" target=\"_blank\" download>" + file_name + "</a></h5>\n" +
+                                "                               </div>" +
+                                "</div>";
+                        }
+                        html += "                       </div>\n" +
+                            "                   </div>\n" +
+                            "                   <span>" + time + "</span>\n" +
+                            "               </div>\n" +
+                            "           </div>";
+                        $("#message_box").append(html);
+                        $("#mini_message_box").append(html);
+                    }
+                }
+
+                $('.fancybox').fancybox();
+                scrollToBottom(document.getElementById('message_box_container'));
+            }
+        })
+    }
+
+    function on_click_attach_file(){
+        $("#chfp_document").trigger("click");
+    }
+
+    function on_select_attach_file(){
+        var currentRecipientid = selected_userid;
+        var body = null;
+        var fileform = $('.chat_file_upload');
+        sendMessage(currentRecipientid, body, fileform, 1, 2);
+    }
+
+    function on_click_video_call(){
+        on_open_videochatting_modal();
+        $("#videochatting_content").load("/chat/show_chatroom");
+    }
+</script>

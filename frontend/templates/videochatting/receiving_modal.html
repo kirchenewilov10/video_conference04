@@ -1,0 +1,102 @@
+{% load staticfiles %}
+{% load i18n %}
+<!-- Start of Call -->
+<div class="main" id="receive_call_modal" style="display: none">
+    <div class="call" id="receive_call" style="width: 20%">
+        <div class="content">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="inside">
+                        <div class="panel">
+                            <div class="participant">
+{#                                <img class="avatar-xxl" src="{{ receiver.image_path }}" alt="avatar">#}
+                                <span>{% trans "Connecting" %}</span>
+                            </div>
+                            <div class="options">
+{#                                <button class="btn option"><i class="material-icons md-30">mic</i></button>#}
+{#                                <button class="btn option"><i class="material-icons md-30">videocam</i></button>#}
+                                <button class="btn option call-end" onclick="on_receive_calling_admin()"><i class="material-icons md-30">call</i></button>
+                                <button class="btn option call-end" onclick="on_reject_calling_admin()"><i class="material-icons md-30">call_end</i></button>
+{#                                <button class="btn option"><i class="material-icons md-30">person_add</i></button>#}
+{#                                <button class="btn option"><i class="material-icons md-30">volume_up</i></button>#}
+                            </div>
+{#                            <button class="btn back" name="1"><i class="material-icons md-24">chat</i></button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Call -->
+
+<script>
+    function on_close_receive_calling_modal(){
+        $("#receive_call_modal").css("display", "none");
+        $("#receive_call").css("display", "none");
+    }
+
+    function on_open_receive_calling_modal(){
+        $("#receive_call_modal").css("display", "block");
+        $("#receive_call").css("display", "block");
+    }
+
+    function on_receive_calling_admin(){
+        on_close_receive_calling_modal();
+        on_open_videochatting_modal();
+        show_local_mediastream();
+
+        $("#videochatting_content").load("/chat/show_admin_chatroom", {calling_user: calling_user}, async function(){
+            show_local_mediastream();
+            while(1){
+                if (typeof (localStream) !== "undefined" && localStream.getTracks().length === 2)
+                    break;
+                await sleep(1000);
+            }
+
+            var messageData = {};
+            messageData["sendUser"] = currentUserid;
+            messageData["targetUser"] = calling_user;
+            messageData["type"] = "accept_calling";
+
+            /*
+            chatSocket.send(JSON.stringify({
+                'message': messageData,
+                'session_type': 'video_chatting'
+            }));
+
+            */
+
+            sendMessage(calling_user, messageData, null, 0, 3);
+        });
+        /*
+        $("#main_content").load("/chat/show_admin_chatroom", {
+            calling_user: calling_user
+        }, function(){});
+         */
+    }
+
+    function on_reject_calling_admin(){
+        on_close_receive_calling_modal();
+
+        remotePeerConnection = null;
+
+        var userid = parseInt(document.getElementById("userid").value);
+
+        var messageData = {};
+        messageData["sendUser"] = userid;
+        messageData["targetUser"] = calling_user;
+        messageData["type"] = "reject_calling";
+
+        /*
+        chatSocket.send(JSON.stringify({
+            'message': messageData,
+            'session_type': 'video_chatting'
+        }));
+
+         */
+
+        sendMessage(calling_user, messageData, null, 0, 3);
+        calling_user = 0;
+    }
+</script>

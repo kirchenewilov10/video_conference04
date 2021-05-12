@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="24" viewBox="0 0 44 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        font-size: 18px;
+        font-family: SegoeUI-Semibold, Segoe UI;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+      }
+    </style>
+  </defs>
+  <text id="أخبار" class="cls-1" transform="translate(22 19)"><tspan x="-21.932" y="0">أخبار</tspan></text>
+</svg>

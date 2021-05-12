@@ -1,0 +1,466 @@
+{% load staticfiles %}
+{% load i18n %}
+{% include 'adminsettings/add_comment_modal.html' %}
+{% include 'adminsettings/set_off_days_modal.html' %}
+
+<div class="container" style="margin-top: 50px;">
+    <div class="row justify-content-center mt-30">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="col-12 col-md-12 col-lg-12 mb-30">
+                <div class="page-header">
+                    <h3>
+                        <i class="fa fa-bars"></i> {% trans "Orders" %}
+                        <button type="button" class="btn btn-primary pull-right" onclick="on_click_show_calendar_view()">{% trans "Calendar View" %}</button>
+                        <button type="button" class="btn btn-primary pull-right mr-2" onclick="on_click_open_set_off_days_modal()">{% trans "Set off days" %}</button>
+                    </h3>
+                </div>
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-12 col-md-12 p-0">
+                            <table id="orders_table" class="display cell-border compact stripe" style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    {% for data in headerdata %}
+                                        <th class="text-center">{{ data.name }}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var orders_table;
+    var orders_total_select = 0;
+    var tableElement;
+
+    $(document).ready(function () {
+        var height = (window.innerHeight - 444) + "px";
+        orders_table = $('#orders_table').DataTable({
+            dom: '<"top"Rf<"clear">>rt<"bottom"lip<"clear">>',
+            lengthMenu: [[20, 50, 100], [20, 50, 100]],
+            pageLength: 50,
+            scrollX: true,
+            scrollY: height,
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    width: "2%",
+                    targets: 0
+                },
+                {
+                    width: "10%",
+                    targets: 2
+                }
+            ],
+            ajax: {
+                url: "/adminsettings/orders_datatable_api?format=datatables",
+                data: function (d) {
+                    return $.extend({}, d, {});
+                }
+            },
+            columns: [
+                {
+                    width: "1%",
+                    data: "id", "searchable": false, "render": function (data, type, row) {
+                        var htm = "";
+                        htm += '<i id=' + row.id + ' style="display: None"></i>';
+                        return htm;
+                    }
+                },
+                {
+                    className: "dt-center",
+                    data: "userid", "render": function(data, type, row){
+                        return row.username;
+                    }
+                },
+                {
+                    className: "dt-center",
+                    data: "service_id", "render": function(data, type, row){
+                        return row.service_name;
+                    }
+                },
+                {
+                    className: "dt-center hide",
+                    data: "category_type"
+                },
+                {
+                    className: "dt-center",
+                    data: "description", "render": function(data, type, row){
+                        var html="";
+                        if (row.comment !== ""){
+                            html += "<small class=\"label pull-right bg-yellow hand\" title=\"{% trans "Comment" %}\" onclick=\"on_open_add_comment_modal(" + row.id + ")\">C</small>";
+                        }
+                        if (row.user_response !== "") {
+                            html += "<small class=\"label pull-right bg-aqua hand\" title=\"{% trans "Response" %}\" onclick=\"on_open_add_comment_modal(" + row.id + ")\">R</small>";
+                        }
+                        html += "<p title='" + row.description + "' style='color: black; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;'>" + row.description + "</p>";
+                        return html;
+                    }
+                },
+                {
+                    className: "dt-center",
+                    data: "price", "render": function(data, type, row){
+                        return "<b>$</b> " + row.price;
+                    }
+                },
+                {
+                    className: "dt-center hide",
+                    data: "pay_status"
+                },
+                {
+                    className: "dt-center",
+                    data: "service_status", "render": function(data, type, row){
+                        var html = "";
+                        if (row.service_status === 0){
+                            html = "<span class=\"badge bg-yellow\">{% trans "Created" %}</span>";
+                        }
+                        else if (row.service_status === 1) {
+                            if (row.pay_status === 0){
+                                html = "<span class=\"badge bg-aqua\">{% trans "Accepted" %}</span>";
+                            }
+                            else {
+                                html = "<span class=\"badge bg-blue\">{% trans "Paid" %}</span>";
+                            }
+                        }
+                        else if (row.service_status === 2) {
+                            html = "<span class=\"badge bg-grey\">{% trans "Cancelled" %}</span>";
+                        }
+                        else if (row.service_status === 3) {
+                            html = "<span class=\"badge bg-green\">{% trans "Finished" %}</span>";
+                        }
+                        else if (row.service_status === 4) {
+                            html = "<span class=\"badge bg-red\">{% trans "Rejected" %}</span>";
+                        }
+                        return html;
+                    }
+                },
+                {
+                    className: "dt-center",
+                    data: "paid_price", "render": function(data, type, row) {
+                        return "<b>$</b> " + row.paid_price;
+                    }
+                },
+                {
+                    className: "dt-center",
+                    data: "date_booked", "render": function(data, type, row) {
+                        var d = row.date_booked, html, text_color="";
+
+                        if (row.service_status <= 1) {
+                            text_color = "class=\"text-aqua\"";
+                        }
+
+                        if (row.booked === 1)
+                            html = "<p " + text_color + ">" + d.substring(0, 10) + "<br>" + d.substring(11, 19) + "</p>";
+                        else
+                            html = "{% trans "Immediately" %}";
+                        return html;
+                    }
+                },
+                {
+                    className: "dt-center",
+                    data: "date_created", "render": function(data, type, row){
+                        var html;
+                        var d = row.date_created;
+                        html = d.substring(0, 10) + "<br>" + d.substring(11, 19);
+                        html = "<p class=\"text-muted\">" + html + "</p>";
+                        return html;
+                    }
+                },
+                {
+                    className: "dt-center hide",
+                    data: "date_paid"
+                },
+                {
+                    className: "dt-center hide",
+                    data: "comment"
+                },
+                {
+                    className: "dt-center hide",
+                    data: "review"
+                },
+                {
+                    className: "dt-center hide",
+                    data: "score"
+                },
+                {
+                    className: "dt-center hide",
+                    data: "booked"
+                },
+                {
+                    className: "dt-center",
+                    data: "", "render": function(data, type, row){
+                        var html="", comment, accept, cancel_accept, show_details, mark_as_finish, reject;
+
+                        comment = "<button data-toggle=\"tooltip\" title=\"{% trans "Comment" %}\" onclick=\"on_open_add_comment_modal(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-commenting\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+                        accept = "<button data-toggle=\"tooltip\" title=\"{% trans "Accept" %}\" onclick=\"accept_order(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-check-square-o\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+                        cancel_accept = "<button data-toggle=\"tooltip\" title=\"{% trans "Cancel Accept" %}\" onclick=\"cancel_accept_order(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-ban\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+                        show_details = "<button data-toggle=\"tooltip\" title=\"{% trans "Details" %}\" onclick=\"show_order_details(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-list\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+                        mark_as_finish = "<button data-toggle=\"tooltip\" title=\"{% trans "Mark as Finished" %}\" onclick=\"mark_as_finished_order(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-thumb-tack\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+                        reject = "<button data-toggle=\"tooltip\" title=\"{% trans "Reject" %}\" onclick=\"reject_order(" + row.id + ")\" style=\"border-color: lightgray; padding: 3px; border-radius: 5px;\">\n" +
+                            "<i class=\"fa fa-close\" aria-hidden=\"true\"></i>\n" +
+                            "</button>";
+
+                        if (row.service_status === 0) {
+                            html += comment + accept + reject;
+                        }
+                        else if (row.service_status === 1) {
+                            html += cancel_accept + mark_as_finish;
+                        }
+                        else {
+                            html += show_details;
+                        }
+                        return html;
+                    }
+                }
+            ],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+            order: [
+                [10, 'desc']
+            ]
+        });
+        tableElement = document.getElementsByClassName('dataTable');
+        tableElement[0].id = "orders_table";
+
+        $('#orders_table thead').on("click", "th.select-checkbox", function () {
+            if (orders_total_select % 2 === 1) {
+                orders_table.rows().deselect();
+                $("#orders_table thead tr").removeClass("selected");
+            } else {
+                orders_table.rows().select();
+                $("#orders_table thead tr").addClass("selected");
+            }
+
+            orders_total_select++;
+        });
+
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Get the column API object
+            var column = orders_table.column($(this).attr('data-column'));
+
+            // Toggle the visibility
+            column.visible(!column.visible());
+        });
+    });
+
+    function on_open_add_comment_modal(order_id) {
+        $.ajax({
+            type: "POST",
+            url: "/adminsettings/get_order_by_id",
+            data: {
+                order_id: order_id
+            },
+            success: function(res) {
+                if (res === "failure"){
+                    show_message("warning", "{% trans "Warning" %}", "{% trans "Operation failed." %}");
+                }
+                else {
+                    var data = JSON.parse(res);
+                    $("#service_request_user").html(data["username"]);
+                    $("#service_type").html(data["service_name"]);
+                    $("#service_price").html(data["price"]);
+                    if (data["service_status"] === 0){
+                        $("#service_status").html("<span class=\"badge bg-yellow\">{% trans "Awaiting" %}</span>");
+                    }
+                    else if (data["service_status"] === 1) {
+                        $("#service_status").html("<span class=\"badge bg-aqua\">{% trans "Accepted" %}</span>");
+                    }
+                    else if (data["service_status"] === 2) {
+                        $("#service_status").html("<span class=\"badge bg-grey\">{% trans "Cancelled" %}</span>");
+                    }
+                    else if (data["service_status"] === 3) {
+                        $("#service_status").html("<span class=\"badge bg-green\">{% trans "Finished" %}</span>");
+                    }
+                    else if (data["service_status"] === 4) {
+                        $("#service_status").html("<span class=\"badge bg-red\">{% trans "Rejected" %}</span>");
+                    }
+
+                    $("#service_description").html(data["description"]);
+
+                    var d = data["date_created"];
+                    $("#service_date_created").html(d.substring(0, 10) + " " + d.substring(11, 19));
+                    $("#new_comment").val(data["comment"]);
+
+                    if (data["user_response"] !== "") {
+                        $("#user_response").html(data["user_response"]);
+                        $("#user_response_div").removeClass("hide");
+                    }
+
+                    selected_order_id = order_id;
+
+                    open_modal("add_comment_modal");
+                }
+            }
+        })
+    }
+
+    function accept_order(order_id){
+        swal({
+            title: "{% trans "Are you sure to accept this order?" %}",
+            text: "",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/adminsettings/accept_order",
+                data: {
+                    order_id: order_id
+                },
+                success: function (res) {
+                    if (res === "success") {
+                        swal("{% trans "Success" %}", "{% trans "This order has been accepted successfully." %}", "success");
+                        update_table(orders_table);
+                    }
+                    else if (res === "no_permission") {
+                        swal("{% trans "Permission Denied" %}", "{% trans "You don't have the permission for this operation." %}", "error");
+                    }
+                    else {
+                        swal("{% trans "Error" %}", "{% trans "Operation failed." %}", "error");
+                    }
+                }
+            })
+        });
+    }
+
+    function cancel_accept_order(order_id) {
+        swal({
+            title: "{% trans "Are you sure to cancel the acceptance of this order?" %}",
+            text: "",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/adminsettings/cancel_accept_order",
+                data: {
+                    order_id: order_id
+                },
+                success: function (res) {
+                    if (res === "success") {
+                        swal("{% trans "Success" %}", "{% trans "The acceptance of this order has been cancelled successfully." %}", "success");
+                        update_table(orders_table);
+                    }
+                    else if (res === "no_permission") {
+                        swal("{% trans "Permission Denied" %}", "{% trans "You don't have the permission for this operation." %}", "error");
+                    }
+                    else {
+                        swal("{% trans "Error" %}", "{% trans "Operation failed." %}", "error");
+                    }
+                }
+            })
+        });
+    }
+
+    function mark_as_finished_order(order_id){
+        swal({
+            title: "{% trans "Are you sure to finish this order?" %}",
+            text: "",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/adminsettings/finish_order",
+                data: {
+                    order_id: order_id
+                },
+                success: function (res) {
+                    if (res === "success") {
+                        swal("{% trans "Success" %}", "{% trans "The acceptance of this order has been cancelled successfully." %}", "success");
+                        update_table(orders_table);
+                    }
+                    else if (res === "no_permission") {
+                        swal("{% trans "Permission Denied" %}", "{% trans "You don't have the permission for this operation." %}", "error");
+                    }
+                    else {
+                        swal("{% trans "Error" %}", "{% trans "Operation failed." %}", "error");
+                    }
+                }
+            })
+        });
+    }
+
+    function reject_order(order_id) {
+        swal({
+            title: "{% trans "Are you sure to reject this order?" %}",
+            text: "",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/adminsettings/reject_order",
+                data: {
+                    order_id: order_id
+                },
+                success: function (res) {
+                    if (res === "success") {
+                        swal("{% trans "Success" %}", "{% trans "This order has been rejected successfully." %}", "success");
+                        update_table(orders_table);
+                    }
+                    else if (res === "no_permission") {
+                        swal("{% trans "Permission Denied" %}", "{% trans "You have no permission for this operation." %}", "error");
+                    }
+                    else {
+                        swal("{% trans "Error" %}", "{% trans "Operation failed." %}", "error");
+                    }
+                }
+            })
+        });
+    }
+
+    function show_order_details(order_id){
+        on_open_add_comment_modal(order_id);
+        $("#btn_save_comment").addClass("hide");
+        $("#new_comment").attr("disabled", "disabled");
+        $("#service_price").removeAttr("onclick");
+    }
+
+    function on_click_show_calendar_view() {
+        $("#main_content").load('adminsettings/show_calendar_view');
+    }
+</script>

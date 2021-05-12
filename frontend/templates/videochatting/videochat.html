@@ -1,0 +1,31 @@
+{% load staticfiles %}
+{% load i18n %}
+<main class="container-fluid">
+    <div class="row">
+        <section class="col-md-8">
+            <video id="remoteVideo" poster="{% static "img/loading3.gif" %}" style="width: 100%; height: 100%;" autoplay playsinline></video>
+            <video id="localVideo" poster="{% static "img/loading3.gif" %}" style="width: 150px; position: absolute; top: 5px; right: 20px; border-radius: 5px; border: black 1px solid;" autoplay playsinline></video>
+        </section>
+        <section class="col-md-4 chat pt-0">
+            {% include "videochatting/message_chatbox.html" %}
+        </section>
+    </div>
+</main>
+
+<script>
+    {% if page_type == "request_call" %}
+        startVideoChatting();
+    {% endif %}
+    on_click_member(selected_userid, 'registered');
+
+    if (typeof (localVideo) === "undefined"){
+        const localVideo = document.getElementById('localVideo');
+    }
+    if (typeof (remoteVideo) === "undefined"){
+        const remoteVideo = document.getElementById('remoteVideo');
+    }
+
+    localVideo.addEventListener('loadedmetadata', logVideoLoaded);
+    remoteVideo.addEventListener('loadedmetadata', logVideoLoaded);
+    remoteVideo.addEventListener('onresize', logResizedVideo);
+</script>

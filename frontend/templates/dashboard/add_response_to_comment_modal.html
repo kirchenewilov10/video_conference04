@@ -1,0 +1,158 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="add_response_to_comment_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 800px; margin-top: 150px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-send"></i> {% trans 'Response' %}
+                    <a class="close star-back-color" onclick="on_close_add_response_to_comment_modal()">
+                        <i class="fa fa-close"></i>
+                    </a>
+                </h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0px; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Comment' %}</b>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <textarea class="form-control" id="order_comment" rows="3" disabled></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mt-7">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-box-title text-right">
+                                        <b>{% trans 'Response' %}</b>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <textarea class="form-control" id="order_response" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-flat" onclick="on_send_response_to_comment()">{% trans 'Send' %}</button>
+                <button type="button" class="btn btn-primary btn-flat" onclick="on_close_add_response_to_comment_modal()">{% trans 'Close' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var selected_order_id = 0;
+    function on_open_add_response_to_comment_modal() {
+        $("#order_response").val("");
+        open_modal("add_response_to_comment_modal");
+        $("#order_response").focus();
+    }
+
+    function on_close_add_response_to_comment_modal() {
+        close_modal("add_response_to_comment_modal");
+        $("#order_response").removeAttr("disabled");
+        selected_order_id = 0;
+    }
+
+    function add_response_to_comment(order_id) {
+        $.ajax({
+            type: "POST",
+            url: "/get_order_comment_and_response",
+            data: {
+                order_id: order_id
+            },
+            success: function(res) {
+                var data = JSON.parse(res);
+                $("#order_comment").val(data["comment"]);
+                on_open_add_response_to_comment_modal();
+                selected_order_id = order_id;
+            }
+        })
+    }
+
+    function on_send_response_to_comment() {
+        var order_response = $("#order_response").val();
+
+        if (order_response === "") {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please input your response." %}");
+            $("#order_response").focus();
+            return;
+        }
+
+        if (order_response.indexOf("<script>") >= 0 || order_response.indexOf("<style>") >= 0 || order_response.indexOf("<\/script>") >= 0 || order_response.indexOf("<\/style>") >= 0) {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "You have input illegal sentences." %}");
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/send_order_response",
+            data: {
+                order_id: selected_order_id,
+                order_response: order_response
+            },
+            success: function(res) {
+                if (res === "success") {
+                    show_message("success", "{% trans "Success" %}", "{% trans "Your response has been sent to administrator successfully." %}");
+                    on_close_add_response_to_comment_modal();
+                    update_table(orders_table);
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                }
+            }
+        })
+    }
+
+    function cancel_order(order_id) {
+        swal({
+            title: "{% trans "Are you sure?" %}",
+            text: "{% trans "This order will be cancelled." %}",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "/cancel_order",
+                data: {
+                    order_id: order_id
+                },
+                success: function (res) {
+                    if (res === "success") {
+                        swal("{% trans "Success" %}", "{% trans "This order has been cancelled successfully." %}", "success");
+                        update_table(orders_table);
+                    }
+                    else {
+                        swal("{% trans "Error" %}", "{% trans "Failed to cancel order." %}", "error");
+                    }
+                }
+            })
+        });
+    }
+
+    function show_comment_and_response(order_id) {
+        selected_order_id = order_id;
+        $.ajax({
+            type: "POST",
+            url: "/get_order_comment_and_response",
+            data: {
+                order_id: order_id
+            },
+            success: function(res) {
+                var data = JSON.parse(res);
+                $("#order_comment").val(data["comment"]);
+                on_open_add_response_to_comment_modal();
+                $("#order_response").val(data["user_response"]);
+            }
+        })
+    }
+</script>

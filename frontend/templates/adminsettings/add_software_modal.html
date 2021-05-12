@@ -1,0 +1,223 @@
+{% load staticfiles %}
+{% load i18n %}
+<style>
+    .upload-file-name-show {
+        padding-left: 15px;
+        display: block;
+        width: 240px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+</style>
+<div id="new_software_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 700px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-cubes"></i> {% trans 'New Software' %}<a class="close star-back-color" href="#" onclick="on_close_software_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0px; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-box-title text-right">
+                                        <b>{% trans 'Software Name' %}</b>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                                        <input type="text" id="software_name" class="form-control pull-right" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-box-title text-right">
+                                        <b>{% trans 'File' %}</b>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="display: flex;">
+                                        <form id="frm_upload_software_file" ENCTYPE="multipart/form-data" onchange="on_change_software_file()">
+                                            {% csrf_token %}
+                                            <input id="software_file" class="file-input" type="file" style="display:None;">
+                                        </form>
+                                        <button type="button" class="btn btn-block btn-primary no-border no-padding no-margin" onclick="on_click_upload_btn()" style="width: 20%;"><i class="fa fa-upload"></i></button>
+                                        <div id="file_name" class="upload-file-name-show"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group-inner">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="progress" id="upload_progress" style="display: none">
+                                        <div class="progress-bar progress-bar-green" id="upload_progress_bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                                            <span class="sr-only">1% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="on_save_new_software()">{% trans 'Save' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_software_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var selected_software_id = 0;
+    var reader = {};
+    var slice_size = 500 * 1024;
+
+    function on_open_software_modal(){
+        open_modal("new_software_modal");
+    }
+
+    function on_close_software_modal(){
+        $("#software_name").val("");
+        $("#file_name").html("");
+        $("#file_name").css("display", "none");
+        $("#frm_upload_software_file").get(0)[0] = null;
+
+        close_modal("new_software_modal");
+    }
+
+    function on_click_upload_btn(){
+        $("#software_file").trigger("click");
+    }
+
+    function on_change_software_file(){
+        var form = $("#frm_upload_software_file");
+        var file = form.get(0)[1].files[0];
+
+        $("#file_name").html(file.name);
+        $("#file_name").css("display", "block");
+        $("#file_name").attr("title", file.name);
+    }
+
+    function on_save_new_software(){
+        var name = $("#software_name").val();
+        if (name === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please input the name." %}");
+            return;
+        }
+
+        var form = $("#frm_upload_software_file");
+        try{
+            var file = form.get(0)[1].files[0];
+            if (typeof(file) === "undefined"){
+                show_message("warning", "{% trans "Warning" %}", "{% trans "Please select the file" %}");
+                return;
+            }
+        }
+        catch(e){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please select the file" %}");
+            return;
+        }
+
+        $( '#upload_progress_bar' ).attr("aria-valuenow", 1);
+        $( '#upload_progress_bar' ).css("width", "1%");
+        $( '#upload_progress' ).css("display", "block");
+
+        reader = new FileReader();
+        upload_file( file, 0 , name);
+    }
+
+    function upload_file(file, start, software_name){
+        var next_slice = start + slice_size + 1;
+        var last = 0;
+        if (next_slice >= file.size){
+            next_slice = file.size;
+            last = 1;
+        }
+        var blob = file.slice( start, next_slice );
+
+        reader.onloadend = function( event ) {
+            if (event.target.readyState !== FileReader.DONE) {
+                return;
+            }
+            $.ajax( {
+                url: 'adminsettings/save_software',
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                data: {
+                    start: start,
+                    last: last,
+                    software_name: software_name,
+                    file_data: event.target.result,
+                    file: file.name,
+                    file_type: file.type,
+                },
+                error: function( jqXHR, textStatus, errorThrown ) {
+                    console.log("error");
+                    console.log( jqXHR, textStatus, errorThrown );
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                },
+                success: function( data ) {
+                    if (data.status === "success"){
+                        var size_done = start + slice_size;
+                        var percent_done = Math.floor( ( size_done / file.size ) * 100 );
+
+                        if ( next_slice < file.size ) {
+                            // Update upload progress
+                            $( '#upload_progress_bar' ).attr("aria-valuenow", percent_done);
+                            $( '#upload_progress_bar' ).css("width", percent_done + "%");
+
+                            // More to upload, call function recursively
+                            upload_file( file, next_slice, software_name );
+                        } else {
+                            // Update upload progress
+                            $( '#upload_progress_bar' ).attr("aria-valuenow", 100);
+                            $( '#upload_progress_bar' ).css("width", "100%");
+                            $( '#upload_progress' ).css("display", "none");
+
+                            show_message("success", "{% trans "Success" %}", "{% trans "New software is saved successfully." %}");
+                            on_close_software_modal();
+                            on_click_menu('adminsettings/softwares_view');
+                        }
+                    }
+                    else {
+                        show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                    }
+                }
+            } );
+        };
+
+        reader.readAsDataURL( blob );
+    }
+
+    function on_click_remove_software(id){
+        swal({
+            title: "{% trans "Are you sure?" %}",
+            text: "{% trans "Are you sure to delete this software permanently?" %}",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+             $.ajax({
+                 type: "POST",
+                 url: "adminsettings/remove_software",
+                 data: {
+                     software_id: id
+                 },
+                 success: function(res){
+                    if (res === "success"){
+                        swal("{% trans "Deleted!" %}", "{% trans "Software is deleted successfully." %}", "success");
+                        on_click_menu('adminsettings/softwares_view');
+                    }
+                    else {
+                        swal("{% trans "Failed!" %}", "{% trans "Failed to delete the software." %}", "error");
+                    }
+                 }
+             })
+        });
+    }
+</script>

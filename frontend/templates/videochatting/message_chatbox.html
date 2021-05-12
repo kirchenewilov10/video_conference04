@@ -1,0 +1,93 @@
+{% load staticfiles %}
+{% load i18n %}
+<div class="main" style="position:relative; top: 0; height: max-content;">
+    <div class="tab-content" id="mini-nav-tabContent">
+        <!-- Start of Babble -->
+        <div class="babble tab-pane active" id="mini-list-chat" role="tabpanel" aria-labelledby="mini-list-chat-list">
+            <!-- Start of Chat -->
+            <div class="chat no-padding" id="mini_chat1">
+                <div class="top" style="background: #161616;">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="inside">
+                                <a href="#"><img class="avatar-md" src="{{ receiver.image_path }}" title="{{ receiver.username }}" alt="Receiver Avatar"></a>
+{#                                <div class="status" style="top: 26px; left: 10px;">#}
+{#                                    {% if receiver.online == 1 %}#}
+{#                                        <i class="material-icons online">fiber_manual_record</i>#}
+{#                                    {% else %}#}
+{#                                        <i class="material-icons offline">fiber_manual_record</i>#}
+{#                                    {% endif %}#}
+{#                                </div>#}
+                                <div class="data">
+                                    <h5><a href="#" style="color: whitesmoke;">{{ receiver.username }}</a></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content pt-5" id="mini-chat-content" style="height: 510px;">
+                    <div class="container" style="overflow-y: scroll; height: 510px;" id="mini_message_box_container">
+                        <div class="col-md-12" id="mini_message_box">
+{#                            {% for log in chat_logs %}#}
+{#                                {% if log.recipientid == userid %}#}
+{#                                    <div class="message">#}
+{#                                        <img class="avatar-md" src="{{ receiver.image_path }}" data-toggle="tooltip" data-placement="top" title="{{ receiver.username }}" alt="Receiver Avatar">#}
+{#                                        <div class="text-main">#}
+{#                                            <div class="text-group">#}
+{#                                                <div class="text">#}
+{#                                                    <p>{{ log.body }}</p>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <span>{{ log.timestamp }}</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                {% elif log.userid == userid %}#}
+{#                                    <div class="message me">#}
+{#                                        <div class="text-main">#}
+{#                                            <div class="text-group me">#}
+{#                                                <div class="text me">#}
+{#                                                    <p>{{ log.body }}</p>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <span>{{ log.timestamp }}</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                {% endif %}#}
+{#                            {% endfor %}#}
+{#                            <div class="message">#}
+{#                                <img class="avatar-md" src="{% static "plugins/calling/img/avatars/avatar-male-2.jpg" %}" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">#}
+{#                                <div class="text-main">#}
+{#                                    <div class="text-group">#}
+{#                                        <div class="text typing">#}
+{#                                            <div class="wave">#}
+{#                                                <span class="dot"></span>#}
+{#                                                <span class="dot"></span>#}
+{#                                                <span class="dot"></span>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="container no-padding" style="border-top: 2px solid #e8e8e8;">
+                    <div class="col-md-12 no-padding">
+                        <div class="bottom">
+                            <form class="position-relative w-100">
+                                {% csrf_token %}
+                                <input type="file">
+                                <textarea id="mini-chat-message-input" class="form-control" placeholder="Start typing for reply..." rows="2" style="width: 80%; margin: 0 42px;" onkeyup="on_mini_typing_message(event)"></textarea>
+{#                                <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>#}
+                                <button type="button" class="btn" style="position: absolute; top: 0; padding: 5px 0 0 10px;"><i class="material-icons">attach_file</i></button>
+                                <button type="button" id="mini-chat-message-submit" class="btn send" onclick="on_click_send_message()" style="padding: 0 10px;"><i class="material-icons">send</i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Chat -->
+        </div>
+        <!-- End of Babble -->
+    </div>
+</div>

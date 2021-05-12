@@ -1,0 +1,70 @@
+{% load staticfiles %}
+{% load i18n %}
+<!-- Start of Call -->
+<div class="main" id="call_modal" style="display: none">
+    <div class="call" id="call" style="width: 20%">
+        <div class="content">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="inside">
+                        <div class="panel">
+                            <div class="participant">
+{#                                <img class="avatar-xxl" src="{{ receiver.image_path }}" alt="avatar">#}
+                                <span>{% trans "Connecting" %}</span>
+                            </div>
+                            <div class="options">
+{#                                <button class="btn option"><i class="material-icons md-30">mic</i></button>#}
+{#                                <button class="btn option"><i class="material-icons md-30">videocam</i></button>#}
+                                <button class="btn option call-end" onclick="on_cancel_calling()"><i class="material-icons md-30">call_end</i></button>
+{#                                <button class="btn option"><i class="material-icons md-30">person_add</i></button>#}
+{#                                <button class="btn option"><i class="material-icons md-30">volume_up</i></button>#}
+                            </div>
+{#                            <button class="btn back" name="1"><i class="material-icons md-24">chat</i></button>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Call -->
+
+<script>
+    function on_close_calling_modal() {
+        $("#call_modal").css("display", "none");
+        $("#call").css("display", "none");
+    }
+
+    function on_cancel_calling(){
+        on_close_calling_modal();
+
+        try{
+            localVideo.srcObject = null;
+            localStream.getTracks().forEach( (track) => {
+                track.stop();
+            });
+        }
+        catch(e){
+            console.log(e);
+        }
+
+        var messageData = {};
+        messageData["sendUser"] = {{ userid }};
+        messageData["targetUser"] = selected_userid;
+        messageData["type"] = "cancel_calling";
+        sendMessage(selected_userid, messageData, null, 0, 3);
+
+        /*
+        chatSocket.send(JSON.stringify({
+            'message': messageData,
+            'session_type': 'video_chatting'
+        }));
+
+         */
+    }
+
+    function on_open_calling_modal(){
+        $("#call_modal").css("display", "block");
+        $("#call").css("display", "block");
+    }
+</script>

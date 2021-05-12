@@ -1,0 +1,154 @@
+{% load staticfiles %}
+{% load i18n %}
+<style>
+    .myfab_file_attach{
+        opacity: 1 !important;
+        visibility: visible !important;
+        margin: 15px 0 0 20px !important;
+    }
+    .myfab_send {
+        opacity: 1 !important;
+        visibility: visible !important;
+        margin: 15px 20px 0 0 !important;
+    }
+    .chat_message {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+</style>
+<!-- Begin ChatBox -->
+<div class="myfabs">
+    <div id="chatbox" class="chat" style="padding: 0 !important; display: none;">
+        <div class="chat_header">
+            <div class="chat_option">
+                <div class="header_img">
+                    <img src="{% static "dist/img/codestar.jpg" %}"/>
+                </div>
+                <i id="chat_online_status" class="fa fa-circle" style="color: lime; vertical-align: top; position: absolute; left: 60px; top: 15px;"></i><span id="chat_head" style="font-size: 25px;">{% trans "SUPPORT TEAM" %}</span>
+                <input type="hidden" class="room_recipientid">
+                <span id="chat_box_close" class="chat_box_close" data-toggle="tooltip" data-original-title="Close" onclick="on_click_close_chatbox()"><i class="fa fa-close" style="font-size: x-large;"></i></span>
+                <span id="chat_fullscreen_loader" class="chat_fullscreen_loader tip-top" data-toggle="tooltip" data-original-title="Expand" onclick="on_click_expand()"><i class="fullscreen fa fa-expand"></i></span>
+                <span id="chat_box_minimize" class="chat_box_minimize tip-top" data-toggle="tooltip" data-original-title="Minimize" onclick="on_click_minimize()"><i class="minimize fa fa-minus"></i></span>
+            </div>
+        </div>
+        <div id="chat_converse" class="chat_conversion chat_converse">
+
+        </div>
+        <span id="user_typing" class="user_typing_gif"></span>
+        <div class="myfab_field">
+            <form ENCTYPE="multipart/form-data" class="chat_file_upload">
+                {% csrf_token %}
+                <div class="input-group form-file">
+                    <input class="file-input" type="file" id="chfp_document" accept=".*" style="display:none;" onchange="on_select_attach_file()">
+                </div>
+            </form>
+            <a id="myfab_file_attach" class="myfab myfab_file_attach tip-top" data-toggle="tooltip" data-original-title="Attachment" onclick="on_click_chat_attach()"><i class="fa fa-paperclip" style="font-size: x-large;"></i></a>
+            <a id="myfab_send" class="myfab myfab_send tip-top" data-toggle="tooltip" data-original-title="Send" onclick="on_click_send_message()"><i class="fa fa-send" style="font-size: x-large;"></i></a>
+            <textarea id="chat_message" name="chat_message" placeholder="{% trans "Send a message" %}" class="chat_field chat_message" style="background-color: #192c3c; color: white; border-color: #192c3c;" onkeyup="on_key_up(event)"></textarea>
+        </div>
+    </div>
+{#    <a id="prime" class="myfab" style="color: white !important;" onclick="on_click_chat_prime()"><i class="prime fa fa-comments-o"></i></a>#}
+</div>
+<!-- End ChatBox -->
+
+<script>
+    let sessionKey = '{{ chat_param.sessionKey }}';
+    let chatbox_status = 0;
+
+    function on_click_close_chatbox(){
+        if ($('#chatbox .fullscreen')[0].classList.contains("fa-compress")){
+            on_click_expand();
+        }
+        close_chatroom();
+    }
+
+    function close_chatroom() {
+        $('#chatbox').fadeOut();
+        chatbox_status = 1;
+    }
+
+    function on_click_minimize(){
+        if ($("#chat_box_minimize")[0].children[0].classList.contains("fa-minus")){
+            if ($('#chatbox .fullscreen')[0].classList.contains("fa-compress")){
+                $('#chatbox .fullscreen').removeClass('fa-compress');
+                $('#chatbox .fullscreen').addClass('fa-expand');
+                $("#chat_online_status").css("top", "15px");
+                $("#chat_online_status").css("left", "60px");
+
+                $('#chatbox').toggleClass('chat_fullscreen');
+                $('#chatbox .header_img').toggleClass('change_img');
+                $('#chatbox .img_container').toggleClass('change_img');
+                $('#chatbox .chat_header').toggleClass('chat_header2');
+                $('#chatbox .myfab_field').toggleClass('myfab_field2');
+                $('#chatbox .chat_converse').toggleClass('chat_converse2');
+            }
+            $("#chat_converse").css("display", "none");
+            $("#chatbox .myfab_field").css("display", "none");
+
+            $("#chat_box_minimize").html("<i class=\"minimize fa fa-plus\"></i>");
+            $("#chat_box_minimize").attr("data-original-title", "Restore");
+        }
+        else {
+            $("#chat_converse").css("display", "block");
+            $("#chatbox .myfab_field").css("display", "block");
+
+            $("#chat_box_minimize").html("<i class=\"minimize fa fa-minus\"></i>");
+            $("#chat_box_minimize").attr("data-original-title", "Minimize");
+        }
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+
+    function on_click_expand(){
+        $("#chat_converse").css("display", "block");
+        $("#chatbox .myfab_field").css("display", "block");
+        if ($('#chatbox .fullscreen')[0].classList.contains("fa-expand")){
+            $('#chatbox .fullscreen').removeClass('fa-expand');
+            $('#chatbox .fullscreen').addClass('fa-compress');
+            $("#chat_box_minimize .minimize").removeClass("fa-plus");
+            $("#chat_box_minimize .minimize").addClass("fa-minus");
+            $("#chat_online_status").css("top", "34px");
+            $("#chat_online_status").css("left", "55px");
+        }
+        else {
+            $('#chatbox .fullscreen').removeClass('fa-compress');
+            $('#chatbox .fullscreen').addClass('fa-expand');
+            $("#chat_online_status").css("top", "15px");
+            $("#chat_online_status").css("left", "60px");
+        }
+
+        $('#chatbox').toggleClass('chat_fullscreen');
+        $('#chatbox .header_img').toggleClass('change_img');
+        $('#chatbox .img_container').toggleClass('change_img');
+        $('#chatbox .chat_header').toggleClass('chat_header2');
+        $('#chatbox .myfab_field').toggleClass('myfab_field2');
+        $('#chatbox .chat_converse').toggleClass('chat_converse2');
+    }
+
+    function on_click_chat_prime(){
+        $('#prime').toggleClass('is-float');
+        $("#chatbox").css("display", "block");
+        $("#chatbox").css("opacity", 1);
+    }
+
+    function on_click_send_message(){
+        var body = $('#chat_message');
+        var fileform = null;
+        sendMessage(body, fileform, 1);
+    }
+
+    function on_click_chat_attach(){
+        $("#chfp_document").trigger("click");
+    }
+
+    function on_select_attach_file(){
+        var body = null;
+        var fileform = $('.chat_file_upload');
+        sendMessage(body, fileform, 2);
+    }
+
+    function on_key_up(e){
+        if (e.keyCode === 13) {  // enter, return
+            on_click_send_message();
+        }
+    }
+</script>

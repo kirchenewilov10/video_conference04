@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+{% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title  -->
+    <title>SECUROLOGY</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="{% static "/img/securoloynet_logo.png" %}">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{% static "/plugins/landingpage/style.css" %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}">
+{#    <link rel="stylesheet" href="{% static "plugins/calling/css/lib/bootstrap.min.css" %}">#}
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static "bower_components/font-awesome/css/font-awesome.min.css" %}">
+    <!-- ICheck -->
+    <link rel="stylesheet" href="{% static "plugins/iCheck/all.css" %}">
+    <!-- Swipe core CSS -->
+    <link href="{% static "plugins/calling/css/swipe.min.css" %}" type="text/css" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static "bower_components/select2/dist/css/select2.min.css" %}">
+    <link rel="stylesheet" href="{% static "dist/css/AdminLTE.min.css" %}">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect. -->
+    <link rel="stylesheet" href="{% static "dist/css/skins/_all-skins.min.css" %}">
+
+    <!-- Fancy CSS -->
+    <link rel="stylesheet" href="{% static "plugins/fancybox/jquery.fancybox.css" %}">
+    <!-- sweet alert CSS
+		============================================ -->
+    <link rel="stylesheet" href="{% static "plugins/dialog/sweetalert/sweetalert.css" %}">
+    <!-- Modal CSS -->
+    <link rel="stylesheet" href="{% static "css/modals.css" %}">
+    <link rel="stylesheet" href="{% static "css/form-file.css" %}">
+
+    <!-- notifications CSS
+		============================================ -->
+    <link rel="stylesheet" href="{% static "css/notifications/Lobibox.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/notifications/notifications.css" %}">
+    <link rel="stylesheet" href="{% static "js/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/store.css" %}">
+
+    <!-- MANUAL SWITCH CSS -->
+    <link rel="stylesheet" href="{% static "plugins/switch/component-custom-switch.min.css" %}">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.jqueryui.min.css">
+
+    <link rel="stylesheet" href="{% static "css/datatables/select.dataTables.min.css" %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/colreorder/1.5.2/css/colReorder.jqueryui.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.0/css/fixedColumns.dataTables.min.css">
+
+</head>
+
+<body>
+    <style>
+        .btn {
+            border: none !important;
+        }
+        .height-200 {
+            height: 200px !important;
+        }
+
+        .star-back-color {
+            background-color: #0b5669 !important
+        }
+
+        .modal-title{
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            font-size: x-large;
+        }
+
+        .modal-content {
+            background-color: #f3f3f3;
+        }
+
+        .text-box-title {
+            padding-top: 5px;
+        }
+
+        .form-group-inner {
+            margin-bottom: 5px;
+        }
+
+        .main{
+            position: absolute;
+            top: 300px;
+            background: transparent;
+        }
+        .main .call {
+            margin-left: 40%;
+        }
+        .hand {
+            cursor: pointer;
+        }
+        .underline {
+            text-decoration: underline !important;
+            color: #0b58a2 !important;
+        }
+        .navbar .nav-item .nav-link .label {
+            position: relative;
+            top: 5px;
+            right: 3px;
+            text-align: center;
+            font-size: 9px;
+            padding: 2px 0;
+            line-height: .9;
+        }
+        .payment-table td {
+            border: black 1px solid !important;
+        }
+    </style>
+    <!-- Preloader Start -->
+    <div id="preloader">
+        <div class="preload-content">
+            <div id="world-load"></div>
+        </div>
+    </div>
+    <!-- Preloader End -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="navbar navbar-expand-lg" style="border-top: 0; border-left: 0; border-right: 0; margin:0;">
+                        <!-- Logo -->
+                        <a class="navbar-brand" href="/index"><img src="{% static "/welcome_page/images/securoloynet_logo.png" %}" alt="Logo"></a>
+                        <!-- Navbar Toggler -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <!-- Navbar -->
+                        <div class="collapse navbar-collapse" id="worldNav">
+                            <ul class="navbar-nav ml-auto pull-right">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hi, {{ username }}</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#" onclick="on_open_profile_modal()"><i class="fa big-icon fa-user"></i> {% trans "UserInfo" %}</a>
+                                        <a class="dropdown-item" href="#" onclick="on_open_setting_modal()"><i class="fa big-icon fa-gear"></i> {% trans "Language" %}</a>
+                                        <a class="dropdown-item" href="#" onclick="on_click_sign_out()"><i class="fa big-icon fa-power-off"></i> {% trans "Logout" %}</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- Search Form  -->
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
+
+    <!-- ********** Hero Area Start ********** -->
+{#    <div class="hero-area height-200 bg-img background-overlay" style="background-image: url('{% static '/plugins/landingpage/img/blog-img/bg4.jpg' %}');"></div>#}
+    <!-- ********** Hero Area End ********** -->
+
+    <div class="regular-page-wrap" id="main_content">
+        <div class="container" style="margin-top: 50px;">
+            <div class="row justify-content-center mt-30">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="page-header">
+                            <h3><i class="fa fa-diamond"></i> {% trans "Pick Service" %}</h3>
+                        </div>
+                        <div class="page-content" id="div_pick_service">
+                            <div class="row">
+                                <div class="col-12 col-md-2 p-0">
+                                    <button class="btn btn-primary pull-right" style="position: absolute; bottom: 0px;" onclick="on_click_add_service_to_bill()"><i class="fa fa-plus"></i></button>
+                                </div>
+                                <div class="col-12 col-md-10 col-lg-6 p-0">
+                                    <label for="servicename">{% trans "Service Name" %}</label>
+                                    <select class="form-control select2" id="servicename" onchange="on_change_sevice_name()">
+                                        {% for service in services %}
+                                            <option value="{{ service.id }}">{{ service.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <hr class="row">
+                            <div class="row" id="service_categories_box">
+                            </div>
+                            <div class="row mt-30">
+                                <div class="col-12 col-md-12 col-lg-12 pl-0">
+                                    <label for="servicedescription">{% trans "Describe your need..." %}</label>
+                                    <textarea id="servicedescription" class="form-control" rows="3" style="resize: vertical;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="page-header">
+                            <h3><i class="fa fa-bars"></i> {% trans "Requests" %}</h3>
+                        </div>
+                        <div class="page-content" id="div_orders_table">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <table id="orders_table" class="display cell-border compact stripe" style="width: 100%">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            {% for header in headerdata %}
+                                                <th class="text-center">{{ header.name }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-12 mt-30 mb-30">
+                        <div class="page-header">
+                            <h3><i class="fa fa-credit-card"></i> {% trans "Payment" %}</h3>
+                        </div>
+                        <div class="page-content">
+                            <div class="row">
+                                <div class="col-8 col-md-8 col-lg-8 mt-30 mb-30">
+                                    <table class="table col-lg-12 text-center payment-table">
+                                        <thead style="border-bottom-style:solid;border-bottom-width:1px;border-top-style:solid; display:table; table-layout: fixed; width: 100%;">
+                                            <tr>
+                                                <th style="width: 5%;">{% trans "NO" %}</th>
+                                                <th style="width: 20%;">{% trans "Service" %}</th>
+                                                <th style="width: 10%;">{% trans "Type" %}</th>
+                                                <th style="width: 10%;">{% trans "Qty" %}</th>
+                                                <th style="width: 35%;">{% trans "Description" %}</th>
+                                                <th style="width: 10%;">{% trans "Price" %}</th>
+                                                <th style="width: 10%;">{% trans "Delete" %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="selected_services_list" style="height: 290px; overflow-y: auto; overflow-x: hidden; display: block">
+                                            <tr style='display: table; width:100%; table-layout: fixed'>
+                                                <td colspan="5" style="width: 80%;"><b>{% trans "Total" %}</b></td>
+                                                <td colspan="2">$<label id="total_service_price"></label></td>
+                                            </tr>
+                                            <tr style='display: table; width:100%; table-layout: fixed'>
+                                                <td colspan="5" style="width: 80%;"><b>{% trans "Discount Code" %}</b></td>
+                                                <td class="no-padding" colspan="2" style="text-align: center;">
+                                                    <input type="text" id="discount_code" class="form-control text-center" placeholder="{% trans "Discount Code" %}" style="height: 37px;">
+                                                </td>
+                                            </tr>
+                                            <tr style='display: table; width:100%; table-layout: fixed'>
+                                                <td colspan="5" style="width: 80%;"><b>{% trans "Discount Total" %}</b></td>
+                                                <td colspan="2" style="text-align: center;">
+                                                    <label id="discount_total"></label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-4 mt-30 mb-30">
+                                    <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab_visa" data-toggle="tab"><img src="{% static "/dist/img/credit/visa.png" %}" alt="Visa"><img src="{% static "/dist/img/credit/mastercard.png" %}" alt="MasterCard"></a></li>
+                                            <li><a href="#tab_paypal" data-toggle="tab"><img src="{% static "/dist/img/credit/paypal.png" %}" alt="Paypal" style="width: 51px;"></a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab_visa">
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label for="visa_name_on_card">{% trans "Name on Card" %}</label>
+                                                            <input type="text" class="form-control" id="visa_name_on_card" placeholder="{% trans "Name on Card" %}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12 col-lg-12">
+                                                        <div class="form-group">
+                                                            <label for="visa_cardnumber">{% trans "Card Number" %}</label>
+                                                            <input type="text" class="form-control" id="visa_cardnumber" placeholder="{% trans "Card Number" %}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12 col-lg-7">
+                                                        <div class="form-group">
+                                                            <label for="visa_exp_date">{% trans "Expiration Date" %}</label>
+                                                            <input type="text" class="form-control" id="visa_exp_date" placeholder="MM/YYYY">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-12 col-lg-5">
+                                                        <div class="form-group">
+                                                            <label for="visa_cvv">{% trans "CVV" %}</label>
+                                                            <input type="text" class="form-control" id="visa_cvv" placeholder="CVV">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12 col-lg-12">
+                                                        <button class="btn btn-success btn-lg btn-block" type="button" onclick="on_click_pay()">{% trans "Pay" %}</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="tab_paypal">
+                                                <div class="row">
+                                                    <div class="col-12 col-md-12 col-lg-12" id="paypal-button-container">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if userinfo.service_usable == 1 %}
+                    <div class="col-12 col-md-12 col-lg-12 2 mt-30">
+                        <div class="page-header">
+                            <h3><i class="fa fa-cubes"></i> {% trans "Softwares" %}</h3>
+                        </div>
+                        <div class="page-content" id="div_software_list">
+                            <div class="row">
+                                <div class="col-12 col-md-11 p-0">
+                                    <label for="program">{% trans "Programs" %}</label>
+                                    <select class="form-control select2" id="program">
+                                        {% for software in softwares %}
+                                            <option value="{{ software.id }}">{{ software.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-1 p-0">
+                                    <button class="btn btn-primary" style="position: absolute; bottom: 0px;" onclick="on_click_download_software()"><i class="fa fa-download"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12 mt-30 mb-30">
+                        <div class="page-header">
+                            <h3>
+                                <i class="fa fa-commenting-o"></i>
+                                <span class="label" id="total_unread_message_status" style="display: {% if unread_messages_cnt > 0 %}block{% else %}none{% endif %}">
+                                    <i class="fa fa-circle text-danger"></i>
+                                </span>{% trans "Messages" %}
+                                <span class="sr-only"></span>
+                            </h3>
+                        </div>
+                        <div class="page-content">
+                            <div class="row" id="message_section">
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ***** Footer Area Start ***** -->
+    <footer class="footer-area" style="padding: 10px 0 !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="footer-single-widget">
+                        <a href="#"><img src="{% static "img/securoloynet_logo.png" %}" alt="" style="width: 200px;"></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="footer-single-widget">
+                        <div class="copywrite-text">
+                            <p>
+                                {% trans "Copyright &copy;2020 All rights reserved" %}
+{#                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved#}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ***** Footer Area End ***** -->
+    <div id="waiting" class=""></div>
+
+    {% include "dashboard/profile.html" %}
+    {% include "dashboard/language.html" %}
+    {% include "mainjs.html" %}
+    {% include "videochatting/receiving_modal.html" %}
+    {% include "videochatting/videochatting_modal.html" %}
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
+    <!-- jQuery Cookie 1.4.1 -->
+    <script src="{% static "/bower_components/jquery/dist/jquery.cookie.js" %}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{% static "bower_components/jquery-ui/jquery-ui.min.js" %}"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <!-- Select2 -->
+    <script src="{% static "bower_components/select2/dist/js/select2.full.min.js" %}"></script>
+    <!-- notification JS -->
+    <script src="{% static "js/notifications/Lobibox.js" %}"></script>
+    <!-- Plugins js -->
+    <script src="{% static "/plugins/landingpage/js/plugins.js" %}"></script>
+    <!-- Active js -->
+    <script src="{% static "/plugins/landingpage/js/active.js" %}"></script>
+    <!-- Login js -->
+    <script src="{% static "/js/login.js" %}"></script>
+
+    <!-- Fancy js -->
+    <script src="{% static "plugins/fancybox/jquery.fancybox.js" %}"></script>
+    <!-- swal confirmation JS============================================ -->
+    <script src="{% static "plugins/dialog/sweetalert/sweetalert.min.js" %}"></script>
+    <!-- Datatable js -->
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.jqueryui.min.js"></script>
+    <script src="{% static "js/datatables/dataTables.select.min.js" %}"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="{% static "js/datatables/ColReorderWithResize.js" %}"></script>
+    <script src="{% static "plugins/calling/js/vendor/popper.min.js" %}"></script>
+
+    <!-- Optional JavaScript -->
+    <script src="{% static "js/webrtc_adapter.js" %}"></script>
+
+    {% include "chatjs.html" %}
+
+    <script>
+        var orders_table;
+        var total_select = 0;
+        var total_unread_messages_cnt = {{ unread_messages_cnt }};
+        var selected_userid = 0;
+        var selected_session_type = "registered";
+        var selected_service_cnt = 0;
+
+        $(document).ready(function () {
+            //Initialize Select2 Elements
+            on_change_sevice_name();
+            $('.select2').select2();
+
+            {% if userinfo.service_usable == 1 %}
+                $("#message_section").load("/message/messages_view");
+            {% endif %}
+
+            // set csrf token for ajax call
+            $.ajaxSetup({
+                beforeSend:function (xhr,settings) {
+                    xhr.setRequestHeader('X-CSRFtoken','{{ csrf_token }}');
+                }
+            });
+
+            // Init orders table
+            orders_table = $('#orders_table').DataTable({
+                dom: '<"top"Rf<"clear">>rt<"bottom"lip<"clear">>',
+                serverSide: true,
+                lengthMenu: [[10], [10]],
+                pageLength: 10,
+                scrollY: true,
+                scrollX: true,
+                columnDefs: [
+                    {
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets: 0,
+                        width: "1px"
+                    }],
+                ajax: {
+                    url: "/orders_datatable_api?format=datatables",
+                    data: function (d) {
+                        return $.extend({}, d, {});
+                    }
+                },
+                columns: [
+                    {
+                        width: "1%",
+                        data: "id", "searchable": false, "render": function (data, type, row) {
+                            var htm = "";
+                            htm += '<i id=' + row.id + ' style="display: None"></i>';
+                            return htm;
+                        }
+                    },
+                    {
+                        className: "dt-center",
+                        data: "service_id", "render": function(data, type, row){
+                            return row.service_name;
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "category_type"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "price", "render": function(data, type, row){
+                            return "<label><b>$</b> " + row.price + "</label>";
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "pay_status"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "service_status", "render": function(data, type,row) {
+                            var html="";
+                            if (row.service_status === 0){
+                                html += "<span class=\"badge bg-yellow\">{% trans "Awaiting" %}</span>";
+                            }
+
+                            if (row.comment !== ""){
+                                html += "<br><i class='fa fa-exclamation-circle' title='" + row.comment + "'></i>";
+                            }
+
+                            return html;
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "paid_price"
+                    },
+                    {
+                        className: "dt-center",
+                        data: "date_created", "render": function(data, type, row){
+                            var d = row.date_created;
+                            return d.substring(0, 10) + "<br>" + d.substring(11, 19);
+                        }
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "date_paid"
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "comment"
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "review"
+                    },
+                    {
+                        className: "dt-center hide",
+                        data: "score"
+                    }
+                ],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                order: [
+                    [7, 'desc']
+                ],
+                "search": {
+                    "regex": true
+                }
+            });
+            var tableElement = document.getElementsByClassName('dataTable');
+            tableElement[0].id = "orders_table";
+
+            $('#orders_table thead').on("click", "th.select-checkbox", function () {
+                if (total_select % 2 === 1) {
+                    orders_table.rows().deselect();
+                    $("#orders_table thead tr").removeClass("selected");
+                } else {
+                    orders_table.rows().select();
+                    $("#orders_table thead tr").addClass("selected");
+                }
+
+                total_select++;
+            });
+        });
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+
+
+    </script>
+</body>
+
+</html>

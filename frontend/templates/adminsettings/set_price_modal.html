@@ -1,0 +1,99 @@
+{% load staticfiles %}
+{% load i18n %}
+<div id="set_service_price_modal" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+    <div class="modal-dialog" style="width: 500px; max-width: 500px; margin-top: 50px;">
+        <div class="modal-content" style="background-color: #f5f5f5">
+            <div class="modal-header header-color-modal star-back-color" style="padding-right:20px; padding-left: 20px;">
+                <h4 class="modal-title"><i class="fa fa-diamond"></i> <label id="set_service_price_modal_title">{% trans 'Set Price' %}</label><a class="close star-back-color" href="#" onclick="on_close_set_service_price_modal()"><i
+                            class="fa fa-close"></i></a></h4>
+            </div>
+            <div class="col-lg-12" style="max-height:600px;padding: 0; overflow-x: hidden; overflow-y: auto">
+                <div class="box-body">
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <div class="form-group-inner">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-box-title text-right">
+                                        <label for="service_price"><b>{% trans 'Price' %}</b></label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                        <input type="text" id="service_price" class="form-control" value="" onkeyup="on_keyup_set_service_price(event)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="on_set_service_price()">{% trans 'Set' %}</button>
+                <button type="button" class="btn btn-primary" onclick="on_close_set_service_price_modal()">{% trans 'Cancel' %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var selected_price_id = 0;
+    var modal_type = 0;     // 0: default, 1: bulk update
+    function on_open_set_service_price_modal(type=0){
+        modal_type = type;
+        open_modal("set_service_price_modal");
+    }
+
+    function on_close_set_service_price_modal(){
+        $("#service_price").val("");
+        selected_price_id = 0;
+        close_modal("set_service_price_modal");
+    }
+
+    function on_set_service_price(){
+        var price = $("#service_price").val();
+        if (price === ""){
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please input the price" %}");
+            $("#service_price").focus();
+            return;
+        }
+
+        if (isNaN(price)) {
+            show_message("warning", "{% trans "Warning" %}", "{% trans "Please input correct price" %}");
+            $("#service_price").focus();
+        }
+
+        if (modal_type === 0){
+            on_set_bulk_prices([selected_price_id], price);
+        }
+        else {
+            var selected_price_ids = get_select_prices();
+            on_set_bulk_prices(selected_price_ids, price);
+        }
+    }
+
+    function on_keyup_set_service_price(e){
+        if (e.keyCode === 13){
+            on_set_service_price();
+        }
+    }
+
+    function on_set_bulk_prices(price_ids, price){
+        $.ajax({
+            type: "POST",
+            url: "adminsettings/bulk_update_price",
+            data: {
+                price_ids: JSON.stringify(price_ids),
+                price: price
+            },
+            success: function(res) {
+                if (res === "success"){
+                    show_message("success", "{% trans "Success" %}", "{% trans "Price has been set successfully." %}");
+                    on_close_set_service_price_modal();
+                    on_click_menu('adminsettings/services_view');
+                }
+                else {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Operation failed." %}");
+                }
+            }
+        })
+    }
+
+</script>

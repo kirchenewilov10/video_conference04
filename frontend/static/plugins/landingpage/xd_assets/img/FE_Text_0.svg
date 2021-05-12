@@ -1,0 +1,67 @@
+<svg id="FE_Text_0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1009" height="249.096" viewBox="0 0 1009 249.096">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1d5c99;
+        font-size: 16px;
+        font-family: Poppins-SemiBold, Poppins;
+      }
+
+      .cls-1, .cls-5 {
+        font-weight: 600;
+      }
+
+      .cls-2, .cls-5 {
+        font-family: SegoeUI-Semibold, Segoe UI;
+      }
+
+      .cls-3 {
+        fill: #e7ebeb;
+        font-family: Poppins-Regular, Poppins;
+        letter-spacing: 0.01em;
+      }
+
+      .cls-3, .cls-5 {
+        font-size: 62px;
+      }
+
+      .cls-4 {
+        font-family: SegoeUI, Segoe UI;
+      }
+
+      .cls-5 {
+        fill: #fff;
+        letter-spacing: 0.05em;
+      }
+
+      .cls-6 {
+        filter: url(#سيكيورولوجي);
+      }
+
+      .cls-7 {
+        filter: url(#أمــانك_الشخصي_يبدأ_من_أمــانك_الرقمي);
+      }
+    </style>
+    <filter id="أمــانك_الشخصي_يبدأ_من_أمــانك_الرقمي" x="0" y="83.57" width="1009" height="108" filterUnits="userSpaceOnUse">
+      <feOffset dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="سيكيورولوجي" x="612" y="0" width="396" height="104" filterUnits="userSpaceOnUse">
+      <feOffset dy="10" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <text id="سيكيورولوجي_تنفرد_بتقديم_خدمات_استشارية_و_احترافية_في_حماية_المعلومات_الخاصة_للأجهزة_الشخصية_للأفراد_و_الشركات_ويشمل_الأجهزة_المكتبية_المحمولة_و_أيضا_الأجهزة_الذكية_بأنواعها_من_خلال_تقنيات_أمنة_و_موثوقة" data-name="سيكيورولوجي, تنفرد بتقديم خدمات استشارية و احترافية في حماية  المعلومات الخاصة للأجهزة الشخصية للأفراد و الشركات, ويشمل الأجهزة المكتبية, المحمولة و أيضا الأجهزة الذكية بأنواعها, من خلال تقنيات أمنة و موثوقة" class="cls-1" transform="translate(0 185.096)"><tspan x="40.064" y="17">,</tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17">, </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17" xml:space="preserve">  </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17"> </tspan><tspan y="17">, </tspan><tspan class="cls-2" y="17" xml:space="preserve">سيكيورولوجي, تنفرد بتقديم خدمات استشارية و احترافية في حماية  المعلومات الخاصة للأجهزة الشخصية للأفراد و الشركات, و</tspan><tspan y="17"> </tspan><tspan x="530.227" y="45"> </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan y="45">, </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan y="45"> </tspan><tspan class="cls-2" y="45">المحمولة و أيضا الأجهزة الذكية بأنواعها, من خلال تقنيات أ</tspan></text>
+  <g class="cls-7" transform="matrix(1, 0, 0, 1, 0, 0)">
+    <text id="أمــانك_الشخصي_يبدأ_من_أمــانك_الرقمي-2" data-name="أمــانك الشخصي يبدأ من أمــانك الرقمي" class="cls-3" transform="translate(9 150.57)"><tspan x="0" y="0"> </tspan><tspan y="0"> </tspan><tspan y="0"> </tspan><tspan y="0"> </tspan><tspan y="0"> </tspan><tspan class="cls-4" y="0">أمــانك الشخصي يبدأ من أمــانك ا</tspan></text>
+  </g>
+  <g class="cls-6" transform="matrix(1, 0, 0, 1, 0, 0)">
+    <text id="سيكيورولوجي-2" data-name="سيكيورولوجي" class="cls-5" transform="translate(999 67)"><tspan x="-377.843" y="0">سيكيورولوجي</tspan></text>
+  </g>
+</svg>

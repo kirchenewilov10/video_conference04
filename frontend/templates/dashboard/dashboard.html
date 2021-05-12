@@ -1,0 +1,39 @@
+{% load staticfiles %}
+{% load i18n %}
+<div class="col-md-12" style="padding: 0px;">
+    <div class="content-body-divided col-md-6" style="padding: 0px;">
+        <!-- Horizontal Form -->
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">{% trans "Payment" %}</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <div class="col-md-12">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="pick_service" class="col-sm-3 control-label" style="margin-top: 5px;">
+                            {% trans "Pick Service" %}
+                        </label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="pick_service" placeholder="Service List">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-body-divided col-md-6" style="padding: 0px;">
+        <!-- Horizontal Form -->
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">{% trans "Service Records" %}</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <div class="col-md-12">
+            </div>
+        </div>
+    </div>
+</div>

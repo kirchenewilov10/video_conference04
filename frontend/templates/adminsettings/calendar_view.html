@@ -1,0 +1,238 @@
+{% load staticfiles %}
+{% load i18n %}
+{% include 'adminsettings/add_comment_modal.html' %}
+{% include 'adminsettings/export_booking_modal.html' %}
+
+<div class="container" style="margin-top: 50px;">
+    <div class="row justify-content-center mt-30">
+        <div class="col-12 col-md-12 col-lg-12">
+            <div class="col-12 col-md-12 col-lg-12 mb-30">
+                <div class="page-header">
+                    <h3>
+                        <i class="fa fa-bars"></i> {% trans "Accepted Orders" %}
+                        <button type="button" class="btn btn-primary pull-right" onclick="on_click_show_list_view()">{% trans "List View" %}</button>
+                        <button type="button" class="btn btn-primary pull-right mr-15" onclick="on_click_export_booking()">{% trans "Export" %}</button>
+                    </h3>
+                </div>
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            <span class="label" style="background-color: #E06666;">&nbsp;</span>&nbsp;<label class="label-text">{% trans "Off duty" %}</label>
+                            <span class="label" style="background-color: #9FC5E8; margin-left: 15px;">&nbsp;</span>&nbsp;<label class="label-text">{% trans "Order" %}</label>
+                            <span class="label" style="background-color: #FFE599; margin-left: 15px;">&nbsp;</span>&nbsp;<label class="label-text">{% trans "Booked" %}</label>
+                            <span class="label" style="background-color: #B6D7A8; margin-left: 15px;">&nbsp;</span>&nbsp;<label class="label-text">{% trans "Finished" %}</label>
+                        </div>
+                        <div class="col-12 col-md-12 p-0">
+                            <div class="box-body box-profile" id="calendar_box">
+                                <div style="float:left; width: 150px;">
+                                    <div id="nav"></div>
+                                </div>
+                                <div style="margin-left: 150px;">
+                                    <div id="calendar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var height = (window.innerHeight - 321) + "px";
+        $("#calendar_box").css("height", height);
+
+        var nav = new DayPilot.Navigator("nav");
+        nav.showMonths = 3;
+        nav.selectMode = "month";
+        nav.onTimeRangeSelected = function(args) {
+            dp.startDate = args.start;
+            dp.update();
+        };
+        nav.init();
+
+
+        var now_date = new Date().toISOString().slice(0,10);
+
+        var picker = new DayPilot.DatePicker({
+            target: 'start',
+            pattern: 'yyyy-MM-dd',
+            onTimeRangeSelected: function(args) {
+                dp.startDate = args.start;
+                dp.update();
+            }
+        });
+
+        var dp = new DayPilot.Month("calendar");
+
+        // view
+        dp.startDate = now_date;
+        dp.eventMoveHandling = "Disabled";
+
+        // event creating
+        /*
+        dp.onTimeRangeSelected = function (args) {
+
+            var name = prompt("New event name:", "Event");
+            dp.clearSelection();
+            if (!name) return;
+            var e = new DayPilot.Event({
+                start: args.start,
+                end: args.end,
+                id: DayPilot.guid(),
+                text: name
+            });
+            dp.events.add(e);
+        };
+         */
+
+        dp.onEventClicked = function(args) {
+            var selected_day_id = args.e.id();
+            var type = selected_day_id.split("-")[0];
+            var id = selected_day_id.split("-")[1];
+            if (type === "offday") {
+                on_click_off_day(id);
+            }
+            else {
+                on_open_add_comment_modal(id);
+            }
+        };
+
+        dp.onBeforeEventRender = function(args) {
+            var type = args.data.tags && args.data.tags.type;
+            switch (type) {
+                case "important":
+                    args.data.fontColor = "#fff";
+                    args.data.backColor = "#E06666";
+                    args.data.borderColor = "#E06666";
+                    break;
+                case "note":
+                    args.data.fontColor = "#000";
+                    args.data.backColor = "#9FC5E8";
+                    args.data.borderColor = "#3D85C6";
+                    break;
+                case "warning":
+                    args.data.fontColor = "#000";
+                    args.data.backColor = "#FFE599";
+                    args.data.borderColor = "#F1C232";
+                    break;
+                case "complete":
+                    args.data.fontColor = "#000";
+                    args.data.backColor = "#B6D7A8";
+                    args.data.borderColor = "#6AA84F";
+                    break;
+            }
+        };
+
+        dp.init();
+
+
+        $.ajax({
+            type: "POST",
+            url: "adminsettings/get_admin_calendar_data",
+            success: function(res) {
+                if (res === "access_denied") {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Permission denied." %}");
+                    return;
+                }
+                else if (res === "failure") {
+                    show_message("error", "{% trans "Error" %}", "{% trans "Failed to get orders." %}");
+                    return;
+                }
+
+                var data = JSON.parse(res);
+                dp.events.list = get_calendar_event_list(data);
+                dp.update();
+            }
+        })
+    });
+
+    function get_calendar_event_list(data) {
+        var event_list = [], i, j, temp, flag;
+        var orders = data["orders"], datetime, type;
+        for (i=0;i<orders.length;i++) {
+            temp = {};
+            if (orders[i]["service_status"] === 0)
+                continue;
+
+            if (orders[i]["booked"] === 1){
+                datetime = orders[i]["date_booked"];
+                type = {"type": "warning"};
+            }
+            else {
+                datetime = orders[i]["date_created"];
+                type = {"type": "note"};
+            }
+
+            if (orders[i]["service_status"] === 3) {
+                type = {"type": "complete"};
+            }
+
+            temp["start"] = datetime.substring(0, 10) + "T" + datetime.substring(11, 19);
+            temp["end"] = datetime.substring(0, 10) + "T" + datetime.substring(11, 19);
+            temp["id"] = "order" + "-" + orders[i]["id"];
+            temp["text"] = datetime.substring(11, 16);
+            temp["tags"] = type;
+
+            flag = 0;
+            for (j=0;j<event_list.length;j++) {
+                if (event_list[j]["start"] === temp["start"]) {
+                    flag = 1;
+                }
+            }
+
+            if (flag === 0)
+                event_list.push(temp);
+        }
+
+        var off_days = data["off_days"];
+        for (i=0;i<off_days.length;i++){
+            temp = {};
+            temp["start"] = off_days[i]["off_day"] + "T" + "00:00:00";
+            temp["end"] = off_days[i]["off_day"] + "T" + "23:59:59";
+            temp["id"] = "offday" + "-" + off_days[i]["id"];
+            temp["text"] = "Off";
+            temp["tags"] = {"type": "important"};
+            event_list.push(temp);
+        }
+
+        return event_list;
+    }
+
+    function on_click_show_list_view() {
+        on_click_menu('adminsettings/orders_view');
+    }
+
+    function on_click_off_day(off_day_id) {
+        swal({
+            title: "{% trans "Remove?" %}",
+            text: "{% trans "Are you sure to remove this rest day?" %}",
+            type: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#0070b1",
+            confirmButtonText: "{% trans "Confirm" %}",
+            cancelButtonText: "{% trans "Cancel" %}",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "adminsettings/remove_off_day",
+                data: {
+                    "off_day_id": off_day_id
+                },
+                success: function (res) {
+                    if (res === "success"){
+                        swal("{% trans "Success" %}", "{% trans "Off-Day setting has been removed successfully." %}", "success");
+                        dp.events.remove(args.e);
+                    }
+                    else {
+                        swal("{% trans "Failed!" %}", "{% trans "Operation failed." %}", "error");
+                    }
+                }
+            });
+        });
+    }
+</script>

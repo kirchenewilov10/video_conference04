@@ -1,0 +1,36 @@
+<svg id="Slide_Arrows" xmlns="http://www.w3.org/2000/svg" width="177" height="70" viewBox="0 0 177 70">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: rgba(116,112,207,0.11);
+        stroke: #1d5c99;
+      }
+
+      .cls-2 {
+        fill: #1d5c99;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+
+      .cls-4 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="Group_1479" data-name="Group 1479" transform="translate(107)">
+    <g id="Ellipse_47" data-name="Ellipse 47" class="cls-1" transform="translate(0 70) rotate(-90)">
+      <circle class="cls-3" cx="35" cy="35" r="35"/>
+      <circle class="cls-4" cx="35" cy="35" r="34.5"/>
+    </g>
+    <path id="Path_10" data-name="Path 10" class="cls-2" d="M8,0,6.545,1.455l5.506,5.506H0V9.039H12.052L6.545,14.545,8,16l8-8Z" transform="translate(27 27)"/>
+  </g>
+  <g id="Group_1478" data-name="Group 1478">
+    <g id="Ellipse_47-2" data-name="Ellipse 47" class="cls-1" transform="translate(70) rotate(90)">
+      <circle class="cls-3" cx="35" cy="35" r="35"/>
+      <circle class="cls-4" cx="35" cy="35" r="34.5"/>
+    </g>
+    <path id="Path_10-2" data-name="Path 10" class="cls-2" d="M8,0,6.545,1.455l5.506,5.506H0V9.039H12.052L6.545,14.545,8,16l8-8Z" transform="translate(43 43) rotate(180)"/>
+  </g>
+</svg>
