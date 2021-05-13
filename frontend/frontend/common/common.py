@@ -113,7 +113,7 @@ def get_mail_account(request):
     """
     mail_account = {}
     mail_account["email"] = "securology.net@gmail.com"
-    mail_account["password"] = "gtyi ryme dbiw casr"
+    mail_account["password"] = "xxxxx"
     return mail_account
 
 
